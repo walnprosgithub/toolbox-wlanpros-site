@@ -1,0 +1,2 @@
+# Serve the web app's index for /app deep links (existing files always win over this rule)
+/app/*  /app/index.html  200

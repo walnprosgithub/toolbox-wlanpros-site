@@ -1,0 +1,3 @@
+# toolbox.wlanpros.com — Netlify publishes this repo's root directly. No build step: files are committed already built.
+[build]
+  publish = "."
