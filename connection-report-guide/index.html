@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading a WLAN Pros Toolbox Connection Report — WLAN Pros</title>
+<meta name="description" content="How to read the Check My Connection report from the WLAN Pros Toolbox: what every field means and how to tell whether the Wi-Fi link or the internet upstream is the bottleneck.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://toolbox.wlanpros.com/connection-report-guide/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reading a WLAN Pros Toolbox Connection Report">
+<meta property="og:description" content="What every field in the Check My Connection report means, and how to tell whether the Wi-Fi link or the internet is the limit.">
+<meta property="og:url" content="https://toolbox.wlanpros.com/connection-report-guide/">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #4a4a4a;
+    --accent: #7a9e26;
+    --rule: #e2e2e2;
+    --bg: #ffffff;
+    --panel: #f6f8ef;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    font-size: 17px;
+  }
+  main { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
+  .brand { display: inline-block; margin: 0 0 22px; }
+  .brand img { height: 38px; width: auto; display: block; }
+  h1 { font-size: 2.1rem; line-height: 1.2; margin: 0 0 0.4em; }
+  h2 { font-size: 1.3rem; margin: 2em 0 0.5em; padding-top: 0.6em; border-top: 1px solid var(--rule); }
+  h3 { font-size: 1.05rem; margin: 1.6em 0 0.4em; }
+  p, li { color: var(--ink); }
+  .lead { font-size: 1.1rem; }
+  ul, ol { padding-left: 1.3em; }
+  li { margin: 0.5em 0; }
+  a { color: var(--accent); }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em; background: var(--panel); padding: 0.12em 0.4em;
+    border-radius: 4px; color: #46580f; white-space: nowrap;
+  }
+  .note { background: var(--panel); border-left: 3px solid var(--accent); padding: 0.8em 1.1em; border-radius: 4px; margin: 1.2em 0; }
+  dl { margin: 1.1em 0; }
+  dt { font-weight: 600; margin-top: 1.1em; }
+  dd { margin: 0.15em 0 0; padding-left: 0; }
+  footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.9rem; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <a class="brand" href="/"><img src="https://d2cpnw0u24fjm4.cloudfront.net/wp-content/uploads/2021/06/18142226/cropped-WLANProsLogo-black2151.png" alt="WLAN Pros"></a>
+
+  <h1>Reading a WLAN Pros Toolbox Connection Report</h1>
+
+  <p class="lead">Someone sent you a block of plain text that starts with <code>WLAN Pros Toolbox: Connection Report</code>. They ran the "Check My Connection" (Test My Connection) tool in the WLAN Pros Toolbox, hit Copy, and pasted you the result. This guide tells you how to read it and what to do next.</p>
+
+  <p>The report answers one question: <strong>is the slow part the Wi-Fi link, or the internet upstream?</strong> Everything in it serves that single decision. The tool measures the Wi-Fi link (the radio hop between the device and the access point) separately from the internet connection (the path from the home or office out to the wider internet), then compares the two so you do not have to guess which side to chase.</p>
+
+  <p>The report never invents a value. Anything the device could not read prints <code>Unavailable</code> (Wi-Fi link facts) or <code>Not measured</code> (internet metrics). A blank or a fabricated number never appears, so an <code>Unavailable</code> is information, not a glitch.</p>
+
+  <h2>What the report looks like</h2>
+
+  <p>The copied text is plain text organized into labeled sections, always in this order:</p>
+
+  <ol>
+    <li><strong>Header</strong>: title, timestamp, and a one-line summary verdict</li>
+    <li><strong>WI-FI</strong>: the radio link facts (network name, signal, rates, channel)</li>
+    <li><strong>INTERNET</strong>: the measured speed test results</li>
+    <li><strong>DNS</strong>: name-resolution time</li>
+    <li><strong>NETWORK</strong>: local addressing on the device</li>
+    <li><strong>ISP</strong>: public IP and provider (only when the lookup succeeded)</li>
+    <li><strong>CLOUD APPS</strong>: reachability of common services (only when that panel ran)</li>
+    <li><strong>VERDICT</strong>: the plain-language result and the direct comparison</li>
+  </ol>
+
+  <p>Sections 6 and 7 are omitted entirely when their data did not land (offline, lookup failed, or the panel was not shown). Their absence is not an error.</p>
+
+  <h2>How to read it: the fast path</h2>
+
+  <p>If you only have ten seconds, read two lines:</p>
+
+  <ul>
+    <li>The <strong>Summary</strong> line in the header (<code>Summary: Wi-Fi Strong · Internet Weak</code>)</li>
+    <li>The <strong>Result</strong> line in the VERDICT section</li>
+  </ul>
+
+  <p>Those two carry the answer. The Summary grades each side independently; the Result names the limiter. The rest of the report is the supporting evidence behind that call, and it is where you go when the headline does not match what the user is experiencing.</p>
+
+  <h2>Field-by-field</h2>
+
+  <p>Ranges below are practical reading aids. Where a threshold is the Toolbox's own grading band, it is labeled as such; those are the cut points the app uses on screen, not a published industry standard. Wi-Fi link health depends heavily on band, distance, and what the device is doing, so treat the Wi-Fi numbers as directional rather than pass/fail.</p>
+
+  <h3>Header</h3>
+  <dl>
+    <dt>Generated</dt>
+    <dd>the test date, time, and platform (for example <code>Jun 25, 2:14 PM on macOS</code>). Use this to confirm the report is recent. A report from yesterday tells you little about a problem happening now.</dd>
+    <dt>Summary</dt>
+    <dd>the two-axis grade, <code>Wi-Fi &lt;tier&gt; · Internet &lt;tier&gt;</code>. Each side is graded <code>Strong</code>, <code>Moderate</code>, <code>Weak</code>, or <code>Couldn't check</code>. This is the single most useful line. Two <code>Strong</code> reads and a user still complaining points you at something the tool does not measure (a specific app, DNS, a remote server, a VPN), not at the local link or the pipe.</dd>
+  </dl>
+
+  <h3>WI-FI</h3>
+  <p>These come from the device's Wi-Fi radio. On macOS the system reads them through CoreWLAN; on iOS they arrive through the companion Shortcut plus the native network read; on Android and Windows through the platform Wi-Fi APIs. If the user is on a wired connection, or on iOS without the Shortcut capture, most of this section reads <code>Unavailable</code> by design, and the verdict leans on the internet measurement alone.</p>
+  <dl>
+    <dt>Network (SSID)</dt>
+    <dd>the Wi-Fi network name. On macOS this is hidden unless the app has Location access, in which case it reads <code>Unavailable (grant Location access to show the network name)</code>. That specific wording means the data exists but the OS is gating the name, not that the tool failed.</dd>
+    <dt>BSSID</dt>
+    <dd>the MAC address of the specific access point radio the device is joined to. Useful when you suspect the device is stuck on a distant AP. Same macOS Location gating as the SSID.</dd>
+    <dt>RSSI</dt>
+    <dd>received signal strength, in dBm. More negative is weaker. Practical reading: stronger than -60 dBm is excellent; -60 to -67 dBm is solid; -68 to -75 dBm is workable; -76 to -77 dBm is marginal; weaker than -77 dBm is troublesome. These are practical field reading aids; the app does not grade RSSI numerically.</dd>
+    <dt>Noise</dt>
+    <dd>the noise floor, in dBm. More negative is better (less background noise). A typical clean noise floor sits near -90 dBm or lower. On its own it means little; it matters as the other half of SNR.</dd>
+    <dt>SNR</dt>
+    <dd>signal-to-noise ratio, in dB, the gap between RSSI and the noise floor. Higher is better. This is often a better health indicator than RSSI alone. Practical reading: above 25 dB is comfortable for high data rates; 15 to 25 dB is workable; below 15 dB is where rates fall off. These are practical field reading aids; the app does not grade SNR numerically.</dd>
+    <dt>Wi-Fi Down (Rx rate)</dt>
+    <dd>the negotiated receive data rate, in Mbps. This is the device-to-AP link speed for incoming data, not a throughput measurement. On macOS this reads <code>Unavailable (not exposed on macOS)</code>, which is a known platform limit, not a glitch. iOS supplies it.</dd>
+    <dt>Wi-Fi Up (Tx rate)</dt>
+    <dd>the negotiated transmit data rate, in Mbps. This is the link speed the verdict leans on most. The tool estimates usable Wi-Fi throughput at about 55% of the average of Tx and Rx, because real-world Wi-Fi throughput runs roughly 50 to 60 percent of the negotiated PHY rate. A low Tx rate relative to a healthy internet speed is the classic signature of a Wi-Fi-limited connection.</dd>
+    <dt>Channel</dt>
+    <dd>the Wi-Fi channel number. A value of <code>0</code> is the "no/unknown channel" sentinel some systems return and prints as <code>Unavailable</code> rather than a misleading <code>0</code>. The channel tells you the band (1 to 14 is 2.4 GHz; 36 and up is 5 GHz or 6 GHz) and is your starting point for a co-channel or interference investigation.</dd>
+    <dt>Channel width</dt>
+    <dd>the channel width in MHz (20, 40, 80, 160). Wider is faster but more prone to interference. A device sitting on 20 MHz when wider is available can be a clue, though Wi-Fi will narrow width deliberately under contention.</dd>
+    <dt>Band</dt>
+    <dd>2.4 GHz, 5 GHz, or 6 GHz. A device parked on 2.4 GHz when 5 GHz is available is a frequent cause of "the Wi-Fi is slow." 2.4 GHz is slower, more congested, and more interference-prone.</dd>
+    <dt>Standard (PHY)</dt>
+    <dd>the Wi-Fi generation in use (for example Wi-Fi 5, Wi-Fi 6). An old standard on a new network can cap performance.</dd>
+    <dt>Security</dt>
+    <dd>the security scheme (WPA2-Personal, WPA3, and so on), or <code>Unavailable</code> when the platform did not report it.</dd>
+    <dt>Note</dt>
+    <dd>appears on iOS only, when the Wi-Fi signal details were not captured. It means the RF rows above are a missing capture step, not a failure: the user needs to tap "Capture Wi-Fi details" in the app to read them through the companion Shortcut.</dd>
+  </dl>
+
+  <h3>INTERNET</h3>
+  <p>These come from the speed test the tool runs against a public endpoint: a short download window, a short upload window, and a loaded-responsiveness probe, roughly 25 to 35 seconds total.</p>
+  <dl>
+    <dt>Internet Down</dt>
+    <dd>measured download throughput, in Mbps. Compare it against the user's plan. The Toolbox's own grading bands: <code>Excellent</code> at 100 Mbps and up, <code>Good</code> at 25 Mbps and up, <code>Fair</code> at 5 Mbps and up, <code>Poor</code> below 5 Mbps. Note that this is a single-flow web measurement, so it can read lower than a multi-connection speed test on a fast line. That gap is expected and is the subject of the companion methodology piece.</dd>
+    <dt>Internet Up</dt>
+    <dd>measured upload throughput, in Mbps. Toolbox grading bands: <code>Excellent</code> at 20 Mbps and up, <code>Good</code> at 5 Mbps and up, <code>Fair</code> at 1 Mbps and up, <code>Poor</code> below 1 Mbps. Upload matters for video calls, cloud backup, and uploads; a healthy download with a starved upload explains a lot of "my video keeps freezing" complaints.</dd>
+    <dt>Latency</dt>
+    <dd>round-trip delay, in ms. Lower is better. Toolbox grading bands: <code>Excellent</code> below 20 ms, <code>Good</code> below 50 ms, <code>Fair</code> below 100 ms, <code>Poor</code> at 100 ms and up. (The app grounds the direction in ITU-T G.114 voice guidance; the exact cut points are the app's own.)</dd>
+    <dt>Jitter</dt>
+    <dd>variation in latency, in ms. Lower is better. Toolbox grading bands: <code>Excellent</code> below 5 ms, <code>Good</code> below 15 ms, <code>Fair</code> below 30 ms, <code>Poor</code> at 30 ms and up. High jitter on a healthy-looking link is a top suspect for choppy calls.</dd>
+    <dt>Loss</dt>
+    <dd>packet loss, in percent. Lower is better. Toolbox grading bands: <code>Excellent</code> at 0%, <code>Good</code> below 1%, <code>Fair</code> below 2.5%, <code>Poor</code> at 2.5% and up. Any sustained loss above ~1% noticeably degrades real-time traffic.</dd>
+    <dt>Responsiveness</dt>
+    <dd>round-trips per minute (RPM) under load, the connection's bufferbloat behavior. Higher is better. Toolbox grading bands: <code>Excellent</code> at 1000 RPM and up, <code>Good</code> at 500 RPM and up, <code>Fair</code> at 100 RPM and up, <code>Poor</code> below 100 RPM. (Grounded in RFC 9097 and Apple's networkQuality; the value here is a simplified single-flow estimate, not a full multi-flow RPM, and the app says so.) A connection with good throughput but poor responsiveness is the textbook bufferbloat case: fine on a speed test, miserable on a call while something is uploading.</dd>
+  </dl>
+
+  <h3>DNS</h3>
+  <dl>
+    <dt>Resolution time</dt>
+    <dd>how long a name lookup took, in ms, with the resolved host noted, or <code>Not available</code> when no probed host resolved. This is a real measurement of the device's configured resolver, not anything the speed-test engine produces. Slow or failing DNS makes everything <em>feel</em> broken while raw speed reads fine; this row catches that. A few tens of ms is normal; hundreds of ms or <code>Not available</code> is worth chasing.</dd>
+  </dl>
+
+  <h3>NETWORK</h3>
+  <p>Local addressing on the device. The first three are read directly; the last three are honestly unavailable on these platforms and say why rather than guessing.</p>
+  <dl>
+    <dt>Local IP address</dt>
+    <dd>the device's address on the local network. A <code>169.254.x.x</code> address means the device failed to get a real lease (no DHCP), which is itself a finding.</dd>
+    <dt>Subnet mask</dt>
+    <dd>the local subnet mask.</dd>
+    <dt>Default gateway</dt>
+    <dd>the local router/gateway address. A common first ping target when you start troubleshooting.</dd>
+    <dt>DHCP server, DNS server(s), VLAN tag</dt>
+    <dd>these carry the precise reason they are absent rather than a value, because the platform does not expose them in a sandbox-safe way. Do not read their absence as a fault.</dd>
+  </dl>
+
+  <h3>ISP</h3>
+  <p>Present only when the public-IP lookup succeeded. Tells you what the connection looks like from the outside.</p>
+  <dl>
+    <dt>Public IP</dt>
+    <dd>the public-facing IP address.</dd>
+    <dt>ISP / org</dt>
+    <dd>the internet provider or organization that owns the address. Tells you who to call if the verdict points upstream.</dd>
+    <dt>ASN</dt>
+    <dd>the provider's autonomous system number.</dd>
+    <dt>Approx. location</dt>
+    <dd>the geolocated area of the public IP. Approximate, and often the provider's regional point rather than the user's exact location.</dd>
+  </dl>
+
+  <h3>CLOUD APPS</h3>
+  <p>Present only when the cloud-apps panel ran. The header reads <code>CLOUD APPS REACHABLE (N of M)</code>, then each service lists <code>reachable</code> (with a connect time) or <code>unreachable</code>. This is a fast triage layer: if the link and internet both read fine but one specific service is <code>unreachable</code>, the problem is that service or its path, not the user's connection. It also confirms the device is genuinely online even when the speed test stalls.</p>
+
+  <h3>VERDICT</h3>
+  <p>The plain-language answer, restating what the header summary graded.</p>
+  <p><strong>Result</strong>: names the limiter in one sentence. The wording the tool produces:</p>
+  <ul>
+    <li><code>Your Wi-Fi is the weak link right now.</code> Usable Wi-Fi capacity is clearly below the measured internet. Chase the Wi-Fi link.</li>
+    <li><code>Your internet is the limit right now, not your Wi-Fi.</code> Usable Wi-Fi clearly exceeds the measured internet. Chase the ISP / modem / plan.</li>
+    <li><code>Both your Wi-Fi and your internet are keeping up.</code> Or a same-tier line noting which side has slightly more headroom. Neither is the obvious culprit; look past both.</li>
+    <li><code>We measured your internet, but could not read your Wi-Fi on this device.</code> The link could not be read (wired, or iOS without a capture). The verdict rests on the internet side only.</li>
+    <li><code>You are online. Your internet is reachable, but the speed test did not complete...</code> The device is confirmed online by DNS, public IP, and cloud reachability, but throughput did not measure. Re-run.</li>
+  </ul>
+  <p><strong>Comparison</strong>: the direct head-to-head, shown only when both sides measured. For example <code>Your Wi-Fi link is 64% slower than your internet connection.</code> or <code>...running at about the same speed.</code> Within plus or minus 10% the two read as "about the same." Large gaps switch to a multiple ("about 12x faster") and past ~100x to "far faster / slower." This line is the quantified version of the Result.</p>
+
+  <h2>Other tests worth running</h2>
+  <p>The report is a snapshot from one tool. When the verdict is ambiguous, or you want to confirm it before acting, these add the missing dimension:</p>
+  <ul>
+    <li><strong>A saturating multi-connection speed test</strong> (the user's normal speed-test site or app). The Toolbox uses a single-flow web measurement, which can read lower than a multi-stream test on a fast line. Running both tells you whether a low <code>Internet Down</code> is a real upstream limit or just the measurement method. This is the heart of the companion methodology piece on why numbers differ.</li>
+    <li><strong>iPerf between two devices on the LAN.</strong> This measures actual local throughput end to end, independent of the internet. When the Wi-Fi link looks weak, iPerf from the device to a wired host on the same network confirms whether the Wi-Fi hop is genuinely the bottleneck.</li>
+    <li><strong>A ping or ping-plot to the default gateway, then to a public host.</strong> This separates "the local network is dropping" from "the path to the internet is dropping." The gateway address is right there in the NETWORK section. (The Toolbox has Ping and Ping Plotter tools for this.)</li>
+    <li><strong>A look at the AP, band, and channel.</strong> The WI-FI section gives you band, channel, and width. Confirm the device is on the band you expect (5 GHz or 6 GHz, not 2.4 GHz) and that the channel is not buried under co-channel contention or a non-Wi-Fi interferer. (The Toolbox's AP Scan and channel reference tools help here.)</li>
+    <li><strong>A DNS check against an alternate resolver.</strong> If the DNS row is slow or <code>Not available</code>, point the device at a known-good resolver and re-test. Slow DNS masquerades as a slow connection.</li>
+  </ul>
+
+  <h2>Where to go next</h2>
+  <p>Read the <strong>Result</strong> line, then follow the branch:</p>
+
+  <p><strong>If the report points to the Wi-Fi link</strong> (<code>Your Wi-Fi is the weak link</code>, or a weak Tx rate against a healthy internet speed), the fix is on the radio side:</p>
+  <ul>
+    <li>Check the <strong>band</strong>: move the device off 2.4 GHz onto 5 GHz or 6 GHz if it is parked low.</li>
+    <li>Check <strong>distance and placement</strong>: a weak RSSI / low SNR means the device is too far from the AP, or there is too much between them. Move closer, or improve AP placement.</li>
+    <li>Check the <strong>channel</strong>: co-channel contention and interference drag rates down even at strong signal. Pick a cleaner channel.</li>
+    <li>Check <strong>width</strong>: confirm the AP is not stuck narrow when it could run wider.</li>
+    <li>Walk the user around: have them re-run the test in the same room as the AP. If the verdict flips to "internet is the limit" up close, you have confirmed the Wi-Fi link as the variable.</li>
+  </ul>
+
+  <p><strong>If the report points upstream</strong> (<code>Your internet is the limit right now, not your Wi-Fi</code>, or healthy Wi-Fi rates against a low <code>Internet Down</code>/<code>Internet Up</code>), the fix is on the internet side:</p>
+  <ul>
+    <li>Compare <code>Internet Down</code> and <code>Internet Up</code> against the <strong>plan</strong> the user pays for. A big shortfall is an ISP or modem conversation. (First confirm with a saturating multi-connection speed test, since the Toolbox's single-flow number can read low on a fast line.)</li>
+    <li>Check the <strong>modem/ONT and the gateway</strong>: reboot, check for service alerts, look for a failing modem.</li>
+    <li>Use the <strong>ISP / org</strong> line to know who to call.</li>
+    <li>If <code>Responsiveness</code> is poor while throughput is fine, raise <strong>bufferbloat</strong> with the ISP, or enable smart-queue management on the router if available.</li>
+  </ul>
+
+  <p><strong>If both sides look fine</strong> but the user still has a problem, the bottleneck is past both the link and the pipe: a specific application, a remote server, a VPN, or DNS. Use the CLOUD APPS and DNS sections to narrow it, and look at the one app or site that is actually slow rather than the connection as a whole.</p>
+
+  <p>The reason this report is worth trusting on the link-versus-upstream call is that the Toolbox measures the two separately and compares them on the same basis. It isolates the Wi-Fi link from the internet, so when it says "Wi-Fi" or "internet," it is comparing usable Wi-Fi capacity against the measured internet rate, not guessing from a single number. That is also why its internet figure can differ from a multi-stream speed test: different tools answer different questions. For the full reasoning on that gap, see the companion piece on why speed results differ.</p>
+
+  <div class="note">This guide pairs with the WLAN Pros Toolbox "Check My Connection" (Test My Connection) tool and the companion methodology piece on why speed-test numbers differ. It describes the copy-paste report exactly as the tool produces it. The RSSI and SNR ranges are practical field reading aids; all internet grading bands are the app's own thresholds.</div>
+
+  <footer>From Wireless LAN Professionals, Inc., <a href="https://www.wlanprofessionals.com">wlanprofessionals.com</a>. &nbsp;·&nbsp; <a href="/">WLAN Pros Toolbox</a></footer>
+</main>
+</body>
+</html>
