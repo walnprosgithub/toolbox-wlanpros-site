@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 160" fill="none" font-family="IBM Plex Sans, sans-serif">
+  <!-- Wi-Fi security: a Wi-Fi arc locked inside a shield + a WPA2/WPA3 mode matrix.
+       Lime = the recommended (WPA3) mode.
+       2026-06-07: right-side boxes widened (width 178->228, viewBox 320->364) and
+       the encryption column right-aligned with 12px inner padding so the longest
+       value ("GCMP / SAE") sits fully inside its box. Left shield untouched. -->
+
+  <!-- Header -->
+  <text x="182" y="20" fill="#E5E5E5" font-size="13" font-weight="500" text-anchor="middle" font-family="DM Mono, monospace">encrypted SSID</text>
+
+  <!-- Shield (left) holding a Wi-Fi arc -->
+  <g stroke="#E5E5E5" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M62 36 L92 46 L92 78 C92 100 78 110 62 118 C46 110 32 100 32 78 L32 46 Z"/>
+  </g>
+  <!-- Wi-Fi arcs inside the shield (neutral source) -->
+  <g stroke="#E5E5E5" stroke-width="1.75" stroke-linecap="round" fill="none">
+    <path d="M50 78 A18 18 0 0 1 74 78" opacity="0.55"/>
+    <path d="M55 82 A11 11 0 0 1 69 82" opacity="0.8"/>
+  </g>
+  <circle cx="62" cy="88" r="2.5" fill="#E5E5E5"/>
+
+  <!-- Padlock inside the shield (lime = the protection in play) -->
+  <g stroke="#A2CC3A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="53" y="96" width="18" height="14" rx="2"/>
+    <path d="M56 96 L56 91 A6 6 0 0 1 68 91 L68 96"/>
+  </g>
+  <line x1="62" y1="101" x2="62" y2="105" stroke="#A2CC3A" stroke-width="1.75" stroke-linecap="round"/>
+
+  <!-- Mode matrix (right): two rows, WPA2 vs WPA3. Boxes x118..346 (width 228). -->
+  <!-- column headers: mode left-aligned in col 1; encryption right-aligned over col 2 -->
+  <text x="150" y="44" fill="#9C9C9C" font-size="11" font-weight="500" text-anchor="start">mode</text>
+  <text x="334" y="44" fill="#9C9C9C" font-size="11" font-weight="500" text-anchor="end">encryption</text>
+
+  <!-- WPA2 row (neutral). Box spans y52-82; text vertically centered on box center y=67. -->
+  <rect x="118" y="52" width="228" height="30" rx="3" stroke="#9C9C9C" stroke-width="1.25"/>
+  <text x="150" y="67" fill="#E5E5E5" font-size="13" font-weight="500" text-anchor="start" dominant-baseline="middle" font-family="DM Mono, monospace">WPA2</text>
+  <text x="334" y="67" fill="#9C9C9C" font-size="12" font-weight="500" text-anchor="end" dominant-baseline="middle" font-family="DM Mono, monospace">AES-CCMP</text>
+
+  <!-- WPA3 row (lime = recommended). Box spans y90-120; text vertically centered on box center y=105. -->
+  <rect x="118" y="90" width="228" height="30" rx="3" stroke="#A2CC3A" stroke-width="1.75"/>
+  <text x="150" y="105" fill="#A2CC3A" font-size="13" font-weight="500" text-anchor="start" dominant-baseline="middle" font-family="DM Mono, monospace">WPA3</text>
+  <text x="334" y="105" fill="#A2CC3A" font-size="12" font-weight="500" text-anchor="end" dominant-baseline="middle" font-family="DM Mono, monospace">GCMP / SAE</text>
+
+  <!-- recommended cue. Up-arrow (was &#8593;) is a vector <path>; GL-003 8.6.1. -->
+  <text x="254.4" y="136" fill="#A2CC3A" font-size="12" font-weight="500" text-anchor="start">recommended</text>
+  <path d="M341.5 136 V128 M338.5 131 L341.5 128 L344.5 131" fill="none" stroke="#A2CC3A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Footer. Rightwards arrow (was &#8594;) is a vector <path>; GL-003 8.6.1. -->
+  <text x="25.4" y="138" fill="#9C9C9C" font-size="11" font-weight="500" text-anchor="start">WPA2</text>
+  <path d="M57.5 134.5 H68.5 M65 131 L68.5 134.5 L65 138" fill="none" stroke="#9C9C9C" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="68.5" y="138" fill="#9C9C9C" font-size="11" font-weight="500" text-anchor="start">WPA3</text>
+</svg>

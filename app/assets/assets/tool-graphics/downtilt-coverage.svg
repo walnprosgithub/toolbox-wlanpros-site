@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160" fill="none" font-family="IBM Plex Sans, sans-serif">
+  <!-- Downtilt coverage: mast with two beam edges (vertical beamwidth) hitting the ground as near/far points.
+       Lime = the coverage span between near and far. Re-laid-out wide (2:1). -->
+
+  <!-- Ground line -->
+  <line x1="20" y1="124" x2="304" y2="124" stroke="#E5E5E5" stroke-width="1.75" stroke-linecap="round"/>
+  <g stroke="#9C9C9C" stroke-width="1" stroke-linecap="round" opacity="0.7">
+    <path d="M28 124 l5 6 M44 124 l5 6 M284 124 l5 6 M300 124 l5 6"/>
+  </g>
+
+  <!-- Mast at left -->
+  <line x1="48" y1="38" x2="48" y2="124" stroke="#E5E5E5" stroke-width="1.75" stroke-linecap="round"/>
+  <rect x="42" y="34" width="12" height="20" rx="2" stroke="#E5E5E5" stroke-width="1.75"/>
+
+  <!-- low-opacity lime wash filling the beam wedge -->
+  <path d="M48 44 L128 124 L268 124 Z" fill="#A2CC3A" fill-opacity="0.08"/>
+
+  <!-- Two beam edges (vertical beamwidth) from the antenna, neutral -->
+  <!-- upper edge hits the far ground point, lower edge hits the near ground point -->
+  <line x1="48" y1="44" x2="268" y2="124" stroke="#E5E5E5" stroke-width="1.75" stroke-linecap="round"/>
+  <line x1="48" y1="44" x2="128" y2="124" stroke="#E5E5E5" stroke-width="1.75" stroke-linecap="round"/>
+
+  <!-- Beamwidth arc at the antenna between the two edges -->
+  <path d="M72 53 A28 28 0 0 1 62 68" stroke="#9C9C9C" stroke-width="1.5" fill="none"/>
+  <text x="120" y="48" fill="#9C9C9C" font-size="11" font-weight="500" text-anchor="middle">beamwidth</text>
+
+  <!-- Coverage span on the ground (lime): near edge -> far edge -->
+  <line x1="128" y1="124" x2="268" y2="124" stroke="#A2CC3A" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="128" cy="124" r="3.5" fill="#A2CC3A"/>
+  <circle cx="268" cy="124" r="3.5" fill="#A2CC3A"/>
+
+  <!-- near / far radius dimension callouts -->
+  <g stroke="#9C9C9C" stroke-width="1.25" stroke-linecap="round">
+    <line x1="48" y1="140" x2="128" y2="140"/>
+    <path d="M54 137 L48 140 L54 143 M122 137 L128 140 L122 143"/>
+    <line x1="128" y1="152" x2="268" y2="152"/>
+    <path d="M134 149 L128 152 L134 155 M262 149 L268 152 L262 155"/>
+  </g>
+  <text x="88" y="138" fill="#9C9C9C" font-size="11" font-weight="500" text-anchor="middle">near</text>
+  <text x="198" y="150" fill="#9C9C9C" font-size="11" font-weight="500" text-anchor="middle">far</text>
+
+  <!-- coverage label on the span -->
+  <text x="198" y="116" fill="#A2CC3A" font-size="13" font-weight="500" text-anchor="middle">coverage</text>
+
+  <!-- Header -->
+  <text fill="#E5E5E5" font-size="13" font-weight="500" x="78.7" y="20.0" text-anchor="start">tilt + beamwidth</text>
+  <path d="M177.2 15.8 H185.2 M181.7 12.3 L185.2 15.8 L181.7 19.3" fill="none" stroke="#E5E5E5" stroke-width="1.495" stroke-linecap="round" stroke-linejoin="round"/>
+  <text fill="#E5E5E5" font-size="13" font-weight="500" x="188.2" y="20.0" text-anchor="start">coverage</text>
+</svg>

@@ -1,0 +1,743 @@
+{
+  "_meta": {
+    "title": "Educational Resources",
+    "note": "Educational Resources for the WLAN Pros Toolbox: independent-author and community materials only. Megavendor and product documentation are intentionally excluded. The dataset keeps community tools and utilities, independent blogs and experts, podcasts, conference and talk archives, YouTube channels, and training and certification paths. Descriptions are in Keith Parsons's voice.",
+    "last_updated": "2026-06-12",
+    "count": 41,
+    "topics": [
+      "Tools and utilities",
+      "Conference and talk archives",
+      "YouTube channels",
+      "Podcasts",
+      "Independent blogs and experts",
+      "Training and certification",
+      "Training Providers"
+    ]
+  },
+  "resources": [
+    {
+      "id": "mike-albano-clients",
+      "title": "Wi-Fi Clients List — Device Capabilities Database",
+      "summary": "Look up what a client device can actually do on Wi-Fi before you design around it.",
+      "description": "Before you assume a client can use that 160 MHz channel or a third spatial stream, check what it actually supports. Mike Albano's Wi-Fi Clients List is a community-contributed database of client device capabilities: spatial streams, supported bands, and channel support, device by device. When you are sizing capacity or chasing down why one device performs differently from the rest, this is where you confirm what the client is really capable of instead of guessing. Browsing is free. You only need an account if you want to contribute new devices and grow the database.",
+      "url": "https://clients.mikealbano.com/",
+      "topic": "Tools and utilities",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "tool",
+        "client-behavior",
+        "reference"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "artofrf-pcap-io-graph",
+      "title": "Wireless PCAP I/O Graph Analyzer",
+      "summary": "Drop in an 802.11 capture and see the airtime over time without the manual Wireshark workflow.",
+      "description": "Mohammad Ali's PCAP I/O Graph Analyzer, from his Art of RF site, takes an 802.11 capture, lets you apply Wireshark-style display filters, and draws an I/O graph of the wireless traffic over time. It is the fast way to see traffic and airtime patterns and spot anomalies, then hand the picture to someone else, without building the I/O graph by hand every time. It works on 802.11 frames only, so a non-Wi-Fi capture will not load. The author calls it a work in progress and notes it is not meant to replace professional analysis tools and may not always display data accurately. Treat it as a quick visual first look, then confirm anything important in your full toolset.",
+      "url": "https://pcap-io-graph.artofrf.com/",
+      "topic": "Tools and utilities",
+      "cost": "mixed",
+      "level": "advanced",
+      "tags": [
+        "tool",
+        "capture",
+        "pcap",
+        "analysis"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "wlan-pi",
+      "title": "WLAN Pi",
+      "summary": "The open-source, pocketable Wi-Fi analysis platform for on-site work.",
+      "description": "WLAN Pi is the open-source Wi-Fi analysis platform built on small single-board hardware, maintained by a community of wireless engineers. It scans, tests, monitors, and troubleshoots wired and wireless networks, which gives you a real diagnostic tool you can carry in a pocket to the job site. The WLAN Pi OS is free and open source. The project funds itself in part by selling hardware, so the software costs nothing and you buy a device only if you want one. If you work in the field, this belongs in your bag.",
+      "url": "https://www.wlanpi.com/",
+      "topic": "Tools and utilities",
+      "cost": "mixed",
+      "level": "all",
+      "tags": [
+        "tool",
+        "hardware",
+        "open-source",
+        "field"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "wlan-pi-cookbook",
+      "title": "WLAN Pi Cookbook",
+      "summary": "The official community how-to guide for actually operating a WLAN Pi.",
+      "description": "The Cookbook is the practical companion to the WLAN Pi project: the official community documentation for setting up and operating the device. It covers getting started, connecting from a phone or a laptop, USB modes, power management, and the access methods you need to know to put the thing to work. If WLAN Pi is the tool, this is the manual that gets you from unboxed to useful. Free to read, no login required.",
+      "url": "https://wlanpi.gitbook.io/cookbook",
+      "topic": "Tools and utilities",
+      "cost": "mixed",
+      "level": "all",
+      "tags": [
+        "docs",
+        "open-source",
+        "how-to"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "wavelify",
+      "title": "Wavelify — Network Planning Platform",
+      "summary": "A web-based Wi-Fi design platform with a companion Android survey app.",
+      "description": "Wavelify is a web-based network planning platform for Wi-Fi and broader low-voltage design. You import a floor plan, place Access Points, and model coverage in 2D and 3D across 2.4, 5, and 6 GHz, with wall and material attenuation and AI-assisted automatic AP placement, then export PDF design reports. A companion Android survey app turns a phone into a capture tool that syncs measurements back into the design project. It is a newer entrant, so give it a look on its own merits. You can get in and try it for free, with the full design capability behind paid tiers.",
+      "url": "https://wavelify.com/",
+      "topic": "Tools and utilities",
+      "cost": "mixed",
+      "level": "intermediate",
+      "tags": [
+        "tool",
+        "design",
+        "planning",
+        "survey"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-wlpc-youtube",
+      "title": "WLPC Conference Talks (WLAN Pros on YouTube)",
+      "summary": "Over 1,000 recorded WLPC conference talks, free on YouTube, the largest vendor-neutral Wi-Fi talk library anywhere.",
+      "description": "If you want to learn Wi-Fi from the people actually deploying it, this is where you start. The Wireless LAN Professionals YouTube channel holds more than 1,000 recorded WLPC conference presentations going back to 2014, in English and Spanish. Real engineers, real deployments, no vendor pitch. The talks run the full range, from packet analysis and survey method to security, design, and the standards work itself.\n\nThis is the WLPC conference archive, and it is free. Most sessions are short and focused, so you can watch one over lunch and walk away with something you can use the same afternoon. Start with a topic you are weak on and work outward from there.",
+      "url": "https://www.youtube.com/WirelessLANProfessionals",
+      "topic": "Conference and talk archives",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "destination",
+        "video-archive",
+        "youtube",
+        "wlpc",
+        "conference",
+        "wlan-pros",
+        "vendor-neutral"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-wlpc-video-library",
+      "title": "WLPC Video Library (wlanprofessionals.com)",
+      "summary": "The WLAN Pros landing page for the WLPC video archive, the front door to the full talk library.",
+      "description": "This is the WLAN Pros video library page, the front door to the WLPC talk archive. It surfaces the latest conference videos and points you to the complete collection on the Wireless LAN Professionals YouTube channel.\n\nIt is a gateway, not a separate searchable index, so think of it as the place to land when you want to browse what is new rather than hunt for one specific talk. Free, no login. If you would rather go straight to everything, the YouTube channel itself is the deeper well.",
+      "url": "https://wlanprofessionals.com/wlpcvideolibrary/",
+      "topic": "Conference and talk archives",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "destination",
+        "video-archive",
+        "wlpc",
+        "wlan-pros",
+        "conference",
+        "vendor-neutral"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-cwnp-tv-youtube",
+      "title": "CWNP on YouTube (CWNPTV)",
+      "summary": "CWNP's free webinar and explainer channel, vendor-neutral Wi-Fi education from the certification body.",
+      "description": "The CWNP YouTube channel is the video arm of the vendor-neutral certification program, with free webinars and explainers from CWNP and Tom Carpenter. Expect Wi-Fi Visualized walkthroughs, lab builds, and standards explainers, the kind of material that maps straight onto the CWNA and CWAP body of knowledge.\n\nCWNP sells certifications and training, and the videos are free to watch. If you are working toward a CWNP credential, this channel is teaching the same concepts the exams test, in a format you can replay until it sticks.",
+      "url": "https://www.youtube.com/user/CWNPTV",
+      "topic": "YouTube channels",
+      "cost": "mixed",
+      "level": "all",
+      "tags": [
+        "destination",
+        "youtube",
+        "training",
+        "certification",
+        "vendor-neutral"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-ekahau-youtube",
+      "title": "Ekahau on YouTube",
+      "summary": "Ekahau's Wi-Fi design, survey, and troubleshooting tutorials, free to watch from the survey-tool maker.",
+      "description": "The Ekahau YouTube channel publishes Wi-Fi design, survey, and troubleshooting tutorials alongside product webinars. Even where the demos use Ekahau tools, the underlying method, how to plan a survey, read coverage, and validate a design, carries over to whatever survey tool you run.\n\nThis is a vendor channel, free to watch, and Ekahau sells design tools. Watch it for the survey thinking, and take the workflow lessons with you regardless of what is in your own bag.",
+      "url": "https://www.youtube.com/@EkahauWiFiDesignTools",
+      "topic": "YouTube channels",
+      "cost": "mixed",
+      "level": "all",
+      "tags": [
+        "destination",
+        "youtube",
+        "design",
+        "survey",
+        "vendor"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-hamina-youtube",
+      "title": "Hamina Wireless on YouTube",
+      "summary": "Hamina's Wi-Fi design-method webinars, including Lunch and Learn basics and guest sessions on 6 GHz.",
+      "description": "The Hamina Wireless YouTube channel runs webinars and design-method content, with a Lunch and Learn series on Wi-Fi basics and guest sessions such as Wi-Fi Visualized with Tom Carpenter and 6 GHz with Kevin Robinson. The guest lineup is the draw, since you get named experts walking through real design topics.\n\nThis is a vendor channel, free to watch, and Hamina sells planning software. The Lunch and Learn series is a good entry point if you are still building your fundamentals, and the guest sessions reward intermediate engineers who want a deeper cut.",
+      "url": "https://www.youtube.com/channel/UCCCXgcleh6-c1yukgN3OlOw",
+      "topic": "YouTube channels",
+      "cost": "mixed",
+      "level": "all",
+      "tags": [
+        "destination",
+        "youtube",
+        "design",
+        "planning",
+        "vendor"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-cleartosend-youtube",
+      "title": "Clear To Send on YouTube",
+      "summary": "Video versions of the Clear To Send podcast plus Wi-Fi engineering explainers, free and independent.",
+      "description": "The Clear To Send YouTube channel carries the video edition of the long-running podcast along with standalone Wi-Fi engineering explainers. It is run by Rowell Dionicio and Francois Verges, two working engineers, with no vendor steering the content.\n\nIf you prefer to watch a diagram get drawn rather than just hear it described, the video versions are worth it over the audio-only feed. Free. Aimed at engineers who already have the basics and want to go a layer deeper.",
+      "url": "https://www.youtube.com/channel/UCYWhT-mlCKl6i4pzd3Pg_dA",
+      "topic": "YouTube channels",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "youtube",
+        "podcast",
+        "independent"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-heavy-wireless",
+      "title": "Heavy Wireless (Packet Pushers)",
+      "summary": "Keith Parsons' Packet Pushers podcast on Wi-Fi, IoT, and wireless security, with working engineers as guests.",
+      "description": "Heavy Wireless is the Wi-Fi show on the Packet Pushers network, hosted by Keith Parsons, CWNE #3. New episodes land every other Tuesday and run deep on technical Wi-Fi, IoT, and wireless security, with engineers and vendors who actually build and deploy the technology.\n\nThe format is a working conversation, not a product pitch. Guests get pushed on how things really behave in the field, which is where the value is. Free wherever you get podcasts. Good for any engineer who wants the current thinking on where Wi-Fi is headed and why.",
+      "url": "https://packetpushers.net/podcast/heavy-wireless/",
+      "topic": "Podcasts",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "destination",
+        "podcast",
+        "wlan-pros",
+        "keith",
+        "vendor-neutral"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-cleartosend-podcast",
+      "title": "Clear To Send (Podcast)",
+      "summary": "The longest-running Wi-Fi engineering podcast, going since 2015, on design, troubleshooting, and tools.",
+      "description": "Clear To Send is the wireless network engineering podcast, hosted by Rowell Dionicio and Francois Verges and running since August 2015. That is a decade of back catalog on design, troubleshooting, tools, and interviews with people across the industry, which makes it one of the deepest free libraries of Wi-Fi audio you will find.\n\nThe long run is the point. When you hit a topic you are weak on, there is a good chance an episode already covers it. Listening is free, and the site also sells courses. Aimed at engineers who already know the fundamentals and want to keep current.",
+      "url": "https://www.cleartosend.net/",
+      "topic": "Podcasts",
+      "cost": "mixed",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "podcast",
+        "independent"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-wifi-of-things",
+      "title": "The Wi-Fi of Things",
+      "summary": "Ferney Munoz's bilingual English and Spanish Wi-Fi education hub, one of the few covering Wi-Fi in Spanish.",
+      "description": "The Wi-Fi of Things, run by Ferney Munoz, is a Wi-Fi education hub published in both English and Spanish, with sessions, industry news, and tool reviews. The Spanish-language coverage is what sets it apart, since very little serious Wi-Fi training exists in Spanish at all.\n\nIf you work with Spanish-speaking teams, or you want a second voice teaching the same concepts in a second language, this is a rare resource. Free, independent. Useful across all levels.",
+      "url": "https://thewifiofthings.com/",
+      "topic": "Podcasts",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "destination",
+        "podcast",
+        "blog",
+        "independent",
+        "spanish",
+        "bilingual"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-wifi-ninjas",
+      "title": "Wi-Fi Ninjas",
+      "summary": "Mac and Matt's Wi-Fi podcast and blog on wireless networking, protocol analysis, and industry events.",
+      "description": "Wi-Fi Ninjas is a podcast and blog run by Mac and Matt, covering wireless networking, protocol analysis, and industry events, with some content on how they build and share their work. It is an independent show, no vendor behind it.\n\nThe protocol-analysis episodes are the strongest material here, so reach for those if packet work is where you want to grow. Free. Aimed at engineers comfortable with the fundamentals.",
+      "url": "https://wifininjas.net/",
+      "topic": "Podcasts",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "podcast",
+        "blog",
+        "independent"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-ruckcast",
+      "title": "RUCKCast (RUCKUS)",
+      "summary": "Jim Palmer's informal Wi-Fi and networking podcast from RUCKUS Networks, with guests and product features.",
+      "description": "RUCKCast is an informal Wi-Fi and networking podcast hosted by Jim Palmer, CWNE #304, at RUCKUS Networks. It mixes guest conversations with RUCKUS product features, in a loose, easy-listening format.\n\nThis is a vendor podcast, free to listen. The guest episodes carry the most general value, since the conversations range across Wi-Fi topics beyond any one product. Worth a spot in the rotation if you run RUCKUS gear or want a lighter listen alongside the deeper technical shows.",
+      "url": "https://www.ruckusnetworks.com/resources/ruckcast-podcasts/",
+      "topic": "Podcasts",
+      "cost": "mixed",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "podcast",
+        "vendor"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-mrncciew",
+      "title": "mrn-cciew",
+      "summary": "Rasika Nayanajith's deep technical Wi-Fi and packet-analysis blog, one of the best free cert-prep libraries online.",
+      "description": "mrn-cciew, by Rasika Nayanajith (CWNE #153, CCIE #22989), is a long-running, deeply technical blog of Wi-Fi and packet-analysis write-ups. It is one of the most active personal blogs in the field, and the cert-prep coverage for CWNP and CCIE is some of the best free material you will find anywhere.\n\nThe write-ups go frame by frame, which is exactly what you want when you are studying for an analysis exam or trying to truly understand what a capture is telling you. Free, independent. This one is for engineers chasing the advanced certifications.",
+      "url": "https://mrncciew.com/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "advanced",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "packet-analysis",
+        "certification"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-wirednot",
+      "title": "wirednot",
+      "summary": "Lee Badman's independent opinion and practitioner commentary on Wi-Fi, the standards bodies, and industry dysfunction.",
+      "description": "wirednot, by Lee Badman, is an active independent blog of opinion and practitioner commentary. Badman writes about Wi-Fi from the operator's chair, and he is not shy about calling out where the IEEE working groups, the Wi-Fi Alliance, and the vendors get it wrong.\n\nThis is the blog to read when you want a working engineer's honest take rather than a vendor's press release. Free, independent. Best for engineers who want perspective and a check against industry hype, not step-by-step how-tos.",
+      "url": "https://wirednot.wordpress.com/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "opinion"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-artofrf",
+      "title": "Art of RF",
+      "summary": "Mohammad Ali's practical Wi-Fi and RF blog: validation tooling, packet capture, 802.1X, and platform how-tos.",
+      "description": "Art of RF, by Mohammad Ali, is an active blog of hands-on Wi-Fi and RF content, with posts going back to 2012. The focus is practical: validation tooling, packet capture, 802.1X, and how-to walkthroughs for platforms like Mist and Nile.\n\nThis is a do-the-work blog, the kind you open when you have a specific job in front of you and want to see how someone else solved it. Mohammad Ali also builds the Wireless PCAP I/O Graph tool, so the analysis posts come from someone who writes his own tooling. Free, independent. Best for intermediate engineers doing real deployment and capture work.",
+      "url": "https://artofrf.com/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "rf",
+        "802.1X"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-packetologist",
+      "title": "The Packetologist",
+      "summary": "Keith Miller's Wi-Fi troubleshooting deep dives and network automation blog, Python plus Mist and Meraki.",
+      "description": "The Packetologist, by Keith Miller, is a blog of Wi-Fi troubleshooting deep dives and network automation, with posts dating back to 2013. The automation angle is the draw, since Miller pairs Wi-Fi work with Python and platform APIs like Mist and Meraki, which is where a lot of the field is heading.\n\nThe cadence is on the slower side, so treat it as a reference archive rather than a daily read. When a troubleshooting post lands, it goes deep. Free, independent. Best for advanced engineers who want to bring automation into their wireless work.",
+      "url": "https://www.thepacketologist.com/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "advanced",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "troubleshooting",
+        "automation"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-semfio-blog",
+      "title": "SemFio Networks Blog",
+      "summary": "SemFio Networks' practitioner how-tos on WLAN Pi, Python, and regulatory changes, from Francois Verges' consultancy.",
+      "description": "The SemFio Networks blog is the writing arm of Francois Verges' consultancy, and it runs to practical how-tos: WLAN Pi material, Python for wireless engineers, and regulatory updates such as changes to Canadian 5 GHz rules.\n\nThe regulatory coverage is a useful niche, since spectrum rules shift and most blogs never touch them. The content is free to read, and the consultancy sells services. Best for intermediate engineers who want hands-on technique and want to stay current on the rules that govern what they can actually transmit.",
+      "url": "https://semfionetworks.com/blog/",
+      "topic": "Independent blogs and experts",
+      "cost": "mixed",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "how-to"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-intuitibits-blog",
+      "title": "Intuitibits Blog",
+      "summary": "Adrian Granados' Wi-Fi analysis, security, and packet-capture blog, from the maker of WiFi Explorer and Airtool.",
+      "description": "The Intuitibits blog, by Adrian Granados, publishes Wi-Fi analysis, security, and packet-capture tutorials, and it stays active. Granados makes WiFi Explorer and Airtool, two macOS tools many of us run every day, so when he writes about a topic like WPA3 or RSN Override, it comes from someone who builds the analysis tooling itself.\n\nThe security write-ups are the standouts, since they unpack new protocol behavior the moment it matters. Free to read, and Intuitibits sells tools. Best for advanced engineers doing analysis and security work on Apple gear.",
+      "url": "https://www.intuitibits.com/blog",
+      "topic": "Independent blogs and experts",
+      "cost": "mixed",
+      "level": "advanced",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "analysis",
+        "packet-capture"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-hamina-blog",
+      "title": "Hamina Blog",
+      "summary": "Hamina Wireless' Wi-Fi design and survey-method blog, with product notes and conference recaps.",
+      "description": "The Hamina blog covers Wi-Fi design and survey method, with product notes and conference recaps such as WLPC Phoenix 2026. Even where the examples lean on Hamina's planner, the design and survey thinking carries over to any toolset.\n\nThis is a vendor blog (Hamina makes a cloud design tool); the content is free and Hamina sells software. The conference recaps are a fast way to catch what you missed if you could not be in the room. Useful across levels for design and planning work.",
+      "url": "https://blog.hamina.com/",
+      "topic": "Independent blogs and experts",
+      "cost": "mixed",
+      "level": "all",
+      "tags": [
+        "destination",
+        "blog",
+        "design",
+        "planning",
+        "vendor"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-badfi-archive",
+      "title": "BadFi (Archive)",
+      "summary": "Eddie Forero's respected Wi-Fi archive on surveys, captures, 6 GHz, and standards, evergreen and worth reading.",
+      "description": "BadFi, by Eddie Forero, is a well-regarded Wi-Fi blog covering surveys, packet captures, 6 GHz, and standards. The last post landed in March 2023, so treat this as an archive rather than an active feed. Eddie himself is still active in the community elsewhere.\n\nThe RF physics and standards never went out of date, which is why this one is worth keeping on your list even though it is dormant. Read it as a reference collection. Free, independent. Best for intermediate engineers building their survey and capture fundamentals.",
+      "url": "https://badfi.com/blog/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "archive",
+        "dormant"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-wifinigel-archive",
+      "title": "wifinigel (Archive)",
+      "summary": "Nigel Bowden's Wi-Fi scripting and WLAN Pi archive, with RF calculators and cheat sheets still worth keeping.",
+      "description": "wifinigel, by Nigel Bowden (CWNE #135), is an archive of Wi-Fi scripting, WLAN Pi material, Mist API work, RF calculators, and cheat sheets. The last blog post landed in June 2020, so treat the blog itself as an archive. Bowden's WLAN Pi and GitHub tooling carried on well past that, and remains a cornerstone of the field-engineer toolkit.\n\nThe cheat sheets and RF calculators are the parts you will keep coming back to, since the math does not age. Read the blog as a reference, and follow Bowden's tooling for the current work. Free, independent. Best for engineers getting into scripting and WLAN Pi.",
+      "url": "https://wifinigel.blogspot.com/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "archive",
+        "dormant",
+        "wlan-pi"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-cwnp-certification",
+      "title": "CWNP Certifications and Training",
+      "summary": "The vendor-neutral enterprise Wi-Fi certification ladder, CWNA up through CWNE, plus a free blog, webinars, quizzes, and forums.",
+      "description": "CWNP is the vendor-neutral enterprise Wi-Fi certification program, running since 1999. It tests how Wi-Fi actually works, not how one vendor's box is configured, which is exactly why it matters if you are serious about Wi-Fi as a career.\n\nThe ladder is simple to read. Two optional on-ramps, CWSS for the sales side and CWTS for the technology side, give you a gentle start if you want one, but neither is required. The foundation is CWNA, the base enterprise Wi-Fi cert and the gate to everything above it. From there you specialize in any order, each on top of a current CWNA: CWSP for security, CWAP for analysis and troubleshooting, CWDP for design. The capstone is CWNE, earned by portfolio and peer review rather than a single exam. If your work runs past Wi-Fi into IoT, there is a parallel track, CWISA at the foundation up to the CWISE expert, and CWISA also feeds the CWNE requirements. CWNT is the instructor credential. Standard certs are valid 3 years; renew by re-exam, by climbing the ladder, or, for the expert tier, by continuing-education credits.\n\nCWNP sells the exams, training, and study products, and a good amount is free: the blog, webinars, podcasts, whitepapers, community forums, and the daily Word and Question of the Day. Start with the free material, learn the body of knowledge, and sit the exam when you are ready. Exam codes, prices, and the full CWNE requirements change over time, so check the CWNP pages for the current detail. Useful at every level.",
+      "url": "https://www.cwnp.com/",
+      "topic": "Training Providers",
+      "cost": "mixed",
+      "level": "all",
+      "tags": [
+        "destination",
+        "certification",
+        "training",
+        "training-provider",
+        "vendor-neutral"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "train-wifitraining",
+      "title": "WiFi Training",
+      "summary": "A paid commercial Wi-Fi and security training provider, with instructor-led courses and printed workbooks. Paid.",
+      "description": "WiFi Training (WiFiTraining.com, trading as WiFi Training™) is a commercial training company offering instructor-led courses and printed workbooks on enterprise Wi-Fi and wireless security. The catalog covers design, analysis, troubleshooting, and 802.1X security, aimed at network engineers who want structured, hands-on instruction rather than self-study.\n\nThis is a paid, for-profit provider, not a free community resource. Course fees and workbook prices are set on their site and change over time, so check the current detail there before you commit. It is listed here because the instruction is solid and the workbooks are well-regarded, but go in knowing it is a paid commercial site — weigh the cost against the free certification material and community resources elsewhere in this list. Useful if you learn best from a structured paid course.",
+      "url": "https://wifitraining.com/",
+      "topic": "Training Providers",
+      "cost": "paid",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "training",
+        "training-provider",
+        "security",
+        "paid",
+        "commercial"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-cwnp-blog",
+      "title": "CWNP Blog",
+      "summary": "CWNP's free vendor-neutral blog on Wi-Fi fundamentals, RF-myth corrections, and industry news.",
+      "description": "The CWNP blog publishes free vendor-neutral Wi-Fi fundamentals, RF-myth corrections, and industry news, written by Tom Carpenter and guest CWNEs. The myth-correction posts are the ones to read, since they take the confidently-wrong claims that float around the industry and set them straight against how Wi-Fi really behaves.\n\nThe content maps closely to the CWNP body of knowledge, so it doubles as study reinforcement. Free to read, and CWNP sells certs and training. Useful at every level, and a good companion if you are working toward a CWNP credential.",
+      "url": "https://www.cwnp.com/cwnp-wifi-blog/",
+      "topic": "Training and certification",
+      "cost": "mixed",
+      "level": "all",
+      "tags": [
+        "destination",
+        "blog",
+        "certification",
+        "vendor-neutral"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "dest-wifi-alliance-beacon",
+      "title": "Wi-Fi Alliance Beacon Blog",
+      "summary": "The Wi-Fi Alliance's free blog on standards, certification, and emerging technology, straight from the source.",
+      "description": "The Beacon is the Wi-Fi Alliance's blog, and it is the authoritative voice on the Wi-Fi CERTIFIED program. You get explainers on Wi-Fi 7, Wi-Fi 8, 6 GHz, certification, and emerging technology from the organization that actually defines the interoperability tests.\n\nWhen you want to know what a Wi-Fi generation officially includes, rather than what a vendor's marketing claims, this is where you check. Free to read. Useful at every level, and the place to go for the definitive line on certification and standards.",
+      "url": "https://www.wi-fi.org/beacon",
+      "topic": "Training and certification",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "destination",
+        "blog",
+        "standards",
+        "wi-fi-alliance",
+        "vendor-neutral"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "subnetpro",
+      "title": "SubnetPro",
+      "summary": "A free, fully offline toolkit of 60-plus interactive networking simulators and subnet labs.",
+      "description": "SubnetPro, by Chaithanya Katari, packs more than 60 interactive networking simulators into a single offline web page. You get IPv4 and IPv6 calculators, VLSM and subnet-tree builders, binary converters, and route summarization, alongside protocol simulators for DHCP, DNS, ARP, the TCP handshake, and NAT. It scaffolds from CCNA fundamentals up through CCNP and CCIE topics, so it works whether you are learning to subnet or drilling for an exam. This is general networking rather than Wi-Fi specific, but subnetting and IP design sit under every wireless deployment, so it earns a place in the kit. It runs entirely in the browser with no ads and no login, and the author lists it as free.",
+      "url": "https://chaithu-lets-code.github.io/SubnetPro/",
+      "topic": "Tools and utilities",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "tool",
+        "subnetting",
+        "ip",
+        "training"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "wlananalyser",
+      "title": "WiFi Analyser, Browser-Based PCAP Analysis",
+      "summary": "Upload an 802.11 capture in the browser and get an AI-assisted read on what went wrong.",
+      "description": "WiFi Analyser, by Shankar Korukoppula, is a browser-based 802.11 capture analyzer that runs AI-assisted root-cause diagnosis on a monitor-mode PCAP. You upload a radiotap capture from Wireshark, Airtool, a WLAN Pi, or tcpdump, and it surfaces the things that are hard to eyeball: roaming failures across 802.11k, v, and r, RSN mismatches between WPA2 and WPA3, deauthentication floods, MCS instability, and EAPOL and 802.1X problems. There is no install and no login, which makes it a fast first look when someone hands you a capture and a complaint. The analysis is AI-assisted and the author says so plainly, so treat it as a quick diagnosis to confirm in your full toolset rather than the final word. It needs a monitor-mode capture with radiotap headers, so an ordinary client capture will not load. Free.",
+      "url": "https://app.wlananalyser.com/",
+      "topic": "Tools and utilities",
+      "cost": "free",
+      "level": "advanced",
+      "tags": [
+        "tool",
+        "pcap",
+        "capture",
+        "analysis"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-shankarwifi",
+      "title": "ShankarWiFi",
+      "summary": "A free 802.11 reference library with interactive visualizers for the hard-to-picture parts of modern Wi-Fi.",
+      "description": "ShankarWiFi, by Shankar Korukoppula, is a free 802.11 reference site built around interactive visualizers and cert-prep material. Alongside written reference pages on RF, the MAC layer, frames, security, and roaming, it animates the parts of modern Wi-Fi that are hard to picture from a static diagram: MLO modes, TWT schedules, OFDMA resource units, preamble puncturing, and beamforming. It carries CWNA and CWAP study material with quiz questions, so it doubles as exam practice. Some of the content is AI-assisted, which the author discloses, so cross-check anything you are about to design around. Free, no login, no ads. Best for intermediate engineers and cert candidates who learn better by watching a mechanism move than by reading about it. This site and the WiFi Analyser tool are the same author's two properties.",
+      "url": "https://shankarwifi.com/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "blog",
+        "reference",
+        "independent",
+        "certification"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "potatofi-spectrum",
+      "title": "Interactive Spectrum Chart (PotatoFi)",
+      "summary": "Pan and zoom across the whole RF spectrum and toggle every technology sharing it.",
+      "description": "The Interactive Spectrum Chart, by Joel Crane, is a free web tool for seeing the RF spectrum the way it actually is: crowded. You pan and zoom across the bands and toggle technologies on and off, Wi-Fi at every channel width from 20 up to 320 MHz, plus Bluetooth, Zigbee, LoRa, DECT, UWB, and cellular, with regulatory domains for the US, EU, Australia, Japan, and worldwide. It draws OFDM subcarriers and resource units, lets you download a snapshot for a slide, and includes what the author believes is the first openly available 802.11ah channel chart. It is a teaching and reference tool, free to use, and it works on a trackpad, mouse, or touch screen. The author asks that you link to it rather than copy or rehost the code. Useful at every level, and a clean way to show someone why their 2.4 GHz is a mess.",
+      "url": "https://spectrum.potatofi.com/",
+      "topic": "Tools and utilities",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "tool",
+        "spectrum",
+        "rf",
+        "reference"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "badgerwifi-tools",
+      "title": "BadgerWiFi Tools",
+      "summary": "Automation utilities that take the manual grind out of Ekahau project work.",
+      "description": "BadgerWiFi Tools, by Nick Turner, is a set of utilities aimed at the repetitive parts of Ekahau survey work. The desktop app, free and open source for Windows and macOS, automates project analysis, validation against customizable test suites, bulk AP-name management, data export, and map-asset generation. Two web tools sit alongside it: Griddle, which overlays a measured grid on a floor plan or screenshot, and a 2.4, 5, and 6 GHz channel reference. It is built by a working Wi-Fi engineer for working Wi-Fi engineers, so the core value assumes you already live in Ekahau day to day. The software is free, with a separate store selling physical equipment, so we class it as mixed. Best for professionals running surveys at volume who want their tooling to stop wasting their time.",
+      "url": "https://badgerwifi.tools/",
+      "topic": "Tools and utilities",
+      "cost": "mixed",
+      "level": "advanced",
+      "tags": [
+        "tool",
+        "ekahau",
+        "survey",
+        "automation"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-framebyframe",
+      "title": "Frame by Frame",
+      "summary": "Jim Vajda's frame-level Wi-Fi blog, deep but readable analysis of how modern 802.11 actually behaves.",
+      "description": "Frame by Frame, by Jim Vajda (CWNE #183), is an independent Wi-Fi blog that works at the frame level. Vajda takes the parts of modern Wi-Fi that get hand-waved in vendor decks, channel access, OFDMA, MLO, 6 GHz behavior, and roaming, and walks through what the frames are actually doing. It is active and current: his WLPC 2026 write-up on Wi-Fi 7 channel access landed in February 2026, a follow-up to the channel-access talk he gave on stage. This is the deep-but-readable analysis the audience values, from a named expert who presents at WLPC. Free, independent. Best for engineers who already have the fundamentals and want to understand the mechanism rather than memorize the marketing.",
+      "url": "https://framebyframewifi.net/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "analysis",
+        "certification"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "dest-divergent-dynamics",
+      "title": "Divergent Dynamics",
+      "summary": "Devin Akin's vendor-neutral Wi-Fi blog and free library, from a 25-year WLAN veteran who co-founded CWNP.",
+      "description": "Divergent Dynamics is the blog and free library of Devin Akin, a 25-year WLAN veteran and a co-founder of CWNP. The free material is the part to read: vendor-neutral write-ups built around his Define, Design, Deploy, Diagnose method, the kind of structured thinking that turns a pile of survey data into an actual design. Akin writes the way you want a teacher to write, active words, no equivocation, and he has the deployment history to back the verdicts. Divergent Dynamics also sells training and consulting; this entry points at the free blog and library, not the paid courses. Free to read, independent. Useful across levels, and especially good for engineers learning how to make design decisions rather than just collect numbers.",
+      "url": "https://divdyn.com/blog/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "design",
+        "vendor-neutral"
+      ],
+      "approval": "pending_outreach"
+    },
+    {
+      "id": "divdyn-wifi-design-flowchart",
+      "title": "Wi-Fi Design Flowchart",
+      "summary": "Devin Akin's step-by-step Wi-Fi design decision flowchart, the design process laid out as a path you can follow.",
+      "description": "The Wi-Fi Design Flowchart, by Devin Akin of Divergent Dynamics, lays out the Wi-Fi design process as a step-by-step decision flowchart. Instead of staring at a pile of requirements and survey data, you follow the path: what the design has to deliver, the choices that follow from it, and the order to make them in. Akin is a 25-year WLAN veteran and a co-founder of CWNP, and this turns his structured Define, Design, Deploy, Diagnose thinking into a reference you can keep beside you while you work a real design. Free to use. Useful across levels, and especially good when you want a repeatable process rather than designing from instinct each time.",
+      "url": "https://divdyn.com",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "wi-fi design",
+        "flowchart",
+        "reference",
+        "divergent dynamics"
+      ],
+      "approval": "not_required",
+      "notes": "Devin Akin (Divergent Dynamics) approved adding his Wi-Fi Design Flowchart 2026-06-12, pointing to divdyn.com. Approval explicitly GRANTED by the owner — the dataset's schema carries no separate 'granted' token, so approval='not_required' records that this entry is cleared for publish (no pending outreach), per the EducationalResourcesService approval enum (not_required | pending_outreach)."
+    },
+    {
+      "id": "dest-wireshark-wifi-wiki",
+      "title": "Wireshark 802.11 / Wi-Fi Wiki",
+      "summary": "The canonical free reference for capturing and decoding 802.11 in Wireshark, monitor mode, decryption, and filters.",
+      "description": "The Wireshark Wi-Fi wiki is the canonical free reference for capturing and analyzing 802.11 in Wireshark. It covers the things that trip everyone up the first time: why your capture shows fake Ethernet instead of real radio frames, how to get monitor mode working on each operating system, how to decrypt WEP, WPA, and WPA2 traffic, and which display and capture filters actually pull the frames you want. Packet analysis sits at the heart of the CWAP track, and this is the authoritative, vendor-neutral how-to that the analysis tools assume you already know. The companion capture-setup page is the one to bookmark when monitor mode fights you (wiki.wireshark.org/CaptureSetup/WLAN). It is an open community wiki under the Wireshark project, free, no login. Best for engineers doing real capture work who want the primary source rather than a secondhand summary.",
+      "url": "https://wiki.wireshark.org/Wi-Fi",
+      "topic": "Tools and utilities",
+      "cost": "free",
+      "level": "intermediate",
+      "tags": [
+        "reference",
+        "capture",
+        "pcap",
+        "analysis",
+        "open-source"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "wlanpros-connection-report-guide",
+      "title": "Reading a Connection Report",
+      "summary": "How to read the Check My Connection report, for IT and help-desk staff.",
+      "description": "A plain-language guide from WLAN Pros to every line of the Check My Connection report, written for IT and help-desk staff who receive these reports from users. It walks through what each field means, what good and bad values look like, and how to tell a Wi-Fi problem from an internet problem at a glance, so a pasted report turns into a clear next step instead of a wall of numbers.",
+      "url": "https://wlanprofessionals.com/toolbox/connection-report-guide",
+      "topic": "Tools and utilities",
+      "cost": "free",
+      "level": "all",
+      "tags": [
+        "reference",
+        "help-desk",
+        "connection-report",
+        "wlan-pros"
+      ],
+      "approval": "not_required"
+    },
+    {
+      "id": "frame-exchange-reference",
+      "title": "Frame Exchange Reference",
+      "summary": "Every 802.11 frame from the first Probe Request through to the first encrypted data frame, by security type.",
+      "description": "Jonathan Davis's deep walk-through of the complete 802.11 frame exchange, from the first Probe Request to the first encrypted data frame, across the different security types. Deep detail that stays approachable.",
+      "url": "https://frames.bitbucketlabs.com",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "advanced",
+      "tags": [
+        "802.11",
+        "frames",
+        "association",
+        "security",
+        "reference"
+      ],
+      "approval": "pending_outreach",
+      "notes": "Jonathan Davis publicly released this 2026-06-12 at Wi-Co NC and invited the community to share it; Keith's description, added 2026-06-12. Approval pending owner outreach per the dataset convention for independent authors."
+    },
+    {
+      "id": "dest-mackenziewifi",
+      "title": "MackenzieWiFi",
+      "summary": "Peter Mackenzie's analysis-focused blog and career reflections, from a CWAP study guide co-author.",
+      "description": "MackenzieWiFi is the blog of Peter Mackenzie (CWNE #33, CWISE #2), who co-authored the CWAP study guide. The writing leans toward protocol analysis with cert and career reflections from someone who has spent years teaching this material to others.\n\nThe analysis pedigree is the reason to read it. When a CWAP-level author writes about captures, it is worth your time. The cadence is on the slower side, so treat it as a reference collection rather than a frequent read. Free, independent. Best for advanced engineers working toward analysis credentials.",
+      "url": "http://mackenziewifi.com/",
+      "topic": "Independent blogs and experts",
+      "cost": "free",
+      "level": "advanced",
+      "tags": [
+        "destination",
+        "blog",
+        "independent",
+        "cwap",
+        "analysis"
+      ],
+      "approval": "pending_outreach"
+    }
+  ]
+}

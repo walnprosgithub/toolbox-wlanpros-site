@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 560" width="640" height="560" font-family="IBM Plex Sans, sans-serif" fill="none">
+  <!-- Type F (Schuko, CEE 7/4) FACE. BRIGHT REWORK 2026-06-08 (Charta gfx3-intl-bright).
+       Keith directive (overrides §8.20.7 FOR THIS SET, intended): ALL plug geometry (frame + pins + earth clips)
+       -> lime #A1CC3A; ALL text -> near-white #E5E5E5. Palette = #1A1A1A + #E5E5E5 + #A1CC3A.
+       Hierarchy: pins/clips FILLED lime, frame lime STROKE. Pin/clip geometry UNCHANGED (Vera-passed). -->
+
+
+  <!-- Header -->
+  <text x="320" y="46" fill="#E5E5E5" font-size="30" font-weight="600" text-anchor="middle">Schuko</text>
+  <text x="320" y="76" fill="#E5E5E5" font-size="16" font-weight="600" text-anchor="middle">Type F &#183; two round pins + side earth clips</text>
+
+  <!-- FACE FRAME (lime stroke) -->
+  <rect x="204" y="134" width="232" height="232" rx="44" stroke="#A1CC3A" stroke-width="4"/>
+
+  <!-- PINS: two round, horizontal (filled lime) -->
+  <circle cx="272" cy="250" r="19" fill="#A1CC3A"/>   <!-- L -->
+  <circle cx="368" cy="250" r="19" fill="#A1CC3A"/>   <!-- N -->
+  <!-- earth contact strips at top & bottom of the recess, sized to sit inside the well -->
+  <rect x="290" y="188" width="60" height="12" rx="6" fill="#A1CC3A"/>   <!-- top earth clip -->
+  <rect x="290" y="300" width="60" height="12" rx="6" fill="#A1CC3A"/>   <!-- bottom earth clip -->
+
+  <!-- pin callouts: L/N below their pins; earth-clip note above the frame in clear space -->
+  <text x="272" y="304" fill="#E5E5E5" font-size="16" font-weight="700" text-anchor="middle" font-family="DM Mono, monospace">L</text>
+  <text x="368" y="304" fill="#E5E5E5" font-size="16" font-weight="700" text-anchor="middle" font-family="DM Mono, monospace">N</text>
+  <text x="320" y="125" fill="#E5E5E5" font-size="14" font-weight="600" text-anchor="middle" font-family="DM Mono, monospace">earth clips (top &amp; bottom)</text>
+
+  <!-- LABELS -->
+  <text x="320" y="436" fill="#E5E5E5" font-size="34" font-weight="600" text-anchor="middle" font-family="DM Mono, monospace">Type F</text>
+  <text x="320" y="468" fill="#E5E5E5" font-size="18" font-weight="600" text-anchor="middle" font-family="DM Mono, monospace">CEE 7/4 &#183; 230 V &#183; 16 A</text>
+  <text x="320" y="498" fill="#E5E5E5" font-size="16" font-weight="500" text-anchor="middle">Germany &#183; continental Europe</text>
+  <text x="320" y="524" fill="#E5E5E5" font-size="15" font-weight="500" text-anchor="middle">High-voltage class (220&#8211;240 V)</text>
+</svg>

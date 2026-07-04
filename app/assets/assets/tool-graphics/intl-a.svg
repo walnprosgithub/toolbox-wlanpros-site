@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 560" width="640" height="560" font-family="IBM Plex Sans, sans-serif" fill="none">
+  <!-- Type A (North America ungrounded, NEMA 1-15) FACE. BRIGHT REWORK 2026-06-08 (Charta gfx3-intl-bright).
+       Keith directive (overrides §8.20.7 lime-sparingly FOR THIS PLUG-FACE SET, intended):
+       ALL plug geometry (frame stroke + blades) -> canonical lime #A1CC3A; ALL text -> near-white #E5E5E5.
+       Palette = #1A1A1A + #E5E5E5 (text) + #A1CC3A (geometry). No #9C9C9C, no #A2CC3A.
+       Hierarchy: blades FILLED lime, frame lime STROKE. Pin geometry/position UNCHANGED (Vera-passed). -->
+
+
+  <!-- Header -->
+  <text x="320" y="46" fill="#E5E5E5" font-size="30" font-weight="600" text-anchor="middle">North America</text>
+  <text x="320" y="76" fill="#E5E5E5" font-size="16" font-weight="600" text-anchor="middle">Type A &#183; two flat blades, ungrounded</text>
+
+  <!-- FACE FRAME (lime stroke) -->
+  <rect x="204" y="134" width="232" height="232" rx="44" stroke="#A1CC3A" stroke-width="4"/>
+
+  <!-- PINS: two flat blades, no earth (filled lime) -->
+  <rect x="265" y="208" width="20" height="84" rx="5" fill="#A1CC3A"/>   <!-- L blade, left -->
+  <rect x="355" y="208" width="20" height="84" rx="5" fill="#A1CC3A"/>   <!-- N blade, right -->
+
+  <!-- pin callouts, below each blade in clear space -->
+  <text x="275" y="324" fill="#E5E5E5" font-size="16" font-weight="700" text-anchor="middle" font-family="DM Mono, monospace">L</text>
+  <text x="365" y="324" fill="#E5E5E5" font-size="16" font-weight="700" text-anchor="middle" font-family="DM Mono, monospace">N</text>
+
+  <!-- LABELS -->
+  <text x="320" y="436" fill="#E5E5E5" font-size="34" font-weight="600" text-anchor="middle" font-family="DM Mono, monospace">Type A</text>
+  <text x="320" y="468" fill="#E5E5E5" font-size="18" font-weight="600" text-anchor="middle" font-family="DM Mono, monospace">NEMA 1-15 &#183; 120 V &#183; 15 A</text>
+  <text x="320" y="498" fill="#E5E5E5" font-size="16" font-weight="500" text-anchor="middle">US, Canada, Japan, Mexico</text>
+  <text x="320" y="524" fill="#E5E5E5" font-size="15" font-weight="500" text-anchor="middle">Low-voltage class (100&#8211;127 V)</text>
+</svg>

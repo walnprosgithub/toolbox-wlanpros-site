@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- bent glass strand: enters lower-left, sweeps up to the emission tip -->
+    <path d="M4 20 C4 13 7 9 13 9"/>
+    <!-- light radiating from the strand tip: three diverging rays -->
+    <path d="M13 9 L21 4"/>
+    <path d="M13 9 L20 9.5"/>
+    <path d="M13 9 L16 3"/>
+    <!-- glowing core at the emission point -->
+    <circle cx="13" cy="9" r="1.5" fill="currentColor" stroke="none"/>
+  </g>
+</svg>

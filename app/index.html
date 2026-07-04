@@ -1,27 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="refresh" content="0; url=https://6a3edcea6cc102c341d882dd--toolbox-wlanpros.netlify.app/">
-  <title>WLAN Pros Toolbox — Web App</title>
-  <style>
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-           display: flex; align-items: center; justify-content: center; min-height: 100vh; color: #1a1a1a; background: #ffffff; }
-    div { text-align: center; padding: 24px; }
-    a { color: #7a9e26; font-weight: 600; }
-    @media (prefers-color-scheme: dark) { body { color: #ededed; background: #1a1a1a; } a { color: #a2cc3a; } }
-  </style>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/app/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="wlan_pros_toolbox">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>wlan_pros_toolbox</title>
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <!-- PLACEHOLDER. This folder receives the Flutter web build made with: flutter build web --release --base-href /app/
-       Replace this entire /app folder's contents with the build output, then push.
-       Until then, this page forwards to the previous v1.5.6 deploy (Netlify deploy permalink) so the web app stays usable. -->
-  <div>
-    <p>Opening the Toolbox web app&hellip;
-      <a href="https://6a3edcea6cc102c341d882dd--toolbox-wlanpros.netlify.app/">Continue</a> if nothing happens.</p>
-    <p><a href="/">Back to the Toolbox page</a></p>
-  </div>
+  <!-- ============================================================= -->
+  <!--  pdf.js: DELIBERATELY SELF-HOSTED — DO NOT CDN-IFY.            -->
+  <!-- ============================================================= -->
+  <!--
+    pdf.js engine for the bundled "PDF reference card" tools (pdfx on web).
+    SELF-HOSTED, not CDN: the Toolbox is offline-branded, so the pdf.js library,
+    worker, and CMaps are bundled under web/pdfjs/ rather than fetched from a
+    CDN at runtime. The three references below (engine <script src>, worker
+    workerSrc, cMapUrl) point at LOCAL relative web/pdfjs/ paths. Files are the
+    canonical pdfjs-dist@4.6.82 build (Apache-2.0; see web/pdfjs/LICENSE). Paths
+    are relative (no leading slash) so they resolve against the Flutter
+    <base href> for both root and sub-path hosting.
+
+    !! HAZARD — DO NOT RUN `flutter pub run pdfx:install_web` !!
+    That command (pdfx 2.9.x) REWRITES this file to inject jsdelivr CDN
+    <script> tags for pdfjs-dist@4.6.82, silently reintroducing a remote
+    dependency and breaking the offline promise. This already bit us once. If
+    you ever run it, REVERT index.html and restore these three local
+    web/pdfjs/ paths. If pdfjs-dist is version-bumped, re-bundle web/pdfjs/ AND
+    keep these paths local.
+
+    GUARD: test/web/pdfjs_self_hosted_test.dart asserts these local paths are
+    present and that no jsdelivr/cdnjs/unpkg/remote pdfjs reference exists in
+    live markup. Re-injecting the CDN turns that test red. Keep it green.
+  -->
+  <script src="pdfjs/build/pdf.min.mjs" type="module"></script>
+  <script type="module">
+    var { pdfjsLib } = globalThis;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/build/pdf.worker.mjs';
+
+    var pdfRenderOptions = {
+      cMapUrl: 'pdfjs/cmaps/',
+      cMapPacked: true,
+    }
+  </script>
+
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 540" width="760" height="540" font-family="IBM Plex Sans, sans-serif" fill="none">
+  <!-- How Strong Is Wi-Fi (consumer perspective). Redrawn to the §8.6.2.1 standard:
+       NO childish sun face, NO decorative slash rays. A clean schematic sun radiates
+       energy DOWNWARD as straight labeled beams that stop ABOVE the person (they do
+       not strike the head). A person sits ringed by TEN real generic APs (rounded
+       body + two short dipole antennas), each emitting only a tiny weak signal.
+       No math, consumer-clear. Energy LEAVES every radiator (sun + APs). -->
+
+  <!-- ============================================================= -->
+  <!-- THE SUN — clean schematic disc, top center. No face, no slashes. -->
+  <!-- Straight energy beams point DOWN-AND-OUT, fanning toward the floor -->
+  <!-- but terminating in open space ABOVE the person, not on the head. -->
+  <!-- ============================================================= -->
+
+  <!-- sun disc -->
+  <circle cx="380" cy="86" r="46" stroke="#E5E5E5" stroke-width="3"/>
+
+  <!-- downward energy beams: many, bold, fanning out toward the floor.
+       Each ends WELL ABOVE the seated person (lowest tips ~y=254; head is at y=360). -->
+  <g stroke="#E5E5E5" stroke-width="3.4" stroke-linecap="round">
+    <line x1="300" y1="120" x2="214" y2="232"/>
+    <line x1="324" y1="130" x2="270" y2="246"/>
+    <line x1="352" y1="136" x2="330" y2="252"/>
+    <line x1="380" y1="138" x2="380" y2="254"/>
+    <line x1="408" y1="136" x2="430" y2="252"/>
+    <line x1="436" y1="130" x2="490" y2="246"/>
+    <line x1="460" y1="120" x2="546" y2="232"/>
+  </g>
+
+  <!-- sun label -->
+  <text x="380" y="91" font-size="16" fill="#E5E5E5" text-anchor="middle" font-weight="600" dominant-baseline="middle">The sun</text>
+
+  <!-- ============================================================= -->
+  <!-- THE RING — ten REAL generic APs (rounded body + two dipoles), -->
+  <!-- 4 m out around the person, each giving off only a tiny signal. -->
+  <!-- ============================================================= -->
+
+  <!-- faint ring guide the APs sit on -->
+  <ellipse cx="380" cy="404" rx="252" ry="92" stroke="#9C9C9C" stroke-width="1.2" stroke-dasharray="3 6" opacity="0.5"/>
+
+  <!-- AP template, instanced ten times around the ring.
+       Body: rounded rect. Two short dipole stalks with rounded tips on top.
+       One small lime arc above = the weak signal LEAVING the AP. -->
+  <defs>
+    <g id="ap">
+      <!-- two short dipole antennas -->
+      <g stroke="#E5E5E5" stroke-width="2" stroke-linecap="round">
+        <line x1="-6" y1="-7" x2="-6" y2="-15"/>
+        <line x1="6"  y1="-7" x2="6"  y2="-15"/>
+      </g>
+      <circle cx="-6" cy="-16" r="1.8" fill="#E5E5E5"/>
+      <circle cx="6"  cy="-16" r="1.8" fill="#E5E5E5"/>
+      <!-- rounded AP body -->
+      <rect x="-13" y="-7" width="26" height="14" rx="4" stroke="#E5E5E5" stroke-width="2"/>
+      <!-- tiny weak signal arc radiating up/out (lime = the AP's energy) -->
+      <path d="M-9 -19 A8 8 0 0 1 9 -19" stroke="#A2CC3A" stroke-width="1.6" stroke-linecap="round" opacity="0.85"/>
+    </g>
+  </defs>
+
+  <use href="#ap" transform="translate(380,312)"/>
+  <use href="#ap" transform="translate(515,326)"/>
+  <use href="#ap" transform="translate(600,366)"/>
+  <use href="#ap" transform="translate(628,432)"/>
+  <use href="#ap" transform="translate(560,484)"/>
+  <use href="#ap" transform="translate(380,498)"/>
+  <use href="#ap" transform="translate(200,484)"/>
+  <use href="#ap" transform="translate(132,432)"/>
+  <use href="#ap" transform="translate(160,366)"/>
+  <use href="#ap" transform="translate(245,326)"/>
+
+  <!-- ============================================================= -->
+  <!-- THE PERSON — seated on a simple chair, centered in the ring -->
+  <!-- ============================================================= -->
+  <!-- chair -->
+  <g stroke="#9C9C9C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.8">
+    <path d="M360 432 L406 432"/>          <!-- seat -->
+    <path d="M360 432 L360 400"/>          <!-- back -->
+    <path d="M404 432 L408 466"/>          <!-- front leg -->
+    <path d="M364 432 L360 466"/>          <!-- back leg -->
+  </g>
+  <!-- figure -->
+  <g stroke="#E5E5E5" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="378" cy="378" r="14"/>     <!-- head -->
+    <path d="M378 392 L382 430"/>          <!-- torso -->
+    <path d="M380 402 L402 418"/>          <!-- arm on thigh -->
+    <path d="M382 430 L416 432 L418 466"/> <!-- thigh + shin -->
+    <path d="M382 430 L392 432"/>
+  </g>
+
+  <!-- ring spacing label: the single allowed measurement -->
+  <line x1="392" y1="424" x2="600" y2="372" stroke="#9C9C9C" stroke-width="1" stroke-dasharray="2 5" opacity="0.5"/>
+  <text x="508" y="388" font-size="13" fill="#9C9C9C" text-anchor="middle" font-weight="500" opacity="0.9">4 m (13 ft)</text>
+
+  <!-- ============================================================= -->
+  <!-- CAPTION — plain language, no numbers -->
+  <!-- ============================================================= -->
+  <text x="380" y="520" font-size="16" fill="#E5E5E5" text-anchor="middle" font-weight="600">The sun gives you far more energy than every access point</text>
+  <text x="380" y="540" font-size="16" fill="#E5E5E5" text-anchor="middle" font-weight="600">around you, combined.</text>
+</svg>
