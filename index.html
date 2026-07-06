@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WLAN Pros Toolbox — Free Wi-Fi, RF &amp; Network Tools</title>
-  <meta name="description" content="WLAN Pros Toolbox is a free app with 140 Wi-Fi, RF, and network tools for iPhone, iPad, Mac, and Android. One-tap Check My Connection, calculators, reference tables, a Wi-Fi glossary, laminated cards, and active diagnostics. No ads, no tracking, no data collected.">
-  <!-- Live but unannounced: noindex keeps it out of search until the 9 July public push, then switch to "index, follow". -->
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="WLAN Pros Toolbox is a free app with 173 Wi-Fi, RF, and network tools for iPhone, iPad, Mac, and Android. One-tap Check My Connection, calculators, reference tables, a Wi-Fi glossary, laminated cards, and active diagnostics. No ads, no tracking, no data collected.">
+  <!-- Switched to "index, follow" 7/6/26 for the 7/7 launch (was noindex pre-launch). -->
+  <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Wireless LAN Professionals">
   <meta property="og:title" content="WLAN Pros Toolbox — Free Wi-Fi, RF &amp; Network Tools">
@@ -98,6 +98,10 @@
       flex-shrink: 0; color: var(--muted); font-size: 0.9rem; font-weight: 600;
       border: 1px solid var(--rule); border-radius: 6px; padding: 8px 14px; white-space: nowrap;
     }
+    .qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 14px; margin: 1.2em 0; }
+    .qr-grid figure { margin: 0; text-align: center; }
+    .qr-grid img { width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 10px; background: #ffffff; display: block; }
+    .qr-grid figcaption { font-size: 0.82rem; color: var(--muted); margin-top: 5px; }
     footer {
       margin-top: 3em; padding-top: 1.2em; border-top: 1px solid var(--rule);
       color: var(--muted); font-size: 0.92rem; font-style: italic;
@@ -122,21 +126,21 @@
   <!--
     GO-LIVE BUILD for toolbox.wlanpros.com (info page at repo/site root; the web app lives at /app).
     Deploys: this repo is connected to the toolbox Netlify site; push to main republishes in about a minute.
-    Active links: App Store, Google Play, macOS 1.5.11 .dmg, Microsoft Store, web app at /app, the connection-report guide, and the PDFs.
-    Still pending: Learn Wi-Fi (Amazon link pending, price held until live).
-    noindex stays on until the 9 July public push, then switch the head robots meta to "index, follow".
-    Assets that must sit at the repo root: WLAN-Pros-Toolbox-1.6.1.dmg, instructions.pdf, fix-your-own-wifi.pdf, WLAN-Pros-Toolbox-Reviewers-Guide.pdf, app_screenshot_001..007.webp.
+    Active links: App Store, Google Play, macOS versionless .dmg, Microsoft Store, web app at /app, the connection-report guide (page + PDF), scan-to-install QR codes, and the PDFs.
+    macOS convention since 1.7.0: the dmg lives at the root as exactly WLAN-Pros-Toolbox.dmg (no version); each release overwrites it.
+    Robots switched to "index, follow" 7/6/26 for the 7/7 launch. Learn Wi-Fi row removed 7/6 per Keith.
+    Assets that must sit at the repo root: WLAN-Pros-Toolbox.dmg, instructions.pdf (the Field Manual), fix-your-own-wifi.pdf, WLAN-Pros-Toolbox-Reviewers-Guide.pdf, WLAN-Pros-Toolbox-Connection-Report-Guide.pdf, app_screenshot_001..007.webp, qr/launch-set/plain/.
   -->
   <main>
     <a class="brand" href="https://wlanprofessionals.com"><img src="https://d2cpnw0u24fjm4.cloudfront.net/wp-content/uploads/2021/06/18142226/cropped-WLANProsLogo-black2151.png" alt="WLAN Pros"></a>
 
     <h1>The Wi-Fi field toolbox you carry in your pocket. Free.</h1>
 
-    <p class="lead">WLAN Pros Toolbox puts 140 Wi-Fi, RF, and network tools on your phone, tablet, and Mac. The calculators and reference you reach for every day, the active diagnostics you run on site, a searchable Wi-Fi glossary, the WLAN Pros laminated cards as PDFs, and a one-tap "Check My Connection" front door. No ads. No tracking. No account. No data collected.</p>
+    <p class="lead">WLAN Pros Toolbox puts 173 Wi-Fi, RF, and network tools on your phone, tablet, and Mac. The calculators and reference you reach for every day, the active diagnostics you run on site, a searchable Wi-Fi glossary, the WLAN Pros laminated cards as PDFs, and a one-tap "Check My Connection" front door. No ads. No tracking. No account. No data collected.</p>
 
     <div class="cta-row">
       <a class="btn btn-primary" href="/app/">Try it in your browser</a>
-      <a class="btn btn-secondary" href="WLAN-Pros-Toolbox-1.6.1.dmg">Download for macOS</a>
+      <a class="btn btn-secondary" href="WLAN-Pros-Toolbox.dmg">Download for macOS</a>
     </div>
     <p class="cta-note">The web version runs right in your browser, nothing to install. The Mac app is signed and notarized by Apple.</p>
 
@@ -198,13 +202,14 @@
     <p>If you are not a Wi-Fi pro, Check My Connection still answers the one question you care about: is it the Wi-Fi or the internet?</p>
 
     <h2>What is inside</h2>
-    <p>140 tools across 5 categories:</p>
+    <p>173 tools across 6 categories:</p>
     <ul>
       <li><strong>Calculators.</strong> RF and signal math without the spreadsheet: dBm and Watt, Free Space Path Loss, EIRP, link budget, fade margin, Fresnel zone, cable loss, antenna downtilt, throughput, PoE budget, capacity planning, subnet and IPv6 math, and more.</li>
       <li><strong>Reference tables.</strong> The tables you keep looking up: 802.11 standards, MCS index, Wi-Fi channels, channel bonding, signal thresholds, roaming parameters, WPA security, reason codes, PoE class and wattage, Ethernet and fiber pinouts, the OSI model.</li>
       <li><strong>Wi-Fi glossary.</strong> Searchable and offline, with both the IEEE and the Wi-Fi Alliance name for each term.</li>
       <li><strong>Laminated reference cards.</strong> The WLAN Pros laminated cards as PDFs, ready offline: quick-reference sheets and field checklists.</li>
       <li><strong>Network diagnostics.</strong> The active tools you run in the field: Ping, ping sweep, Traceroute, DNS lookup, WHOIS, BGP and ASN lookup, IP geolocation, port scan, SSL/TLS and HTTP inspectors, network discovery, Wake-on-LAN, packet sender, and Network Quality for latency, jitter, loss, and throughput.</li>
+      <li><strong>Field &amp; trade reference.</strong> New in 1.7: the codes, trades, documents, compliance frameworks, and adjacent radios a Wi-Fi pro meets on a job site.</li>
     </ul>
 
     <div class="android-note">
@@ -237,7 +242,7 @@
         <div class="row-name">macOS</div>
         <div class="row-note">Desktop app for Mac (.dmg)</div>
       </div>
-      <a class="row-btn" href="WLAN-Pros-Toolbox-1.6.1.dmg">Download for Mac</a>
+      <a class="row-btn" href="WLAN-Pros-Toolbox.dmg">Download for Mac</a>
     </div>
 
     <div class="row">
@@ -256,12 +261,22 @@
       <a class="row-btn" href="/app/">Open web version</a>
     </div>
 
+    <h2>Scan to install</h2>
+    <p>Reading this on a computer? Point your phone camera at the one you want.</p>
+    <div class="qr-grid">
+      <figure><img src="qr/launch-set/plain/02-ios-app-store.png" alt="QR code for the iOS App Store" loading="lazy"><figcaption>iOS · App Store</figcaption></figure>
+      <figure><img src="qr/launch-set/plain/03-android-google-play.png" alt="QR code for Google Play" loading="lazy"><figcaption>Android · Google Play</figcaption></figure>
+      <figure><img src="qr/launch-set/plain/04-windows-microsoft-store.png" alt="QR code for the Microsoft Store" loading="lazy"><figcaption>Windows · Microsoft Store</figcaption></figure>
+      <figure><img src="qr/launch-set/plain/05-macos-dmg.png" alt="QR code for the macOS download" loading="lazy"><figcaption>macOS · .dmg</figcaption></figure>
+      <figure><img src="qr/launch-set/plain/06-web-app.png" alt="QR code for the web app" loading="lazy"><figcaption>Web app</figcaption></figure>
+    </div>
+
     <h2>Guides &amp; books</h2>
 
     <div class="row">
       <div class="row-main">
-        <div class="row-name">Instructions</div>
-        <div class="row-note">A guide for everyone, getting started with the Toolbox</div>
+        <div class="row-name">Field Manual</div>
+        <div class="row-note">Every tool documented: what it does, how to drive it, worked examples</div>
       </div>
       <a class="row-btn row-btn-outline" href="instructions.pdf">Download PDF</a>
     </div>
@@ -271,7 +286,10 @@
         <div class="row-name">How to Read Your Connection Report</div>
         <div class="row-note">A plain-language guide to the Check My Connection report</div>
       </div>
-      <a class="row-btn row-btn-outline" href="/connection-report-guide/">Read guide</a>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <a class="row-btn row-btn-outline" href="/connection-report-guide/">Read guide</a>
+        <a class="row-btn row-btn-outline" href="WLAN-Pros-Toolbox-Connection-Report-Guide.pdf">Download PDF</a>
+      </div>
     </div>
 
     <div class="row">
@@ -280,14 +298,6 @@
         <div class="row-note">The companion book, free PDF</div>
       </div>
       <a class="row-btn row-btn-outline" href="fix-your-own-wifi.pdf">Download PDF</a>
-    </div>
-
-    <div class="row">
-      <div class="row-main">
-        <div class="row-name">Learn Wi-Fi</div>
-        <div class="row-note">New book, coming to Amazon</div>
-      </div>
-      <span class="soon">Coming soon</span>
     </div>
 
     <div class="row">

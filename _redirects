@@ -1,2 +1,5 @@
 # Serve the web app's index for /app deep links (existing files always win over this rule)
 /app/*  /app/index.html  200
+
+# Old versioned dmg URL (printed QR codes) always serves the current dmg
+/WLAN-Pros-Toolbox-1.6.1.dmg  /WLAN-Pros-Toolbox.dmg  301!
