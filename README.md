@@ -8,7 +8,6 @@ Source of truth for the site at **toolbox.wlanpros.com**. Netlify is connected t
 |---|---|
 | `/index.html` | The Toolbox info/download page (site root) |
 | `/app/` | The Toolbox web app (Flutter web build) |
-| `/*.dmg` | Current macOS build, linked from the page |
 | `/*.pdf` | Guides and books, linked from the page |
 | `/app_screenshot_*.webp` | Page screenshots |
 | `/_redirects`, `netlify.toml` | Netlify config, do not remove |
@@ -23,11 +22,16 @@ The base href flag is required: the app is served from `/app/`, not the domain r
 
 ## Shipping a new macOS .dmg
 
-1. Add the new versioned `.dmg` at the repo root
-2. Update the two download links in `index.html` (hero button + macOS row)
-3. Delete the superseded `.dmg` (git history keeps it), commit, push
+The dmg is NOT stored in this repo (since 7/7/26). It is served from **GitHub Releases**, because Netlify bandwidth is metered and one Mac download costs as much as ~500 page visits. The page links to `/WLAN-Pros-Toolbox.dmg`, which `_redirects` 301s to the latest release asset. Nothing in `index.html` changes between versions.
 
-Note: GitHub warns on files over 50 MB but accepts them; keep only the current dmg in the working tree.
+To ship a new dmg:
+
+1. Go to the repo's **Releases** page → "Draft a new release"
+2. Tag it with the version (e.g. `v1.7.1`), title e.g. "WLAN Pros Toolbox 1.7.1 (macOS)"
+3. Attach the dmg named **exactly** `WLAN-Pros-Toolbox.dmg` (no version in the filename; the tag carries the version)
+4. Publish. The site's download link now serves it automatically; no commit needed.
+
+Do NOT add a `.dmg` back to the repo root. The `_redirects` rule is forced (`301!`) so a stray committed dmg would never be served anyway, it would only bloat the repo.
 
 ## Page edits
 

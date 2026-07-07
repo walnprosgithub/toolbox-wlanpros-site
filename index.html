@@ -128,9 +128,10 @@
     GO-LIVE BUILD for toolbox.wlanpros.com (info page at repo/site root; the web app lives at /app).
     Deploys: this repo is connected to the toolbox Netlify site; push to main republishes in about a minute.
     Active links: App Store, Google Play, macOS versionless .dmg, Microsoft Store, web app at /app, the connection-report guide (page + PDF), scan-to-install QR codes, and the PDFs.
-    macOS convention since 1.7.0: the dmg lives at the root as exactly WLAN-Pros-Toolbox.dmg (no version); each release overwrites it.
+    macOS convention since 7/7/26: the dmg is NOT in this repo. It lives on GitHub Releases (asset named exactly WLAN-Pros-Toolbox.dmg on each release);
+    /WLAN-Pros-Toolbox.dmg on the site 301s there via _redirects. Do NOT re-add a .dmg to the repo root - Netlify metered bandwidth is why it moved. See README.
     Robots switched to "index, follow" 7/6/26 for the 7/7 launch. Learn Wi-Fi row removed 7/6 per Keith.
-    Assets that must sit at the repo root: WLAN-Pros-Toolbox.dmg, instructions.pdf (the Field Manual), fix-your-own-wifi.pdf, WLAN-Pros-Toolbox-Reviewers-Guide.pdf, WLAN-Pros-Toolbox-Connection-Report-Guide.pdf, app_screenshot_001..007.webp, qr/launch-set/plain/.
+    Assets that must sit at the repo root: instructions.pdf (the Field Manual), fix-your-own-wifi.pdf, WLAN-Pros-Toolbox-Reviewers-Guide.pdf, WLAN-Pros-Toolbox-Connection-Report-Guide.pdf, app_screenshot_001..007.webp, qr/launch-set/plain/.
   -->
   <main>
     <a class="brand" href="https://wlanprofessionals.com"><img src="https://d2cpnw0u24fjm4.cloudfront.net/wp-content/uploads/2021/06/18142226/cropped-WLANProsLogo-black2151.png" alt="WLAN Pros"></a>

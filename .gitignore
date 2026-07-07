@@ -1,2 +1,9 @@
 .DS_Store
 Thumbs.db
+
+# The dmg lives on GitHub Releases, never in the repo (see README)
+*.dmg
+
+# Local staging artifacts, never deploy these
+*.zip
+WLAN-Pros-Toolbox-1.7.0-deploy/

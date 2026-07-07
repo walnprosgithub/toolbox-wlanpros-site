@@ -1,5 +1,10 @@
 # Serve the web app's index for /app deep links (existing files always win over this rule)
 /app/*  /app/index.html  200
 
-# Old versioned dmg URL (printed QR codes) always serves the current dmg
-/WLAN-Pros-Toolbox-1.6.1.dmg  /WLAN-Pros-Toolbox.dmg  301!
+# macOS dmg is hosted on GitHub Releases (free bandwidth), not Netlify.
+# "latest/download" always serves the newest published release's asset named exactly WLAN-Pros-Toolbox.dmg.
+# The ! forces the redirect even if a dmg file is ever re-added to the repo by mistake.
+/WLAN-Pros-Toolbox.dmg        https://github.com/walnprosgithub/toolbox-wlanpros-site/releases/latest/download/WLAN-Pros-Toolbox.dmg  301!
+
+# Old versioned dmg URL (printed QR codes) goes to the same place
+/WLAN-Pros-Toolbox-1.6.1.dmg  https://github.com/walnprosgithub/toolbox-wlanpros-site/releases/latest/download/WLAN-Pros-Toolbox.dmg  301!
