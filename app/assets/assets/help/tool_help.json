@@ -391,7 +391,7 @@
       "purpose": "Estimates the total signal loss for a run of coax of a known type, length, and frequency, plus the loss per 100 feet at that frequency.",
       "whyHere": "Cable loss comes straight off both your transmit and receive signal. Pick a cable type and length, and the tool tells you how much signal the feedline will eat.",
       "howToUse": [
-        "Pick the cable type from the list.",
+        "Pick the cable type from the list (six LMR types).",
         "Enter the frequency and pick its unit (GHz or MHz).",
         "Enter the run length and pick its unit (feet or meters).",
         "Read the total loss in dB plus the per-100-foot figure."
@@ -399,7 +399,7 @@
       "inputs": [
         {
           "name": "Cable type",
-          "unit": "One of: LMR-100A, LMR-200, LMR-400 (default), LMR-600, LMR-900, LMR-1200, RG-58, RG-8/U, RG-213, RG-214",
+          "unit": "One of: LMR-100A, LMR-200, LMR-400 (default), LMR-600, LMR-900, LMR-1200",
           "range": ""
         },
         {
@@ -413,14 +413,16 @@
           "range": "Must be greater than 0"
         }
       ],
-      "algorithm": "Each cable type has published loss figures at a handful of frequencies. The tool smoothly fills in the gaps between those published points to find the loss per 100 feet at your exact frequency, then scales it by your run length (loss per 100 feet times length in feet, divided by 100). For example, LMR-400 at 2400 MHz is 3.9 dB per 100 feet. Below the lowest published frequency it uses the lowest value; above the highest, it extends the trend.",
-      "example": "LMR-400 at 2.4 GHz over 50 feet: 3.9 dB per 100 feet times 50, divided by 100, is 1.95 dB total.",
+      "algorithm": "Times Microwave publishes an attenuation equation on every LMR datasheet: loss per 100 feet equals k1 times the square root of the frequency in MHz, plus k2 times the frequency in MHz, where k1 and k2 are constants for that specific cable. The tool evaluates that equation at your exact frequency, then scales it by your run length (loss per 100 feet times length in feet, divided by 100). Nothing is interpolated between table rows, so there is no frequency at which the tool has to guess. For example, LMR-400 at 2400 MHz is 6.6 dB per 100 feet.",
+      "example": "LMR-400 at 2.4 GHz over 50 feet: 6.6 dB per 100 feet times 50, divided by 100, is 3.31 dB total.",
       "fieldNotes": [
-        "These are manufacturer-typical figures at room temperature. Real loss rises with heat and age, and connectors add loss this tool doesn't count.",
-        "The fill-between is a smooth fit through published spec points, not a measurement.",
-        "Above the highest published frequency (for example, above 5800 MHz for LMR cables) the figure is an extension of the trend, so treat 6 GHz results with caution."
+        "These are manufacturer figures at the datasheet's stated conditions (VSWR 1.0, 25 C). Real loss rises with heat and age, and connectors add loss this tool doesn't count.",
+        "The equation is Times Microwave's own, so it reproduces their published tables wherever the two overlap, and it stays exact at frequencies they never tabulated (2400 MHz among them).",
+        "There is no RG-58, RG-8, RG-213 or RG-214 here, on purpose. \"RG\" is not one cable: Belden 8259 and Belden 9201 are both stamped RG-58 and differ by 54 percent at 900 MHz, and no manufacturer publishes RG attenuation at Wi-Fi frequencies at all. For an RG run, read dB/100 ft off your actual cable's datasheet by part number.",
+        "Five cables are offered (LMR-100A, LMR-200, LMR-400, LMR-600, LMR-900). Times Microwave tabulates all five to 5800 MHz, so the published attenuation equation is only ever used inside its validated range. LMR-1200 is deliberately omitted: Times stops tabulating it at 2500 MHz and the equation under-predicts its loss at Wi-Fi frequencies.",
+        "Above 5800 MHz the tool says plainly that it is extrapolating rather than quietly showing a confident number. Treat a 6 GHz result as a lower bound and confirm against your cable's datasheet."
       ],
-      "source": "Manufacturer loss specs for each cable type, interpolated to your frequency and length on your device."
+      "source": "Times Microwave LMR datasheet attenuation equations (k1, k2 per cable), evaluated on your device."
     },
     "architectural-scale": {
       "name": "Architectural Scale",
@@ -791,14 +793,14 @@
           "range": ""
         }
       ],
-      "algorithm": "The tool uses the ITU-R P.838-3 rain model, which sets how strongly rain attenuates the signal based on frequency and polarization (across 18 frequency points from 1 to 100 GHz, filling in the gaps between them). From those it gets the specific attenuation in dB per km at your rain rate. Heavy rain rarely falls evenly along a long path, so the model also shrinks the path to an effective length before multiplying the two together for the total attenuation.",
-      "example": "At 23 GHz, 42 mm/hr, 5 km, horizontal polarization: specific attenuation works out to about 5.72 dB per km, the effective path length shrinks to about 3.94 km, and the total rain attenuation is about 22.55 dB.",
+      "algorithm": "The tool uses the ITU-R P.838-3 rain model, which sets how strongly rain attenuates the signal based on frequency and polarization. It carries all 116 published rows of the recommendation's Table 5, covering 1 GHz to 1000 GHz, and fills in between them where needed. From those it gets the specific attenuation in dB per km at your rain rate. Heavy rain rarely falls evenly along a long path, so the model also shrinks the path to an effective length before multiplying the two together for the total attenuation.",
+      "example": "At 23 GHz, 42 mm/hr, 5 km, horizontal polarization: specific attenuation works out to about 5.85 dB per km, the effective path length shrinks to about 3.94 km, and the total rain attenuation is about 23.07 dB.",
       "fieldNotes": [
         "The model assumes the rain rate is uniform along the whole path; real storm cells are smaller, which the effective-length reduction partly accounts for.",
         "Choose a rain rate that matches the availability you're targeting (for example, the rate exceeded only 0.01% of the time in your region). The tool doesn't supply regional rain statistics.",
         "Below roughly 10 GHz, rain fade is usually negligible."
       ],
-      "source": "The ITU-R rain-fade models, computed from the values you enter, on your device."
+      "source": "ITU-R P.838-3 Table 5 (all 116 rows) plus the ITU-R P.530 path reduction, computed from the values you enter, on your device."
     },
     "ptp-link": {
       "name": "PtP Link Check",
@@ -1075,6 +1077,8 @@
       "example": "A 370 W budget with six access points at 25.5 W each comes to 153 W drawn, 217 W remaining, 41 percent used, so OK.",
       "fieldNotes": [
         "Use each device's worst-case (maximum) draw, not idle, and mind the PoE class.",
+        "Budget in PSE watts, not PD watts. PSE is what the switch port must supply; PD is what survives the cable and reaches the device. Twelve Class-4 APs are 306 W of PD but 360 W of PSE: against a 370 W switch that is the difference between comfortable and nearly exhausted. The standards card on this screen shows both columns.",
+        "802.3bt Type 4 supplies 90 W (IEEE 802.3-2022, Table 145-11, Class 8 P_Class). The 99.9 W figure sometimes quoted is the PSE power rating band (P_Type, Table 145-16), which is a different quantity.",
         "The percent shown stops at 100 for display, but the OVER verdict triggers on the real negative remaining, so an over-budget case is never hidden.",
         "This checks the switch's total budget only. It does not model per-port limits or power lost over long cable runs."
       ],
@@ -1351,27 +1355,49 @@
       ],
       "source": "Values come from the US (FCC) regulatory domain."
     },
-    "mcs-index": {
-      "name": "MCS Index",
-      "category": "Quick Reference",
-      "purpose": "Look up the modulation, coding rate, and PHY data rate for any 802.11 MCS index across channel widths, for 802.11n (HT), 802.11ac (VHT), and 802.11ax (HE), scaled by the number of spatial streams.",
-      "whyHere": "For when you see an MCS index in a capture or client stats and want to know the modulation and coding behind it and the rate it should deliver at a given width and stream count.",
+    "capacity-planner": {
+      "name": "Capacity Planner",
+      "category": "Calculators & Tools",
+      "purpose": "An informational statement, not a calculator: it explains why Wi-Fi capacity planning cannot honestly be reduced to a few input boxes and a confident AP count.",
+      "whyHere": "The tool that used to live here returned an AP-count from a single formula. That math was removed because one formula cannot honor the variables that actually drive capacity. This screen replaces the false precision with an honest explanation and points you to a real plan.",
       "howToUse": [
-        "Choose the standard (n, ac, or ax) and the stream count (1 to 8); the rates update (rate = per-stream value multiplied by the number of streams).",
-        "MCS 0 (BPSK 1/2) is the most robust and slowest; higher MCS indices use denser modulation (up to 1024-QAM for ax) for higher rates but need a better signal.",
-        "Cells shown as \"N/A\" are genuinely invalid combinations, not zero and not made up."
+        "There is nothing to enter. Read the statement: capacity planning is a design problem, not a calculation.",
+        "For a plan you can trust, bring in a Wi-Fi professional experienced in your kind of environment; a real plan comes from measuring and modeling your specific space and usage."
       ],
       "inputs": [],
       "algorithm": null,
       "example": null,
       "fieldNotes": [
-        "What it shows: two selectors, the 802.11 standard (n, ac, or ax) and the number of spatial streams (1 to 8). Columns per standard: 802.11n = 20 LGI, 20 SGI, 40 LGI, 40 SGI; 802.11ac = 20/40/80/160 SGI; 802.11ax = 20/40/80/160 MHz (800 ns guard interval).",
-        "802.11ac MCS 9 is invalid at 20 and 40 MHz for a single stream (shown as \"N/A\").",
-        "Guard-interval definitions: 802.11n LGI = 800 ns and SGI = 400 ns; 802.11ac uses SGI; 802.11ax uses an 800 ns guard interval.",
-        "The notes card points out that real throughput is typically 50 to 65% of the PHY rate. These rates are PHY-layer maximums, not delivered throughput.",
-        "Data source: the IEEE 802.11n/ac/ax PHY rate tables."
+        "This is a read-only disclaimer screen: no inputs, no math, no copyable result. The tile, the /tools/capacity-planner route, and the \"Capacity Planner\" title are kept so the tile still resolves where users expect.",
+        "Real Wi-Fi capacity depends on the applications in use and their airtime cost, client device capabilities and roaming, AP and antenna selection, channel reuse and co-channel interference, band steering, airtime fairness, QoS, and how people move through the space. Change any one and the answer changes.",
+        "A confidently wrong number is worse than no number, which is why the calculator was removed rather than kept with a caveat."
       ],
-      "source": "Values come from the IEEE 802.11n/ac/ax PHY rate tables."
+      "source": "Verbatim from Keith's approved disclaimer copy; no external data source (the screen performs no calculation)."
+    },
+    "mcs-index": {
+      "name": "MCS Index",
+      "category": "Quick Reference",
+      "purpose": "Look up the modulation, coding rate, and PHY data rate for any 802.11 MCS index across channel widths, for 802.11n (HT), 802.11ac (VHT), 802.11ax (HE), and 802.11be (EHT / Wi-Fi 7), scaled by the number of spatial streams.",
+      "whyHere": "For when you see an MCS index in a capture or client stats and want to know the modulation and coding behind it and the rate it should deliver at a given width and stream count.",
+      "howToUse": [
+        "Choose the standard (n, ac, ax, or be) and the stream count; the rates update. 802.11n offers 1 to 4 streams (MCS 0-31 is eight indices across four streams - the standard defines no more); ac, ax, and be offer 1 to 8.",
+        "MCS 0 (BPSK 1/2) is the most robust and slowest; higher MCS indices use denser modulation (up to 1024-QAM for ax and 4096-QAM for be) for higher rates but need a better signal.",
+        "Cells shown as \"N/A\" are genuinely invalid combinations, not zero and not made up. Some are invalid only at certain stream counts.",
+        "Above 4 spatial streams no rate is shown at all. That is not an \"N/A\" - it is a gap in the published source. The screen says so explicitly rather than computing a number it cannot source."
+      ],
+      "inputs": [],
+      "algorithm": null,
+      "example": null,
+      "fieldNotes": [
+        "What it shows: two selectors, the 802.11 standard (n, ac, ax, or be) and the number of spatial streams (1 to 8). Columns per standard: 802.11n = 20 LGI, 20 SGI, 40 LGI, 40 SGI; 802.11ac = 20/40/80/160 SGI; 802.11ax = 20/40/80/160 MHz; 802.11be = 20/40/80/160/320 MHz (both at an 800 ns guard interval).",
+        "802.11ac MCS 9 at 20 MHz is valid ONLY at 3 spatial streams - it is N/A at 1, 2 and 4. MCS 9 at 40 MHz is valid at every stream count. Two further stream-dependent exclusions: MCS 6 at 80 MHz and MCS 9 at 160 MHz are both invalid at 3 streams.",
+        "The source tables publish 1 to 4 spatial streams. Above 4 the app shows no rate, because the per-stream exclusions up there are unpublished and are not derivable from the ones below - a rule that reproduces MCS 9 at 20 MHz exactly still gets MCS 6 at 80 MHz and MCS 9 at 160 MHz wrong. A known gap beats an invented number.",
+        "Guard-interval definitions: 802.11n LGI = 800 ns and SGI = 400 ns; 802.11ac uses SGI. 802.11ax and 802.11be define 0.8, 1.6, and 3.2 microsecond guard intervals only - there is no 400 ns short GI above 802.11ac.",
+        "The notes card points out that real throughput is typically 50 to 65% of the PHY rate. These rates are PHY-layer maximums, not delivered throughput.",
+        "Rates are rounded from the exact PHY value at the chosen stream count, not by multiplying a rounded single-stream figure - so 802.11ac MCS 9 at 160 MHz with 2 streams reads 1733.3, matching the source, not 1733.4.",
+        "Data source: Keith Parsons' MCS Index Chart and mcsindex.net (by @VergesFrancois, SemFio Networks), cross-checked against the IEEE 802.11n/ac/ax/be PHY rate tables."
+      ],
+      "source": "Values come from Keith Parsons' MCS Index Chart and mcsindex.net, cross-checked against the IEEE 802.11n/ac/ax/be PHY rate tables."
     },
     "modulation": {
       "name": "Modulation",
@@ -1390,18 +1416,18 @@
       "fieldNotes": [
         "The SNR and EVM figures on the cards are representative, order-of-magnitude demands, not exact 802.11 MCS thresholds. The relationship, not the precise number, is the point. Use the MCS Index tool for the spec rate and modulation table.",
         "EVM (Error Vector Magnitude) is how far the received symbol lands from the ideal point, expressed as a percentage (or in dB) of the reference amplitude. As the order rises, the decision boundaries shrink, so higher-order QAM needs a lower EVM and a higher SNR.",
-        "The diagrams are shown on an always-dark card in both light and dark app themes so they never look inverted. They are marked decorative for screen readers, since every fact is also in the screen's text and copy output.",
-        "The Copy action exports the order, bits, and SNR/EVM summary as a tab-separated table plus the note that the numbers are representative."
+        "The diagrams are shown on an always-dark card in both light and dark app themes so they never look inverted. They are marked decorative for screen readers, and the summary card below them carries the same order, bits, SNR and EVM figures as real on-screen text - so nothing in the diagrams is available only to sighted users.",
+        "The Copy action exports the same summary table as the screen shows, plus the note that the numbers are representative."
       ],
       "source": "Educational reference content."
     },
     "signal-thresholds": {
       "name": "Signal Thresholds",
       "category": "Quick Reference",
-      "purpose": "RSSI and SNR targets: a quality scale for RSSI, minimum RSSI and SNR by application, and the SNR needed to reach each typical MCS index.",
+      "purpose": "RSSI and SNR design targets: a recommended quality scale for RSSI, minimum RSSI and SNR by application, and the SNR needed to reach each typical MCS index.",
       "whyHere": "For validating a survey or troubleshooting a complaint: \"is -68 dBm good enough for VoIP?\" or \"what SNR do I need to hold MCS 7?\"",
       "howToUse": [
-        "RSSI bands carry a colored verdict dot plus the quality word (green = good, amber = marginal/Fair, red = bad/Weak/Poor); the word always carries the meaning, never the color alone.",
+        "RSSI bands carry a colored verdict dot plus the quality word (green = good, amber = marginal/Fair, red = bad/Poor); the word always carries the meaning, never the color alone.",
         "In the application table, read across to the minimum RSSI and minimum SNR your use case needs.",
         "The SNR-to-MCS table tells you the SNR floor to sustain a given rate."
       ],
@@ -1409,12 +1435,12 @@
       "algorithm": null,
       "example": null,
       "fieldNotes": [
-        "What it shows: three blocks. RSSI quality scale: Excellent (better than -50 dBm) / Good (-50 to -67) / Fair (-67 to -70) / Weak (-70 to -80) / Poor (worse than -80). Minimum signal by application: VoIP/real-time, HD video, general browsing, email/basic data, IoT/low-rate, and location/RTLS, each with a minimum RSSI, minimum SNR, and a note. SNR to MCS (80 MHz, 1 spatial stream): the SNR floor for each MCS index (MCS 0 at 5 dB up to MCS 11 at 35 dB) with an indicative rate.",
-        "The intro says plainly: values vary by client hardware, environment, and AP vendor; treat them as field-planning guidelines, not guarantees.",
-        "The SNR-to-MCS rates are indicative (80 MHz, single stream); the MCS 10 and 11 rates are noted as 802.11ax.",
-        "Data source: field-planning reference thresholds, not derived from a single named standard."
+        "What it shows: three blocks. RSSI quality scale: Excellent (> -60 dBm) / Good (-60 to -67) / Fair (-67 to -72) / Poor (-73 or weaker). Minimum signal by application: VoIP/real-time, HD video, general browsing, email/basic data, IoT/low-rate, and location/RTLS, each with a minimum RSSI, minimum SNR, and a note. SNR to MCS (80 MHz, 1 spatial stream): the SNR floor for each MCS index (MCS 0 at 5 dB up to MCS 11 at 35 dB) with an indicative rate.",
+        "These are recommended design targets, not an industry standard. IEEE 802.11 does not define \"good\" or \"poor\" signal levels, and appropriate thresholds vary by site and by customer requirement.",
+        "Values vary by client hardware, environment, and AP vendor; treat them as field-planning guidelines, not guarantees.",
+        "The SNR-to-MCS rates are indicative (80 MHz, single stream); the MCS 10 and 11 rates are noted as 802.11ax."
       ],
-      "source": "Field-planning reference thresholds."
+      "source": "Recommended design targets. Not an industry standard: IEEE 802.11 does not define signal-quality levels."
     },
     "80211-standards": {
       "name": "802.11 Standards",
@@ -1433,7 +1459,7 @@
         "What it shows: one card per amendment with the IEEE designation, a Wi-Fi generation badge, year, and rows for Bands (GHz), Max PHY rate, MIMO, Channel width (MHz), and Modulation. An optional band filter (All / 2.4 / 5 / 6 GHz) narrows the list.",
         "Two footnotes: (1) \"Official Wi-Fi Alliance generation naming begins at Wi-Fi 4 (802.11n); earlier amendments are shown by their 802.11 names only\"; (2) \"Wi-Fi 7 certification began 2024; IEEE 802.11be was published 2025.\"",
         "The max PHY rate is the theoretical aggregate ceiling; real-world throughput is typically 50 to 60% of it.",
-        "Data source: the IEEE 802.11 amendments. Key rows: 802.11ac = Wi-Fi 5 (2013, 6.9 Gbps); 802.11ax = Wi-Fi 6 (2019) and Wi-Fi 6E (2021, adds 6 GHz); 802.11be = Wi-Fi 7 (2024, 46 Gbps with MLO, 4K-QAM, up to 320 MHz)."
+        "Data source: the IEEE 802.11 amendments. Key rows: 802.11ac = Wi-Fi 5 (2014, 6.9 Gbps); 802.11ax = Wi-Fi 6 (2019) and Wi-Fi 6E (2020, adds 6 GHz); 802.11be = Wi-Fi 7 (2024, 23.1 Gbps with MLO, 4K-QAM, up to 320 MHz)."
       ],
       "source": "Values come from the IEEE 802.11 amendments."
     },
@@ -1445,7 +1471,7 @@
       "howToUse": [
         "Each protocol heading shows the designation (lime) and the full name.",
         "In the thresholds table, the scenario word is color-tinted with a dot: green = good (the two design targets), amber = marginal (the overlap zone), red = bad (the sticky-client trigger and the unusable level).",
-        "Design rules carry the actionable target (for example, \"at least 2 APs at -67 dBm everywhere\" or \"15 to 20% cell overlap minimum\")."
+        "Design rules carry the actionable target (for example, \"at least 2 APs at -67 dBm everywhere\" or \"a second AP at -72 dBm or better across the overlap zone\")."
       ],
       "inputs": [],
       "algorithm": null,
@@ -1563,26 +1589,6 @@
       ],
       "source": "The ratios are standard decibel math and the dBm anchors cite published FCC and ETSI limits."
     },
-    "ap-placement": {
-      "name": "AP Placement",
-      "category": "Quick Reference",
-      "purpose": "Field-tested design rules for where to put access points, how to size and overlap cells, plan channels, and handle high-density venues.",
-      "whyHere": "A pre-survey checklist of placement do's and don'ts: mounting, spacing, overlap targets, and how many clients to expect per radio.",
-      "howToUse": [
-        "Read it top to bottom as guidance; each bullet is a complete recommendation.",
-        "The coverage distances given are starting points (20 to 30 m in open office, 10 to 15 m through walls), not guarantees."
-      ],
-      "inputs": [],
-      "algorithm": null,
-      "example": null,
-      "fieldNotes": [
-        "What it shows: five rule groups, each a heading over a bulleted list: Start with requirements, AP location, Cell sizing and overlap (at least 2 access points at -70 dBm everywhere, 15 to 20% overlap, typical coverage distances), Channel planning (2.4 GHz uses only channels 1/6/11, co-channel spacing, prefer 5/6 GHz, DFS), and High-density venues (lower power and add access points, directional antennas, a ceiling of 20 to 30 clients per radio, tri-radio caveats).",
-        "The intro notes that coverage distances and spacing are starting points; always confirm a design with a survey after install.",
-        "An access point is never called a router. The per-radio client ceiling depends on the model.",
-        "Source: accumulated Wi-Fi design best practice from the field, not a single named standard."
-      ],
-      "source": "Accumulated Wi-Fi design best practice from the field, not a single named standard."
-    },
     "poe-reference": {
       "name": "PoE Reference",
       "category": "Quick Reference",
@@ -1638,7 +1644,7 @@
       "example": null,
       "fieldNotes": [
         "Consolidated 2026-06-12 from the former Ethernet Cable, Ethernet Pinout, and Cable & Connector tiles into this single tool.",
-        "Cable chart: for each category (Cat5e, Cat6, Cat6A, Cat7, Cat7A, Cat8): maximum bandwidth (MHz), top speed, distance at 1 Gbps and 10 Gbps, PoE support, shielding, and a typical-use note. Plus a BASE-T speed-grade table (1G/2.5G/5G/10G) and an ISO/IEC 11801 shielding-code key.",
+        "Cable chart: for each peer category (Cat5e, Cat6, Cat6A, Cat8): maximum bandwidth (MHz), top speed, distance at 1 Gbps and 10 Gbps, PoE support, shielding, and a typical-use note. Plus a BASE-T speed-grade table (1G/2.5G/5G/10G) and an ISO/IEC 11801 shielding-code key.",
         "Cat 7 is not a TIA standard. TIA never ratified Category 7; it exists only as ISO/IEC Class F (Cat 7A as Class FA) and uses GG45 / TERA connectors rather than the usual RJ-45. For 10G structured cabling, Cat 6A is the TIA-recognized choice. A warning callout flags this.",
         "PoE++ tip: bundled Cat6 running PoE++ builds up significant heat; Cat6A sheds it better, and TIA-568 recommends Cat6A for PoE++ in bundles.",
         "Pinout: each standard's eight pin rows show the pin number, a wire-color swatch and its name (for example \"Orange / White\"), the twisted-pair number (1 to 4), and the 100/1000 Base-T function. Only pairs 2 and 3 (orange and green) differ between T568A and T568B; a crossover cable uses A on one end and B on the other, rarely needed today since most switches and network cards auto-adjust.",
@@ -2071,14 +2077,15 @@
         "Enter a host, pick the common-ports preset or type a custom spec (for example 22, 80, 443, 8000-8100), and run. Results stream in as ports settle."
       ],
       "inputs": [],
-      "algorithm": "For each port, the tool tries to open a connection with an 800ms default timeout. Open means the connection completed; Closed means the host actively refused it (the host is reachable, nothing is listening on that port); Filtered means no response before the timeout (likely a firewall silently dropping the request). That's the same open/closed/filtered result a full connect scan gives. Connections run in a capped pool (up to 64 at a time) and stream in as they finish. The common-ports preset is 44 ports a network pro actually checks (from 20 up to 27017, each labeled with its service, for example 443 as HTTPS and 3389 as RDP).",
+      "algorithm": "For each port, the tool tries to open a connection with an 800ms default timeout. Open means the connection completed. Closed means the host actively refused it, which tells you the host is reachable and simply has nothing listening on that port. Filtered means nothing came back at all before the timeout: the request was silently dropped, or the host isn't there. That's the same open/closed/filtered result a full connect scan gives. Connections run in a capped pool (up to 64 at a time) and stream in as they finish. The common-ports preset is 44 ports a network pro actually checks (from 20 up to 27017, each labeled with its service, for example 443 as HTTPS and 3389 as RDP).",
       "example": null,
       "fieldNotes": [
         "Platform differences: works the same on every native platform (no special permission beyond ordinary network access). Turned off on the web version.",
         "\"Filtered\" means the request went unanswered (likely a firewall); it does not mean the port is closed. A custom range is de-duplicated and kept within the valid 1 to 65535 range.",
-        "This is a TCP connect scan, not a stealth scan; it completes each connection and then tears it down. A host that comes back all-filtered is usually unreachable or firewalled wholesale."
+        "\"Closed\" is a positive signal: it means the host ANSWERED and refused. A host that isn't there reads as all-filtered, never all-closed. If every port comes back filtered, suspect the host is down or firewalled wholesale rather than idle. The copied report spells this legend out.",
+        "This is a TCP connect scan, not a stealth scan; it completes each connection and then tears it down."
       ],
-      "source": "Tries to open a TCP connection to each port and reports whether it opened, was refused, or went unanswered."
+      "source": "Tries to open a TCP connection to each port and reports whether it opened, was actively refused, or went unanswered."
     },
     "ping": {
       "name": "Ping (TCP)",
@@ -2089,12 +2096,14 @@
         "Enter a host, optionally pick a probe port (443 default; presets 443, 80, 53, 22, 7) and a count, and run. Live min/avg/max/loss and a sparkline build as replies land."
       ],
       "inputs": [],
-      "algorithm": "Each \"ping\" times how long it takes to open a connection to the host on the chosen port (443 by default). Either a completed connection OR an active refusal counts as a successful round trip for timing (exactly how tcping treats it); only a genuine timeout or a name-lookup failure counts as loss. Probes are spaced by your chosen interval minus the time the last probe took, so the cadence stays steady even under high latency.",
+      "algorithm": "Each \"ping\" times how long it takes to open a connection to the host on the chosen port (443 by default). Either a completed connection OR an active refusal counts as a successful round trip for timing (exactly how tcping treats it, because the host answered either way). A timeout, an unreachable host, or a failed name lookup counts as loss, and no round-trip time is recorded for it. Probes are spaced by your chosen interval minus the time the last probe took, so the cadence stays steady even under high latency.",
       "example": null,
       "fieldNotes": [
         "Platform differences: identical on every native platform. Turned off on the web version. The screen labels the metric \"TCP RTT\" and shows the target port, so it's never mistaken for classic ICMP ping.",
         "The round-trip time is the connection time to a port, slightly higher than classic ping, and it depends on that port answering. Even a \"refused\" target gives you a valid timing number, because the host answered.",
-        "This is not classic ICMP echo (see Ping (ICMP) for the real-ICMP path on mobile). If a host blocks the probe port, it reads as loss even if the host is up on another port; try a different probe port."
+        "A host that never answers is reported as loss with no round-trip time. The tool never invents an RTT for a packet it did not get back.",
+        "This is not classic ICMP echo (see Ping (ICMP) for the real-ICMP path on mobile). If a host blocks the probe port, it reads as loss even if the host is up on another port; try a different probe port.",
+        "The copied report carries a Method line defining what counts as a reply (a completed handshake or an active refusal), so a pasted result can't be misread by someone who never saw the screen."
       ],
       "source": "Times how long it takes to open a TCP connection to the host, and reports that as the round-trip time."
     },
@@ -2115,7 +2124,8 @@
         "This is a TCP round-trip probe, not an ICMP echo. The reading is labeled \"TCP RTT\" and the probe port is shown, so you can't mistake it for ICMP. For true ICMP, see Ping (ICMP) on mobile.",
         "It runs on every native platform, including the Mac desktop where true ICMP can't run. It's turned off on the web version, which shows a prompt to download the app.",
         "Dropped probes are always shown, never hidden. A lost sample is a red dot on the axis and counts toward the loss percentage, so a flaky path reads honestly instead of as a smooth line.",
-        "The chart keeps a fixed number of recent samples so a long run stays light on memory, and the copy export notes how many of the total samples are shown."
+        "The chart keeps a fixed number of recent samples so a long run stays light on memory, and the copy export notes how many of the total samples are shown.",
+        "The copied report carries a Method line defining what counts as a reply (a completed handshake or an active refusal), so a pasted result can't be misread by someone who never saw the screen."
       ],
       "source": "It repeatedly sends TCP round-trip probes to the host and charts each reply as it arrives."
     },
@@ -2146,14 +2156,15 @@
         "Enter a range: a CIDR block (192.168.1.0/24), a range (192.168.1.10-40, or with a full end address), or a single IP. Then run it. A live progress bar and a running count of responsive hosts build as it goes."
       ],
       "inputs": [],
-      "algorithm": "For each address it tries to open a TCP connection to a common port (443 by default; it can also try 80, 22, and 53, and a host counts as responsive the instant any of them answers). Both a completed connection and a refused connection prove the host answered; only silence on the port means no response. It works through a batch of hosts at a time (32 in flight by default) to stay fast. It's capped at 254 hosts (a /24); anything larger is rejected with a clear \"that's N hosts, the cap is M\" message rather than being silently cut short.",
+      "algorithm": "For each address it tries to open a TCP connection to a common port (443 by default; it can also try 80, 22, and 53, and a host counts as responsive the instant any of them answers). A host is listed when it ANSWERS: either the connection completes, or the host actively refuses it (a refusal is a reply, and proves something is there). Silence is not an answer, so a host that times out, is unreachable, or is simply not there is NOT listed and is NOT counted as live. It works through a batch of hosts at a time (32 in flight by default) to stay fast. It's capped at 254 hosts (a /24); anything larger is rejected with a clear \"that's N hosts, the cap is M\" message rather than being silently cut short.",
       "example": null,
       "fieldNotes": [
         "It works the same on every native platform and is turned off on the web version.",
         "A host is reported as \"responded,\" not \"up.\" A host that stays silent on the probed ports may still be alive but only answering ICMP, or behind a firewall. The tool never claims ICMP-style liveness.",
+        "A refused connection still counts as responded, and that is deliberate: the host answered, it just isn't listening on that port. That is how tcping behaves too. The list and the copied report say which it was — \"handshake\" or \"refused\" — so a middlebox refusing on behalf of a whole range can't be mistaken for a range full of live servers.",
         "This finds hosts that answer TCP on the probed ports. For richer detail (name, services, device type, vendor), use Network Discovery. A /31 or /32 includes every address; larger blocks leave out the network and broadcast addresses."
       ],
-      "source": "It tries a quick TCP connection to a common port on each address and lists the ones that answer."
+      "source": "It tries a quick TCP connection to a common port on each address and lists only the ones that answer, whether they accept the connection or refuse it."
     },
     "network-discovery": {
       "name": "Network Discovery",
@@ -2290,11 +2301,12 @@
         "Open it and run it. It works out your local network range, checks each address, and attaches the known hardware address wherever the platform makes one available."
       ],
       "inputs": [],
-      "algorithm": "It figures out your local network range (usually a /24, or the real one if different) and quickly checks each address by trying to open a connection on a handful of common ports (80, 443, 22, 445, 139, 53, 8080). A device that answers, even with a refusal, counts as present. On Android and Linux it also reads the system's own address table to attach the real hardware (MAC) address it has already learned. As a safety limit, it refuses to scan anything larger than about 1,000 addresses.",
+      "algorithm": "It figures out your local network range (usually a /24, or the real one if different) and quickly checks each address by trying to open a connection on a handful of common ports (80, 443, 22, 445, 139, 53, 8080). A device counts as present when it ANSWERS, whether it accepts the connection or actively refuses it. An address that stays silent, times out, or is unreachable is not listed. On Android and Linux it also reads the system's own address table to attach the real hardware (MAC) address it has already learned. As a safety limit, it refuses to scan anything larger than about 1,000 addresses.",
       "example": null,
       "fieldNotes": [
         "What each platform can do: Android and Linux give you the device list plus the real hardware address. macOS and Windows give you the device list but no hardware address, because the system does not make that table readable here, so MAC shows \"Not exposed on this platform\". iOS cannot do this at all, because Apple does not let apps read the neighbor table. On web it offers a download fallback.",
         "A blank MAC means the platform genuinely does not expose it, never a guessed value. Empty or all-zero entries are skipped.",
+        "Only addresses that answer are listed. A silent address is left out rather than guessed at, so the list is what replied, not what might be there.",
         "On macOS and Windows you get a device list without hardware addresses; that is the platform's limit. For richer detail, and hardware addresses on macOS, use Network Discovery."
       ],
       "source": "It quietly checks each address on your local network and, on Android and Linux, reads the system's learned hardware-address table to fill in the MAC."
@@ -2853,11 +2865,11 @@
     "port-reference": {
       "name": "Well-Known Ports",
       "category": "Quick Reference",
-      "purpose": "A searchable, offline reference of 86 hand-picked TCP/UDP ports a network or Wi-Fi pro runs into in the field. Search by port number or by part of a service name or description.",
+      "purpose": "A searchable, offline reference of 89 hand-picked TCP/UDP ports a network or Wi-Fi pro runs into in the field. Search by port number or by part of a service name or description.",
       "whyHere": "At a packet capture or writing a firewall rule, you ask two questions: what runs on port N, and what port does service X use. This answers both without leaving the app or going online.",
       "howToUse": [
         "Type a port number (for example, 443) for an exact-port lookup, or a service name or keyword (for example, radius, dns, vpn) to match against both the service name and the description, ignoring case.",
-        "Leave the search box empty to list all 86 ports, sorted from lowest number to highest.",
+        "Leave the search box empty to list all 89 ports, sorted from lowest number to highest.",
         "Each result shows the service name, the port number with its protocol label (TCP, UDP, or both), and a one-line description.",
         "A search that matches nothing shows an honest 'No match' note; it never makes up a port."
       ],
@@ -2865,8 +2877,8 @@
       "algorithm": null,
       "example": null,
       "fieldNotes": [
-        "What's inside: 86 hand-picked entries spanning ports 1 to 27017 (for example, 53 dns TCP/UDP, 67 dhcp UDP, 123 ntp UDP, 443 https TCP/UDP where UDP 443 carries HTTP/3 QUIC, 1812 radius UDP and 1813 radius-acct UDP for 802.1X / WPA2-Enterprise, and 3389 rdp). Each entry has the port number, its protocol(s), a short service name, and a one-line description.",
-        "The table lists TCP and UDP only: 38 are TCP-only, 26 UDP-only, and 22 both.",
+        "What's inside: 89 hand-picked entries spanning ports 1 to 27017 (for example, 53 dns TCP/UDP, 67 dhcp UDP, 123 ntp UDP, 443 https TCP/UDP where UDP 443 carries HTTP/3 QUIC, 1812 radius UDP and 1813 radius-acct UDP for 802.1X / WPA2-Enterprise, and 3389 rdp). Each entry has the port number, its protocol(s), a short service name, and a one-line description.",
+        "The table lists TCP and UDP only: 38 are TCP-only, 28 UDP-only, and 23 both.",
         "This is a curated subset of the official IANA port registry, trimmed to the ports you actually meet in the field, not the full list of roughly 49,000 entries. If a port isn't here, it just means it's not in our set, and the screen says so plainly rather than inventing a row.",
         "Fully offline: the list is carried inside the app and works on every platform.",
         "Bad or incomplete entries are simply left out rather than shown as blanks."
@@ -3061,31 +3073,6 @@
       ],
       "source": "A read-along reference built from verified, stated numbers; no inputs and no live calculation."
     },
-    "dual-orb-wlanpi": {
-      "name": "Dual Orbs on WLAN Pi",
-      "category": "Quick Reference",
-      "purpose": "A step-by-step how-to that turns a WLAN Pi R4 or M4+ into two Orb sensors (one testing the wired connection over Ethernet, one testing Wi-Fi) by installing a bundled software package. The screen walks through the copy, install, and reboot flow, covers the cloned-image identity reset, shows how to reconfigure the Wi-Fi credentials, and lists the commands for managing the sensors. A Download button hands you the bundled package (wlanpi-dual-orb_1.1.3_all.deb) via the share sheet.",
-      "whyHere": "When you want continuous, two-path connection monitoring (wired and wireless) from one small device you already carry, this gets a WLAN Pi running two free Orb sensors in a few commands. The results show up in your own Orb account; the Toolbox just gives you the guide and the package.",
-      "howToUse": [
-        "Tap Download wlanpi-dual-orb.deb and save it (Files / AirDrop / Mail). Keep the filename; the install command refers to it by name.",
-        "Copy the package to your WLAN Pi: scp wlanpi-dual-orb_1.1.3_all.deb wlanpi@<your-Pi-IP>:~",
-        "SSH to the Pi and install it: sudo apt install ./wlanpi-dual-orb_1.1.3_all.deb (it prompts for the Wi-Fi SSID, password, and encryption).",
-        "Reboot: sudo reboot. On boot the Pi installs Orb and starts both sensors on its own.",
-        "If you cloned the image onto more than one Pi, run sudo orb-reset-identity on each so the Orb dashboard sees a distinct new sensor.",
-        "To change the Wi-Fi credentials later, run sudo orb-wifi-configure."
-      ],
-      "inputs": [],
-      "algorithm": null,
-      "example": null,
-      "fieldNotes": [
-        "What it installs: the free, open-source Orb sensor on the Pi, with its background services running as root. You view results in your own Orb account, free for up to 5 devices. Nothing of Orb's is redistributed by the Toolbox; the bundled package only sets the sensor up.",
-        "Tested on the WLAN Pi R4 and the M4+.",
-        "On cloned images the Orb IDs and hostnames carry over from the original; sudo orb-reset-identity deletes the old ones and derives fresh IDs and names from the WLAN Pi hostname. Use sudo orb-reset-identity --dry-run to preview without changing anything.",
-        "The Wi-Fi sensor runs in its own isolated network space named orb-wifi; you can inspect it with sudo ip netns exec orb-wifi iw dev or sudo ip netns exec orb-wifi ip link show.",
-        "Guide and package by Ferney Munoz. Orb: orb.net. WLAN Pi project: wlanpi.com."
-      ],
-      "source": "A step-by-step guide plus a downloadable package you install on your own WLAN Pi; the Toolbox runs nothing on the Pi."
-    },
     "freeradius-wlanpi": {
       "name": "FreeRADIUS on WLAN Pi",
       "category": "Quick Reference",
@@ -3114,7 +3101,7 @@
       "name": "Antenna Fundamentals",
       "category": "Quick Reference",
       "purpose": "A read-along teaching reference for antenna literacy: what an antenna actually does (it shapes where the radio's energy goes, it does not add power), azimuth vs elevation, why gain trades against beamwidth, polarization and the wall-clock mistake, downtilt, how to read a radiation-pattern polar plot (main lobe, the -3 dB beamwidth points, side lobes, nulls, front-to-back ratio), and which antenna type (omni, patch, sector, Yagi, dish) fits which space. Seven line diagrams are embedded at the points they teach.",
-      "whyHere": "It is the antenna-literacy companion to the directional tools in the toolbox (AP Placement, Downtilt, Point-to-Point, Fresnel). When you are choosing or mounting an antenna and want to reason about coverage shape rather than chase a gain number, this is the read-first reference.",
+      "whyHere": "It is the antenna-literacy companion to the directional tools in the toolbox (Downtilt, Point-to-Point, Fresnel). When you are choosing or mounting an antenna and want to reason about coverage shape rather than chase a gain number, this is the read-first reference.",
       "howToUse": [
         "Read top to bottom: it builds from one idea (an antenna is a shaper, not a booster) through azimuth/elevation, orientation, reading a pattern chart, and what to use where.",
         "Use the embedded diagrams alongside the prose: the polar-plot anatomy diagram labels every feature (main lobe, -3 dB beamwidth, side lobes, nulls, back lobe, front-to-back) so a manufacturer's chart stops being a mystery.",
@@ -3411,9 +3398,10 @@
       "algorithm": null,
       "example": null,
       "fieldNotes": [
-        "What it shows: the four WMM Access Categories (Voice, Video, Best Effort, Background), their 802.11 User Priority values, and the DSCP code points (name, decimal, binary) RFC 8325 recommends.",
+        "What it shows: the four WMM Access Categories (Voice, Video, Best Effort, Background), their 802.11 User Priority values, and the DSCP code points (name, binary, decimal) RFC 8325 recommends.",
+        "Two different levels of authority sit on one screen, and the screen labels which is which. The User Priority to Access Category mapping is NORMATIVE - IEEE 802.11 Table 10-1 defines it. The DSCP to Access Category mapping is a CONVENTION: IEEE 802.11 defines no normative DSCP mapping, its own tables are examples in an informative annex, and RFC 8325 says so verbatim. Do not quote the DSCP mapping to a customer as \"the standard\".",
         "The voice-into-video trap is called out prominently rather than buried, because it is the exact misconfiguration this page exists to catch.",
-        "Built from RFC 8325 (Mapping Diffserv to IEEE 802.11), IEEE 802.11e / 802.11-2020, IEEE 802.1Q, and Wi-Fi Alliance WMM, with DSCP values per RFC 2474 / 2597 / 3246 / 5865. Works fully offline."
+        "Built from RFC 8325 (Mapping Diffserv to IEEE 802.11), IEEE 802.11 Table 10-1, IEEE 802.1Q, and Wi-Fi Alliance WMM, with DSCP code points from the IANA DSCP registry (RFC 2474 / 2597 / 3246 / 5865). Works fully offline."
       ],
       "source": "A fixed reference table drawn from the QoS standards, built in and available offline."
     },
@@ -3449,15 +3437,16 @@
       "example": null,
       "fieldNotes": [
         "What it shows: which features are present or absent, the stream, width, and QAM ceilings for each generation, and a top theoretical PHY-rate row.",
-        "The max PHY rate is a theoretical ceiling, not a real-world client speed. It is marked as a ceiling with a note showing the math (for example, Wi-Fi 7 at about 46 Gbps = 16 streams x 320 MHz x 4096-QAM, while no shipping client goes above 2-4 streams). Never treat it as an achievable speed.",
-        "Built from IEEE 802.11ac/ax/be. The 802.11be (Wi-Fi 7) values come from the draft approaching final ratification and may shift, which is flagged on the page. Works fully offline."
+        "The max PHY rate is a theoretical ceiling, not a real-world client speed. It is marked as a ceiling with a note showing the math (Wi-Fi 7 at about 23.1 Gbps = 8 streams x 320 MHz x 4096-QAM, while no shipping client goes above 2-4 streams). Never treat it as an achievable speed.",
+        "The widely-quoted \"Wi-Fi 7 = 46 Gbps\" figure assumes 16 spatial streams. IEEE 802.11be-2024 (Table 9-417t) caps EHT at 8 streams - max-NSS values 9 to 15 are Reserved - so that figure is not reachable under the ratified amendment. MLO aggregates traffic across links; it does not raise a single link's PHY ceiling.",
+        "Built from IEEE 802.11ac/ax and the ratified IEEE 802.11be-2024."
       ],
-      "source": "A fixed comparison table drawn from the 802.11 standards, built in and available offline."
+      "source": "A fixed comparison table built from IEEE 802.11ac, 802.11ax, and the ratified 802.11be-2024. Works offline."
     },
     "regulatory-domains": {
       "name": "Regulatory Domains",
       "category": "Quick Reference",
-      "purpose": "The radio regulator that governs Wi-Fi in each market: its name, official website, governing documents, and 2.4, 5, and 6 GHz band and power notes for 43 jurisdictions, as a dated snapshot.",
+      "purpose": "The radio regulator that governs Wi-Fi in each market: its name, official website, governing documents, and 2.4, 5, and 6 GHz bands (a dated snapshot to verify against the regulator) for 43 jurisdictions.",
       "whyHere": "Working a market you do not know? Find its regulator, the governing rule, and a starting band and power note, then confirm against the official site.",
       "howToUse": [
         "Search by jurisdiction or regulator abbreviation. Shared abbreviations (NCC, TRA, CRA) include the jurisdiction so they stay clear.",
@@ -3468,7 +3457,7 @@
       "algorithm": null,
       "example": null,
       "fieldNotes": [
-        "What it shows: region-level (not per-country) FCC and ETSI rules for the Wi-Fi bands, plus the ITU three-region note. The structural rules (band edges, DFS/TPC, which power classes exist) are high confidence; the exact dBm figures are a snapshot.",
+        "What it shows: a per-jurisdiction directory of 43 jurisdictions, each with its regulator (name, abbreviation, logo), the governing regulation, official website, and a 2.4/5/6 GHz bands note. The structural rules (band edges, DFS/TPC, which power classes exist) are high confidence; the exact dBm figures are a snapshot to verify against the regulator.",
         "Regulations change: the 6 GHz dBm values are being amended (VLP extended band-wide, new geofenced classes). Never treat these as settled constants. Verify before deploying or certifying.",
         "Cross-checked across FCC and ETSI documents and vendor regulatory white papers, current as of 2026. Works fully offline."
       ],
@@ -3959,7 +3948,7 @@
       "algorithm": null,
       "example": null,
       "fieldNotes": [
-        "Read every range, rate, and battery figure as a real-world envelope, not a hard spec; they move with power, antenna, spreading factor, channel width, and environment.",
+        "Read every range and rate figure as a real-world envelope, not a hard spec; they move with power, antenna, spreading factor, channel width, and environment.",
         "CBRS lives at 3.55 to 3.70 GHz and does not overlap any Wi-Fi band; private cellular competes for the job and the budget, never for your air.",
         "A Zigbee mesh and a wall of BLE beacons show up in a 2.4 GHz sweep as non-Wi-Fi energy; naming what you see is the difference between a diagnosis and a guess.",
         "Reference only. Confirm current standards editions and regional band allocations for the specific deployment."
