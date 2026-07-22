@@ -428,7 +428,7 @@
       "name": "Architectural Scale",
       "category": "Calculators & Tools",
       "purpose": "Converts a named drawing scale to its dimensionless ratio and back, and converts a distance measured on a drawing to its real-world length (or the reverse). Covers US architectural fractional-inch scales, engineer's decimal scales, and common metric scales.",
-      "whyHere": "WLAN pros work inside plan sets and scaled PDFs they were never taught to read. Every coverage prediction, wall distance, and mounting height is wrong if the scale is wrong — this is the same calibration step Ekahau, Hamina, and iBwave ask for on import.",
+      "whyHere": "WLAN pros work inside plan sets and scaled PDFs they were never taught to read. Every coverage prediction, wall distance, and mounting height is wrong if the scale is wrong. This is the same calibration step Ekahau, Hamina, and iBwave ask for on import.",
       "howToUse": [
         "Pick the scale family (Architectural, Engineering, or Metric).",
         "Pick the specific scale, for example 1/4\" = 1'-0\". Read its ratio (1:48).",
@@ -456,7 +456,7 @@
       "algorithm": "ratio = real ÷ drawn. Imperial: ratio = 12 ÷ inches-per-foot (1/8\" = 1'-0\" → 12 ÷ 0.125 = 96 → 1:96). Engineer's: feet-per-inch × 12 (1\" = 20' → 240 → 1:240). Metric scales are already ratios. Drawn → real multiplies the measurement by the ratio; real → drawn divides. The ratio is dimensionless, so the conversion runs through a millimetre base and the two ends can carry different units.",
       "example": "3.5\" measured on a 1/8\" = 1'-0\" (1:96) sheet is 3.5 × 96 = 336 inches = 28 ft. In reverse, a 45 ft hallway at 1/4\" = 1'-0\" (1:48) draws at 45 ÷ 48 = 0.9375 ft = 11-1/4 inches.",
       "fieldNotes": [
-        "The result is only as good as the scale. If a PDF has no embedded scale, confirm which scale it is by measuring a known dimension — a 3'-0\" door or a 2×4 ft ceiling tile.",
+        "The result is only as good as the scale. If a PDF has no embedded scale, confirm which scale it is by measuring a known dimension: a 3'-0\" door or a 2×4 ft ceiling tile.",
         "Printed and PDF plans are often not to true scale (fit-to-page printing, cropped sheets). Trust a dimensioned callout on the sheet over any measurement.",
         "US-primary: architectural scales use fractional inches, engineer's scales use decimal feet per inch. Metric ratios (1:50, 1:100) are provided for ISO drawing sets."
       ],
@@ -1507,6 +1507,29 @@
       ],
       "source": "The sequences reproduce the standard 802.11 join and handshake behavior; nothing is invented."
     },
+    "packet-decode": {
+      "name": "Packet Decode",
+      "category": "Quick Reference",
+      "purpose": "Byte-level anatomy of the Layer 3 and 4 headers a capture shows beneath 802.11: the field, its bit offset and width, and what it means, for IPv4, IPv6, TCP, UDP, and ICMP. Plus the TCP control bits, the TCP connection states with the three-way handshake and teardown, a common IP-protocol-numbers table, and the ICMP and ICMPv6 type and code tables.",
+      "whyHere": "When you are reading a packet in Wireshark and need to confirm which field sits at which offset, what a TCP flag combination means, or what an ICMP type and code is telling you, without leaving the app or going online.",
+      "howToUse": [
+        "Scroll to the header you are decoding. Each header table lists the field, its bit offset (counted from bit 0), its bit length, and a plain-language meaning.",
+        "The IPv4 Type-of-Service octet is shown the modern way: DSCP (6 bits) plus ECN (2 bits). The legacy precedence reading is noted beneath.",
+        "For TCP, the flags table lists the eight control bits (CWR, ECE, URG, ACK, PSH, RST, SYN, FIN); the reserved bit that some tools still label NS is shown separately with its history.",
+        "The IPv4 Protocol and IPv6 Next Header fields point at the IP-protocol-numbers table. For TCP and UDP port numbers, use the Well-Known Ports reference instead.",
+        "Use the copy button in the toolbar to copy every table as tab-separated text, one section per header."
+      ],
+      "inputs": [],
+      "algorithm": null,
+      "example": null,
+      "fieldNotes": [
+        "Bit offsets count from bit 0 of each header, where bit 0 is the first (most-significant) bit. Bit lengths are exact, never approximate. Variable-length fields (IPv4/TCP Options, padding, payload) are labeled variable.",
+        "TCP control bits use RFC 9293's canonical layout: a 4-bit reserved field plus 8 control bits. The bit at position 103 that Wireshark historically labels NS is Reserved in RFC 9293. It was NS (Nonce Sum, RFC 3540), which RFC 8311 made Historic, and RFC 9768 reassigns it as AE (Accurate ECN). It is shown for decoder completeness, flagged historic, not as a current flag.",
+        "ICMP type 4 (Source Quench) is kept in the table but marked deprecated per RFC 6633.",
+        "Every field offset, width, flag, state, type, and code is transcribed from the RFCs and the IANA registries and cited per table: IPv4 (RFC 791, with DSCP/ECN per RFC 2474 and RFC 3168), IPv6 (RFC 8200), TCP (RFC 9293), UDP (RFC 768), ICMP (RFC 792 plus the IANA ICMP Parameters registry), and ICMPv6 (RFC 4443, with NDP per RFC 4861)."
+      ],
+      "source": "Every value is transcribed from the primary RFC or IANA registry, cited per table; nothing is invented or approximated."
+    },
     "reason-codes": {
       "name": "802.11 Reason Codes",
       "category": "Quick Reference",
@@ -1869,11 +1892,11 @@
       "howToUse": [
         "Open the tool and tap Run.",
         "On iOS, the Wi-Fi signal details (RSSI, channel, rate, PHY) come from the companion Shortcut, and running the test fires it AUTOMATICALLY. You don't have to tap anything to capture the Wi-Fi RF. The details then appear both on screen (the live \"Wi-Fi signal\" graphs) and in the copied report. If the automatic capture can't reach the Shortcut (not installed, or the launch was cancelled), the \"Your Wi-Fi link\" card offers a manual \"Capture Wi-Fi details\" button instead of a grid of \"Unavailable,\" so you know it's a capture step, not a broken tool. The security type and BSSID still fill in on their own without the Shortcut.",
-        "On macOS, granting Location only affects whether the network name and BSSID show (macOS 14 and later hide those two fields until you allow Location); the verdict itself is based on link rate and never needs it. To save you a trip into System Settings, running the test brings up the native \"Allow Location\" prompt the FIRST time the permission hasn't been set (at most once per screen open, never on every run). If Location isn't granted, the \"Your Wi-Fi link\" card shows a short inline hint where the network name would sit, \"Wi-Fi network name hidden — Location access needed,\" with a one-tap action: \"Allow Location\" while the prompt can still appear, or \"Open settings\" (a direct link to the macOS Location Services pane) once it's been denied. After you grant it, the network name and BSSID fill in; until then the copied report labels them \"Unavailable (grant Location access to show the network name)\" rather than a bare \"Unavailable.\"",
+        "On macOS, granting Location only affects whether the network name and BSSID show (macOS 14 and later hide those two fields until you allow Location); the verdict itself is based on link rate and never needs it. To save you a trip into System Settings, running the test brings up the native \"Allow Location\" prompt the FIRST time the permission hasn't been set (at most once per screen open, never on every run). If Location isn't granted, the \"Your Wi-Fi link\" card shows a short inline hint where the network name would sit, \"Wi-Fi network name hidden. Location access needed,\" with a one-tap action: \"Allow Location\" while the prompt can still appear, or \"Open settings\" (a direct link to the macOS Location Services pane) once it's been denied. After you grant it, the network name and BSSID fill in; until then the copied report labels them \"Unavailable (grant Location access to show the network name)\" rather than a bare \"Unavailable.\"",
         "Read the two status chips (Wi-Fi / Internet) and the headline.",
         "The whole test takes up to about a minute (three back-to-back measurement windows of up to about 15 seconds each: download, upload, then a loaded-responsiveness check). A short \"This usually takes about half a minute\" note shows under the loader.",
         "Use the \"Run again\" action at the top right to re-run the whole Wi-Fi and internet test.",
-        "Tap \"Copy these details\" for a thorough, help-desk-ready report. It opens with a \"WLAN Pros Toolbox — Connection Report\" header plus the test date and time, then clearly labelled sections: Wi-Fi (SSID, BSSID, RSSI, noise, SNR, Tx/Rx rate, channel, width, band, PHY, security), Internet (download, upload, latency, jitter, loss, responsiveness), DNS (a real resolution-time measurement), Network (local IP, subnet mask, default gateway, plus DHCP server / DNS server(s) / VLAN marked honestly unavailable), ISP (public IP, ISP/org, ASN, when reachable), cloud apps reachability, and the verdict. Unavailable fields say so; the ISP and cloud-apps sections are left out cleanly when you're offline.",
+        "Tap \"Copy these details\" for a thorough, help-desk-ready report. It opens with a \"WLAN Pros Toolbox: Connection Report\" header plus the test date and time, then clearly labelled sections: Wi-Fi (SSID, BSSID, RSSI, noise, SNR, Tx/Rx rate, channel, width, band, PHY, security), Internet (download, upload, latency, jitter, loss, responsiveness), DNS (a real resolution-time measurement), Network (local IP, subnet mask, default gateway, plus DHCP server / DNS server(s) / VLAN marked honestly unavailable), ISP (public IP, ISP/org, ASN, when reachable), cloud apps reachability, and the verdict. Unavailable fields say so; the ISP and cloud-apps sections are left out cleanly when you're offline.",
         "Scroll to the bottom for the \"Cloud apps reachable?\" panel. It checks whether your device can reach recognizable services (Facebook, Instagram, TikTok, YouTube, Netflix, Google, iCloud, Microsoft 365, Cloudflare, AWS, Zoom, Slack, GitHub, and a Cloudflare DNS anchor) and times each connection. Its \"Re-check cloud apps\" button re-runs ONLY this panel, not the whole test."
       ],
       "inputs": [],
@@ -1938,7 +1961,7 @@
         "Why your speed test may read differently: no single number is \"the\" speed of a connection. When the Toolbox shows an internet throughput figure, it is real throughput to neutral public destinations, measured over a fixed window and reported honestly. If another test on the same connection reads higher, that is the method talking: a different server, more streams, a longer ramp-up. If the Toolbox can't get a clean read, it tells you it couldn't rather than inventing a number. (see: How the Toolbox Measures Throughput)"
       ],
       "fieldNotes": [
-        "Platform differences: runs on macOS, Windows, Linux, Android, and iOS. On the web version it points you to download the app instead.",
+        "Platform differences: runs on macOS, Windows, Android, and iOS, and is coming to the WLAN Pi. On the web version it points you to download the app instead.",
         "Read each grade on its own: a connection can be Excellent on latency and Poor on upload at the same time, which is exactly the point. The download and upload Mbps grades are \"good enough for a household\" rules of thumb, not standards. Responsiveness is directional only.",
         "Latency times a full connection handshake to a real host, so it's a faithful stand-in for ping and reads slightly higher.",
         "The on-screen footnote says it plainly: these are this app's own measurements, not any other service's score. Download adds two streams together, so it reflects your link's total capacity rather than a single flow. A failed measurement reads \"Unavailable\" with a note, never 0."
@@ -1990,6 +2013,7 @@
       "purpose": "Records each time your device roams from one access point to another on the same network during a monitoring session, capturing the time, the from-and-to access points, and the signal at the moment of the roam.",
       "whyHere": "A roam is when your device switches access points while staying on the same network. Watching the live Wi-Fi signal lets you see a roam happen, but nothing records it. Reach for this when you want a timestamped list of roams from a walk-around, for example to see where a device clings to a far access point or hops too often.",
       "howToUse": [
+        "A \"Current connection\" card sits at the top of the screen, so you see your live link (network, access point, band and standard, channel and width, signal, SNR, Tx rate) the instant you open the tool, before any roam happens. It reads the same live link the roam watch does and refreshes with it; a field the platform doesn't report is left out rather than guessed.",
         "macOS: recording starts automatically and keeps reading the Wi-Fi link while the screen is open. Walk your space; each roam is logged as it happens.",
         "iOS: install the \"WLAN Pros Live\" companion Shortcut (the same one Wi-Fi Information uses), tap Start, then walk with the screen open. Because firing the Shortcut switches to the Shortcuts app, it waits for your deliberate Start tap rather than starting on its own.",
         "Read the list newest-first: time, network, the from-and-to access points, and the signal (RSSI/SNR) read at the roam.",
@@ -2141,7 +2165,7 @@
       "algorithm": "It sends a real ICMP echo request and waits for the echo reply, using the phone's own ping capability. The result is genuine ICMP timing, always labeled \"ICMP echo\" and never a TCP probe dressed up as one.",
       "example": null,
       "fieldNotes": [
-        "Where it works, honestly: iOS and Android both do real ICMP echo. On macOS, Windows, and Linux desktop the only way to run ICMP is the system ping program, which the Mac App Sandbox blocks, so it gives an honest \"not available in the sandboxed desktop build\" and points you at TCP Ping instead. The web version has no way to do this and offers the download instead.",
+        "Where it works, honestly: iOS and Android both do real ICMP echo. On macOS and Windows the only way to run ICMP is the system ping program, which the Mac App Sandbox blocks, so it gives an honest \"not available in the sandboxed desktop build\" and points you at TCP Ping instead. Coming soon to the WLAN Pi platform. The web version has no way to do this and offers the download instead.",
         "Where it's available, this is genuine ICMP timing and loss, the real thing, not a TCP stand-in.",
         "Device-pending note: the iOS ICMP path is verified with a stand-in during testing but can't be fully confirmed without a real device, so the live round-trip is the piece still pending device verification. On desktop, use TCP Ping."
       ],
@@ -2161,7 +2185,7 @@
       "fieldNotes": [
         "It works the same on every native platform and is turned off on the web version.",
         "A host is reported as \"responded,\" not \"up.\" A host that stays silent on the probed ports may still be alive but only answering ICMP, or behind a firewall. The tool never claims ICMP-style liveness.",
-        "A refused connection still counts as responded, and that is deliberate: the host answered, it just isn't listening on that port. That is how tcping behaves too. The list and the copied report say which it was — \"handshake\" or \"refused\" — so a middlebox refusing on behalf of a whole range can't be mistaken for a range full of live servers.",
+        "A refused connection still counts as responded, and that is deliberate: the host answered, it just isn't listening on that port. That is how tcping behaves too. The list and the copied report say which it was (\"handshake\" or \"refused\"), so a middlebox refusing on behalf of a whole range can't be mistaken for a range full of live servers.",
         "This finds hosts that answer TCP on the probed ports. For richer detail (name, services, device type, vendor), use Network Discovery. A /31 or /32 includes every address; larger blocks leave out the network and broadcast addresses."
       ],
       "source": "It tries a quick TCP connection to a common port on each address and lists only the ones that answer, whether they accept the connection or refuse it."
@@ -2196,7 +2220,7 @@
       "algorithm": "It runs the computer's own traceroute program and reads each hop as it appears: the hop number, the responding router's name and IP, the round-trip times for each probe, and any timeouts shown as three asterisks. A real traceroute has to read a specific kind of reply from each router along the way, which needs privileged access the built-in program has, so this tool refuses to fake hops from ordinary TCP timing.",
       "example": null,
       "fieldNotes": [
-        "Where it works, honestly: on macOS, Windows, and Linux desktop it runs the built-in traceroute. Under the Mac App Sandbox (the App Store build) launching that program is blocked, so the tool quietly tests whether it can run and adapts: a Developer-ID Mac build and Windows and Linux run it fine, while the sandboxed build shows a clear \"traceroute unavailable\" message rather than hanging or pretending. On iOS and Android, running an external program isn't allowed, so it says \"Traceroute runs on desktop, use Ping here.\" The web version never reaches this tool.",
+        "Where it works, honestly: on macOS and Windows it runs the built-in traceroute. Under the Mac App Sandbox (the App Store build) launching that program is blocked, so the tool quietly tests whether it can run and adapts: a Developer-ID Mac build and Windows run it fine, while the sandboxed build shows a clear \"traceroute unavailable\" message rather than hanging or pretending. On iOS and Android, running an external program isn't allowed, so it says \"Traceroute runs on desktop, use Ping here.\" Coming soon to the WLAN Pi platform. The web version never reaches this tool.",
         "Each hop shows its number, the responding router (name and IP), and up to three round-trip times. Three asterisks mean a hop that didn't answer, which is common and not necessarily a problem. Reaching the target is reported as \"complete.\"",
         "On a sandboxed Mac App Store build this tool honestly reports itself unavailable. For a path check on mobile, see Traceroute (Mobile), and note its iOS limitation."
       ],
@@ -2301,15 +2325,15 @@
         "Open it and run it. It works out your local network range, checks each address, and attaches the known hardware address wherever the platform makes one available."
       ],
       "inputs": [],
-      "algorithm": "It figures out your local network range (usually a /24, or the real one if different) and quickly checks each address by trying to open a connection on a handful of common ports (80, 443, 22, 445, 139, 53, 8080). A device counts as present when it ANSWERS, whether it accepts the connection or actively refuses it. An address that stays silent, times out, or is unreachable is not listed. On Android and Linux it also reads the system's own address table to attach the real hardware (MAC) address it has already learned. As a safety limit, it refuses to scan anything larger than about 1,000 addresses.",
+      "algorithm": "It figures out your local network range (usually a /24, or the real one if different) and quickly checks each address by trying to open a connection on a handful of common ports (80, 443, 22, 445, 139, 53, 8080). A device counts as present when it ANSWERS, whether it accepts the connection or actively refuses it. An address that stays silent, times out, or is unreachable is not listed. On macOS and Windows it also reads the system's own neighbour table to attach the real hardware (MAC) address the system has already learned: macOS through a native system call, Windows through the Windows IP Helper API. Neither shells out to a command line. As a safety limit, it refuses to scan anything larger than about 1,000 addresses.",
       "example": null,
       "fieldNotes": [
-        "What each platform can do: Android and Linux give you the device list plus the real hardware address. macOS and Windows give you the device list but no hardware address, because the system does not make that table readable here, so MAC shows \"Not exposed on this platform\". iOS cannot do this at all, because Apple does not let apps read the neighbor table. On web it offers a download fallback.",
-        "A blank MAC means the platform genuinely does not expose it, never a guessed value. Empty or all-zero entries are skipped.",
+        "What each platform can do: macOS and Windows give you the device list plus the real hardware address, read from the system's own neighbour table. iOS and Android give you the device list without hardware addresses, because those systems do not let apps read that table. On web it offers a download fallback.",
+        "A missing MAC always tells you WHICH kind of missing it is, and never a guessed value. \"Not exposed on this platform\" means this platform has no way to read the table at all. \"MAC read failed\" means the read was tried here and did not work. \"Not in the ARP cache\" means the read worked and simply had no entry for that device. Empty or all-zero entries are skipped.",
         "Only addresses that answer are listed. A silent address is left out rather than guessed at, so the list is what replied, not what might be there.",
-        "On macOS and Windows you get a device list without hardware addresses; that is the platform's limit. For richer detail, and hardware addresses on macOS, use Network Discovery."
+        "Hardware addresses come from the system's neighbour table on macOS and Windows. The Windows path is implemented but has not yet been confirmed on real hardware; if it does not work, the tool reports a failed read rather than a platform limit. For richer detail, including device-type and vendor, use Network Discovery."
       ],
-      "source": "It quietly checks each address on your local network and, on Android and Linux, reads the system's learned hardware-address table to fill in the MAC."
+      "source": "It quietly checks each address on your local network and, on macOS and Windows, reads the system's learned neighbour-address table to fill in the MAC."
     },
     "bgp-asn": {
       "name": "Lookup (BGP/ASN)",
@@ -4110,6 +4134,28 @@
         "Reference only. A decode is a heuristic; confirm against the exact model's datasheet or ordering guide before you spec, order, or troubleshoot on it."
       ],
       "source": "Per-vendor field reference compiled by Keith Parsons / WLAN Pros. Sources per vendor: the Cisco Catalyst 9130AX datasheet and Getting Started Guide, the Aruba 310 Series datasheet, UniFi Tech Specs, the Ruckus product guide, and Extreme Networks product pages."
+    },
+    "lldp-cdp-reference": {
+      "name": "Find the Switch and Port (LLDP/CDP)",
+      "category": "CLI & Capture",
+      "purpose": "A how-to reference for reading LLDP (IEEE 802.1AB) and CDP, the Layer-2 protocols a switch uses to announce its own name, the exact port you are plugged into, its management IP, and often the VLAN. Shows how to read it on every OS and how to find which switch port an access point is on.",
+      "whyHere": "When an access point is dark and you need its switch port, or a device is wired somewhere and you need to trace it without walking the patch panel, LLDP or CDP puts that answer in a single frame. This reference tells you how to read it on whatever machine is in front of you, and where each OS hides the answer.",
+      "howToUse": [
+        "Have switch CLI access? Start there. 'show lldp neighbors' or 'show cdp neighbors' names the device and its port directly, the fastest answer of all.",
+        "No switch access? Pick your OS: Linux prints a parsed table with 'lldpcli show neighbors'; macOS and Windows capture with a built-in tool ('tcpdump' and 'pktmon'), no driver install needed.",
+        "To find an AP's port, read the switch or the AP itself. Your own laptop's LLDP reports the laptop's port, not the AP's."
+      ],
+      "inputs": [],
+      "algorithm": "Reference only; the app runs no capture and no shell. LLDP is IEEE 802.1AB, EtherType 0x88CC, multicast MAC 01:80:C2:00:00:0E, and carries the switch name, port, management address, and VLAN in its TLVs. CDP is Cisco proprietary with no EtherType; it uses multicast MAC 01:00:0C:CC:CC:CC (filter captures by that MAC or SNAP protocol ID 0x2000). Both are Layer 2 and single hop, so you only see the device on the other end of your own cable, and both are wired only, so a Wi-Fi laptop sees nothing.",
+      "example": "An AP will not boot. On the switch: 'show lldp neighbors' lists the AP against its port; 'show interfaces status' shows link and speed; 'show power inline' shows PoE delivery. No switch access? Read LLDP from the AP's own console. On macOS: sudo tcpdump -nn -v -i en5 'ether proto 0x88cc'.",
+      "fieldNotes": [
+        "The app does not capture the frames. It is reference text; you run these commands on the switch, the WLAN Pi, or the laptop yourself.",
+        "Windows correction: 'Get-NetLldpAgent' does NOT show the neighbor. It reads local agent config only (interface alias, index, scope, MAC) and needs the Data Center Bridging feature. Use 'pktmon', then 'pktmon etl2txt', to read which switch and port.",
+        "Whose port are you reading? Your laptop's LLDP shows the laptop's port. To get the AP's port without switch access, read the AP or the switch, never the laptop.",
+        "Nothing showing up? Cisco ships LLDP off by default (CDP on), and many non-Cisco switches ship LLDP off too. Check that the switch is sending before you blame the tool. Enable on Cisco with 'lldp run'; for any other vendor, check your vendor's documentation, the enable command is not universal.",
+        "Client-Windows (Windows 10/11, not Server) availability of the NetLldpAgent module and the Data Center Bridging feature varies by build and NIC driver and is unconfirmed; on Windows Server the feature install is documented."
+      ],
+      "source": "Fact-checked LLDP/CDP how-to brief (2026-07-15), cross-checked against the Wireshark LLDP wiki, Microsoft Learn (Get-NetLldpAgent, pktmon), lldpd.github.io, Baeldung (tcpdump), and Study-CCNA/Cisco docs."
     }
   }
 }
