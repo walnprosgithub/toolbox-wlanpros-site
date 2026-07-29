@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RF Channel Allocation Cards — WLAN Pros</title>
+<meta name="description" content="Free printable channel allocation reference cards for 2.4 GHz, 5 GHz and 6 GHz, including the Geofenced Variable Power class. Corrected July 2026.">
+<style>
+  :root{
+    --ink:#1a1a1a; --ink-2:#4a4f57; --ink-3:#7a818b;
+    --line:#e4e7ea; --wash:#f6f8ef; --page:#ffffff; --accent:#5b7f10;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --ink:#eef1f5; --ink-2:#aab2bd; --ink-3:#7d858f;
+           --line:#2a2f36; --wash:#171b20; --page:#101418; --accent:#a9d15c; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       line-height:1.6}
+  .wrap{max-width:760px;margin:0 auto;padding:56px 22px 80px}
+  h1{font-size:clamp(28px,5vw,40px);line-height:1.12;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+  .lede{font-size:18px;color:var(--ink-2);margin:0 0 8px;max-width:60ch}
+  .note{font-size:15px;color:var(--ink-3);margin:0 0 36px;max-width:62ch}
+  .cards{display:grid;gap:12px;margin:0 0 44px}
+  a.card{display:flex;justify-content:space-between;align-items:center;gap:16px;
+         padding:18px 20px;border:1px solid var(--line);border-radius:8px;
+         text-decoration:none;color:inherit;background:var(--page)}
+  a.card:hover{border-color:var(--accent);background:var(--wash)}
+  a.card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .band{font-size:18px;font-weight:640;letter-spacing:-.01em}
+  .desc{font-size:14.5px;color:var(--ink-2);margin-top:2px}
+  .dl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--accent);white-space:nowrap}
+  h2{font-size:13px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+     font-weight:700;margin:0 0 10px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+  .why p{font-size:15.5px;color:var(--ink-2);max-width:64ch}
+  .why strong{color:var(--ink)}
+  footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);
+         font-size:13px;color:var(--ink-3)}
+  footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>RF channel allocation cards</h1>
+  <p class="lede">Printable reference cards for 2.4 GHz, 5 GHz and 6 GHz. Free, no signup.</p>
+  <p class="note">Updated 28 July 2026. These replace every earlier version — see below.</p>
+
+  <div class="cards">
+    <a class="card" href="channel-allocations-24ghz.pdf" download>
+      <span>
+        <span class="band">2.4 GHz</span>
+        <span class="desc">Channels 1&ndash;14, overlap, and the three non-overlapping choices</span>
+      </span>
+      <span class="dl">PDF</span>
+    </a>
+    <a class="card" href="channel-allocations-5ghz.pdf" download>
+      <span>
+        <span class="band">5 GHz</span>
+        <span class="desc">U-NII-1 through U-NII-4, DFS, and channel widths</span>
+      </span>
+      <span class="dl">PDF</span>
+    </a>
+    <a class="card" href="channel-allocations-6ghz.pdf" download>
+      <span>
+        <span class="band">6 GHz</span>
+        <span class="desc">U-NII-5 through U-NII-8, with Low Power Indoor and Standard Power</span>
+      </span>
+      <span class="dl">PDF</span>
+    </a>
+    <a class="card" href="channel-allocations-6ghz-gvp.pdf" download>
+      <span>
+        <span class="band">6 GHz &middot; Geofenced Variable Power</span>
+        <span class="desc">The fourth power class, authorized by the FCC in 2026</span>
+      </span>
+      <span class="dl">PDF</span>
+    </a>
+  </div>
+
+  <section class="why">
+    <h2>Why these were reissued</h2>
+    <p>
+      Every free space path loss figure on the earlier cards was <strong>exactly 1 dB high</strong>.
+      One character in one formula, carried across 1,400 cells and five worksheets.
+    </p>
+    <p>
+      It survived for a long time because a constant offset breaks nothing you would think to
+      check. Every channel-to-channel difference was right. The shape of the curve was right.
+      Every comparison between two frequencies was right. <strong>The only way to catch it was to
+      derive the number independently</strong>, and almost nobody does that to a spreadsheet
+      they have used for years.
+    </p>
+    <p>
+      If you printed an earlier card, replace it. If you built your own sheet from one,
+      <strong>check it against the formula rather than against itself.</strong>
+    </p>
+  </section>
+
+  <footer>
+    These cards also ship inside the free <a href="/">WLAN Pros Toolbox</a> app for
+    iOS, Android, macOS, Windows and the web.
+  </footer>
+
+</div>
+</body>
+</html>
