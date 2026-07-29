@@ -8,3 +8,12 @@
 
 # Old versioned dmg URL (printed QR codes) goes to the same place
 /WLAN-Pros-Toolbox-1.6.1.dmg  https://github.com/walnprosgithub/toolbox-wlanpros-site/releases/latest/download/WLAN-Pros-Toolbox.dmg  301!
+
+# /channel-charts/ was published 29 Jul 2026 as a duplicate of /cards/ and folded back in
+# the same day. /cards/ is canonical and holds the only copy of the four chart PDFs.
+# Specific PDF rules come first: first match wins, so a direct PDF link lands on the PDF.
+/channel-charts/WLAN-Pros-2.4GHz-Channel-Allocations.pdf          /cards/channel-allocations-24ghz.pdf     301!
+/channel-charts/WLAN-Pros-5GHz-Channel-Allocations.pdf            /cards/channel-allocations-5ghz.pdf      301!
+/channel-charts/WLAN-Pros-6GHz-Channel-Allocations.pdf            /cards/channel-allocations-6ghz.pdf      301!
+/channel-charts/WLAN-Pros-6GHz-Channel-Allocations-with-GVP.pdf   /cards/channel-allocations-6ghz-gvp.pdf  301!
+/channel-charts/*                                                 /cards/                                  301!
