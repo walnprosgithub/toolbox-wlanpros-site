@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Toolbox on WLAN Pi | WLAN Pros</title>
+<meta name="description" content="The WLAN Pros Toolbox running on your own WLAN Pi: the only edition with no wired ceiling, full DHCP option decode, and the Pi's own radios doing the scanning.">
+<style>
+  :root{
+    --ink:#1a1a1a; --ink-2:#4a4f57; --ink-3:#7a818b;
+    --line:#e4e7ea; --wash:#f6f8ef; --page:#ffffff; --accent:#5b7f10;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --ink:#eef1f5; --ink-2:#aab2bd; --ink-3:#7d858f;
+           --line:#2a2f36; --wash:#171b20; --page:#101418; --accent:#a9d15c; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       line-height:1.6}
+  .wrap{max-width:760px;margin:0 auto;padding:56px 22px 80px}
+  h1{font-size:clamp(28px,5vw,40px);line-height:1.12;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+  .lede{font-size:18px;color:var(--ink-2);margin:0 0 8px;max-width:60ch}
+  .note{font-size:15px;color:var(--ink-3);margin:0 0 36px;max-width:62ch}
+  .cards{display:grid;gap:12px;margin:0 0 44px}
+  a.card{display:flex;justify-content:space-between;align-items:center;gap:16px;
+         padding:18px 20px;border:1px solid var(--line);border-radius:8px;
+         text-decoration:none;color:inherit;background:var(--page)}
+  a.card:hover{border-color:var(--accent);background:var(--wash)}
+  a.card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .band{font-size:18px;font-weight:640;letter-spacing:-.01em}
+  .desc{font-size:14.5px;color:var(--ink-2);margin-top:2px}
+  .dl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--accent);white-space:nowrap}
+  h2{font-size:13px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+     font-weight:700;margin:0 0 10px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+  footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);
+         font-size:13px;color:var(--ink-3)}
+  footer a{color:var(--accent)}
+  h3{font-size:13px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+     font-weight:700;margin:44px 0 10px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+  .size{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .printnote{border:1px solid var(--line);border-radius:8px;padding:16px 18px;background:var(--wash);
+             margin:0 0 26px;font-size:15px;color:var(--ink-2);max-width:64ch}
+  .printnote strong{color:var(--ink)}
+  .printnote p{margin:8px 0} .printnote p:first-child{margin-top:0} .printnote p:last-child{margin-bottom:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Toolbox on WLAN Pi</h1>
+  <p class="lede">The WLAN Pros Toolbox, served by your own WLAN Pi, reading your own radios.</p>
+  <p class="note"><strong>Not announced yet.</strong> This page is live so it can be checked, and is deliberately unlisted. The download is not here because the published installer is out of date and pointing you at it would hand you an old app.</p>
+
+  <h3>Why this edition exists</h3>
+  <section class="why">
+    <p>
+      Every other edition of the Toolbox runs on a device that holds the operating system at arm&rsquo;s length.
+      A phone will not decode a DHCP packet for you. A sandboxed Mac will not either.
+      <strong>The WLAN Pi is Linux, it is yours, and it says yes.</strong>
+    </p>
+    <p>
+      So this is the edition with <strong>no wired ceiling</strong>. It reads the full DHCP option list rather than
+      the handful of fields a phone will surrender, and it is the only place a real DORA exchange belongs.
+      It scans with the Pi&rsquo;s own radios instead of asking the operating system what it feels like sharing, and on a
+      multi-radio Pi it lets you pick which one.
+    </p>
+    <p>
+      <strong>That makes it the reference platform rather than the afterthought.</strong> When an edition on another
+      platform cannot answer a question, this is the build that shows you what the honest answer would have been.
+    </p>
+  </section>
+
+  <h3>What it runs on</h3>
+  <section class="why">
+    <p>
+      <strong>Verified on a WLAN Pi R4 running WLAN Pi OS 3.4.4.</strong> Other models and OS versions are likely fine
+      and are not yet confirmed, which is a different statement from "supported".
+    </p>
+    <p>
+      The Pi serves the Toolbox over HTTP on port 8080 and answers 27 endpoints behind it. You reach it from any
+      browser on the same network. <strong>Nothing is installed on the machine you browse from.</strong>
+    </p>
+  </section>
+
+  <div class="printnote">
+    <p><strong>Read this before you put one on a network you do not own.</strong></p>
+    <p>A normal install ships <strong>plain HTTP with authentication off</strong>. That is the right default for a
+    bench tool on your own bench, and the wrong one anywhere else: <strong>anyone who can reach the Pi can reach
+    everything it exposes</strong>, including tools that send arbitrary packets and wake machines on the LAN.</p>
+    <p>There is a hardened image-build mode that turns on TLS and HTTP authentication, forces key-only SSH, and
+    regenerates secrets on first boot. <strong>If the Pi is going anywhere near a client site, use that one.</strong></p>
+  </div>
+
+  <h3>Getting it</h3>
+  <section class="why">
+    <p>
+      <strong>Not yet. And the honest reason is worth having.</strong>
+    </p>
+    <p>
+      The current build and the currently published installer are not the same age. Rather than post instructions
+      that quietly hand you a build from July, the download appears here when there is one release that carries both.
+      <strong>A download link is a promise about what you will get, and right now we could not keep it.</strong>
+    </p>
+  </section>
+
+  <footer>
+    The Toolbox is free on <a href="/">iOS, Android, macOS, Windows and the web</a>. WLAN Pi is a separate,
+    independent open-source project; this edition runs on it and is not affiliated with it.
+  </footer>
+
+</div>
+</body>
+</html>
