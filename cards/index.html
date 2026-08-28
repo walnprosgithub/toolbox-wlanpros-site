@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RF Channel Allocation Cards | WLAN Pros</title>
-<meta name="description" content="Free printable channel allocation reference cards for 2.4 GHz, 5 GHz and 6 GHz, including the Geofenced Variable Power class. Corrected July 2026.">
+<title>Reference Cards &amp; Field Plates | WLAN Pros</title>
+<meta name="description" content="Free printable Wi-Fi reference material: channel allocation cards for 2.4, 5 and 6 GHz, plus fourteen large-format Field &amp; Trade Reference plates covering enclosure ratings, hazardous locations, code, safety and site access.">
 <style>
   :root{
     --ink:#1a1a1a; --ink-2:#4a4f57; --ink-3:#7a818b;
@@ -34,19 +34,26 @@
       color:var(--accent);white-space:nowrap}
   h2{font-size:13px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
      font-weight:700;margin:0 0 10px;padding-bottom:9px;border-bottom:1px solid var(--line)}
-  .why p{font-size:15.5px;color:var(--ink-2);max-width:64ch}
-  .why strong{color:var(--ink)}
   footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);
          font-size:13px;color:var(--ink-3)}
   footer a{color:var(--accent)}
+  h3{font-size:13px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+     font-weight:700;margin:44px 0 10px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+  .size{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .printnote{border:1px solid var(--line);border-radius:8px;padding:16px 18px;background:var(--wash);
+             margin:0 0 26px;font-size:15px;color:var(--ink-2);max-width:64ch}
+  .printnote strong{color:var(--ink)}
+  .printnote p{margin:8px 0} .printnote p:first-child{margin-top:0} .printnote p:last-child{margin-bottom:0}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <h1>RF channel allocation cards</h1>
-  <p class="lede">Printable reference cards for 2.4 GHz, 5 GHz and 6 GHz. Free, no signup.</p>
-  <p class="note">Updated 29 July 2026. These replace every earlier version. The reason is below.</p>
+  <h1>Reference cards and field plates</h1>
+  <p class="lede">Printable Wi-Fi reference material. Free, no signup, no email.</p>
+  <p class="note">Four channel allocation cards and fourteen Field &amp; Trade Reference plates. The channel cards were updated 29 July 2026 and replace every earlier version.</p>
+
+  <h3>Channel allocation cards</h3>
 
   <div class="cards">
     <a class="card" href="channel-allocations-24ghz.pdf" download>
@@ -79,35 +86,120 @@
     </a>
   </div>
 
-  <section class="why">
-    <h2>Why these were reissued</h2>
-    <p>
-      The <strong>Free Space Path Loss at 1 m</strong> row on the earlier <strong>5 GHz and
-      6 GHz</strong> cards was about <strong>1 dB short</strong>. It showed less loss
-      than the formula gives. At 5.180 GHz it read 45.74 dB where the answer is 46.73 dB.
-      One character in one formula.
-    </p>
-    <p>
-      <strong>The 2.4 GHz card was correct all along</strong>, which is exactly what made this
-      hard to see: two tabs disagreeing with a third, in a workbook where everything looked
-      internally consistent.
-    </p>
-    <p>
-      A constant offset breaks nothing you would think to check. Every channel-to-channel
-      difference was right. The shape of the curve was right. Every comparison between two
-      frequencies was right. <strong>The only way to catch it was to derive the number
-      independently</strong>, and almost nobody does that to a spreadsheet they have used for
-      years.
-    </p>
-    <p>
-      If you printed an earlier 5 GHz or 6 GHz card, replace it. If you built your own sheet
-      from one, <strong>check it against the formula rather than against itself.</strong>
-    </p>
-  </section>
+  <h3>Field &amp; Trade Reference plates</h3>
+  <p class="note">The built environment a wireless install actually lands in: enclosures, classified areas, code, safety, site access and the paperwork that gates a job. Each plate also has a live screen inside the Toolbox app.</p>
+
+  <div class="printnote">
+    <p><strong>Read the sizes before you print.</strong> Thirteen of these are drawing-sized rather than document-sized, because they are meant to go on a wall beside the plan set rather than into a folder.</p>
+    <p><strong>ARCH C, 18 &times; 24 in, holds every one of them</strong> &mdash; rotate the LED Decoder 90&deg;, as it is the one plate wider than it is tall. <strong>A2 will not do it:</strong> at 16.54 in wide it is just under an inch too narrow for the 17.5 in plates, so in metric you need <strong>A1</strong>.</p>
+    <p><strong>No plotter?</strong> Scale-to-fit on Letter or A4 stays readable on a clipboard, but the type gets small. <strong>Throughput Testing is already US Letter</strong> and prints anywhere.</p>
+  </div>
+
+  <div class="cards">
+    <a class="card" href="field-plates/enclosure-ratings.pdf" download>
+      <span>
+        <span class="band">Enclosure Ratings</span>
+        <span class="desc">Decode IP and NEMA ingress ratings, and bridge NEMA to IP</span>
+      </span>
+      <span class="size">17.5 &times; 21.6 in</span>
+    </a>
+    <a class="card" href="field-plates/hazardous-locations.pdf" download>
+      <span>
+        <span class="band">Hazardous Locations</span>
+        <span class="desc">Class, Division and Zone classified-area basics</span>
+      </span>
+      <span class="size">17.5 &times; 17.0 in</span>
+    </a>
+    <a class="card" href="field-plates/nec-gotchas.pdf" download>
+      <span>
+        <span class="band">NEC Gotchas</span>
+        <span class="desc">Code articles that bite a WLAN install, then defer</span>
+      </span>
+      <span class="size">17.5 &times; 15.5 in</span>
+    </a>
+    <a class="card" href="field-plates/safety-basics.pdf" download>
+      <span>
+        <span class="band">Safety Basics</span>
+        <span class="desc">PPE ratings, ESD, and the recognize-and-STOP hazards</span>
+      </span>
+      <span class="size">17.5 &times; 11.2 in</span>
+    </a>
+    <a class="card" href="field-plates/site-access.pdf" download>
+      <span>
+        <span class="band">Site Access</span>
+        <span class="desc">Know before you go: the credential that gates the site</span>
+      </span>
+      <span class="size">17.5 &times; 12.8 in</span>
+    </a>
+    <a class="card" href="field-plates/credentials-licenses.pdf" download>
+      <span>
+        <span class="band">Credentials &amp; Licenses</span>
+        <span class="desc">Portable IDs, FCC licenses, and their lead times</span>
+      </span>
+      <span class="size">17.5 &times; 13.0 in</span>
+    </a>
+    <a class="card" href="field-plates/facility-spaces.pdf" download>
+      <span>
+        <span class="band">Telecom Spaces</span>
+        <span class="desc">Decode MDF, IDF, TR, and the data closet</span>
+      </span>
+      <span class="size">17.5 &times; 12.0 in</span>
+    </a>
+    <a class="card" href="field-plates/plan-set-literacy.pdf" download>
+      <span>
+        <span class="band">Plan-Set Literacy</span>
+        <span class="desc">Read a drawing set, and find the RCP for AP placement</span>
+      </span>
+      <span class="size">15.6 &times; 17.1 in</span>
+    </a>
+    <a class="card" href="field-plates/led-decoder.pdf" download>
+      <span>
+        <span class="band">LED Decoder</span>
+        <span class="desc">Pick a vendor, read that AP&rsquo;s status-LED meanings</span>
+      </span>
+      <span class="size">19.6 &times; 17.6 in</span>
+    </a>
+    <a class="card" href="field-plates/spectrum.pdf" download>
+      <span>
+        <span class="band">Spectrum Reference</span>
+        <span class="desc">Band allocations, sub-bands, and co-existence</span>
+      </span>
+      <span class="size">17.5 &times; 12.4 in</span>
+    </a>
+    <a class="card" href="field-plates/healthcare-vertical.pdf" download>
+      <span>
+        <span class="band">Healthcare Wi-Fi</span>
+        <span class="desc">WMTS, EMC, roaming grades, and the four authorities</span>
+      </span>
+      <span class="size">17.5 &times; 13.6 in</span>
+    </a>
+    <a class="card" href="field-plates/network-in-scope.pdf" download>
+      <span>
+        <span class="band">Network in Scope</span>
+        <span class="desc">When PCI, HIPAA, SOX or GDPR reaches the WLAN</span>
+      </span>
+      <span class="size">17.5 &times; 12.0 in</span>
+    </a>
+    <a class="card" href="field-plates/cloud-tool-trust.pdf" download>
+      <span>
+        <span class="band">Cloud Tool Trust</span>
+        <span class="desc">Read a cloud tool&rsquo;s security badges before you upload</span>
+      </span>
+      <span class="size">17.5 &times; 9.9 in</span>
+    </a>
+    <a class="card" href="field-plates/throughput-testing-where.pdf" download>
+      <span>
+        <span class="band">Throughput Testing: Where You Test</span>
+        <span class="desc">Where you put the test server decides what the number means</span>
+      </span>
+      <span class="size">8.5 &times; 11 in &middot; US Letter</span>
+    </a>
+  </div>
 
   <footer>
-    These cards also ship inside the free <a href="/">WLAN Pros Toolbox</a> app for
-    iOS, Android, macOS, Windows and the web.
+    All of this also ships inside the free <a href="/">WLAN Pros Toolbox</a> app for
+    iOS, Android, macOS, Windows, WLAN Pi and the web, where every field plate has a
+    live, searchable screen behind it.
   </footer>
 
 </div>
