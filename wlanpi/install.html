@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WLAN Pros Toolbox on your WLAN Pi</title>
+<style>
+  :root{--ink:#1A1A1A;--paper:#FFFFFF;--panel:#F7F7F5;--line:#E5E5E5;--body:#3D3D3D;--muted:#6E6E6E;
+    --lime:#5F7F14;--limebright:#A1CC3A;--warn:#8A4B00;--warnbg:#FFF6EC;--good:#1F5E2E;--goodbg:#F0F7F0;
+    --bad:#8C2F2F;--badbg:#FDF1F1;}
+  *{box-sizing:border-box}
+  body{margin:0;padding:0 20px 90px;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--body);background:var(--paper)}
+  .wrap{max-width:900px;margin:0 auto}
+  header{padding:44px 0 12px;border-bottom:4px solid var(--limebright);margin-bottom:28px}
+  .eyebrow{font:600 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:14px}
+  h1{font-size:34px;line-height:1.15;margin:0 0 10px;color:var(--ink);font-weight:700;letter-spacing:-.015em}
+  .sub{font-size:17px;color:var(--muted);margin:0}
+  h2{font-size:22px;margin:46px 0 4px;color:var(--ink);font-weight:700;padding-top:24px;border-top:1px solid var(--line)}
+  h2:first-of-type{border-top:none;padding-top:0}
+  h3{font-size:16.5px;margin:26px 0 4px;color:var(--ink);font-weight:700}
+  p{margin:10px 0}
+  code{font:12.5px/1.5 ui-monospace,Menlo,monospace;background:var(--panel);padding:1px 5px;border-radius:3px;color:var(--ink)}
+  pre{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 16px;overflow-x:auto;margin:14px 0}
+  pre code{background:none;padding:0;font-size:13px;line-height:1.55}
+  .callout{border-left:4px solid var(--limebright);background:var(--panel);padding:14px 18px;margin:20px 0;border-radius:0 6px 6px 0}
+  .callout.warn{border-left-color:#D98324;background:var(--warnbg)}
+  .callout.bad{border-left-color:#B44;background:var(--badbg)}
+  .callout.good{border-left-color:#4C9A2A;background:var(--goodbg)}
+  .callout p:first-child{margin-top:0} .callout p:last-child{margin-bottom:0}
+  ol,ul{margin:9px 0;padding-left:22px} li{margin:7px 0}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14.5px}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:2px solid var(--line)}
+  footer{margin-top:52px;padding-top:18px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+  strong{color:var(--ink)}
+  .step{font:700 13px/1 ui-monospace,Menlo,monospace;color:var(--lime);letter-spacing:.08em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">WLAN Pros Toolbox · WLAN Pi edition</div>
+  <h1>Put the Toolbox on your WLAN Pi</h1>
+  <p class="sub">One install, one browser tab, and the edition of the Toolbox with no wired ceiling. This is the whole procedure, what you get for it, and the two things that will break it later.</p>
+</header>
+
+<div class="callout good">
+<p><strong>The short version.</strong> You run one command on a WLAN Pi you already own. It stands up a small web server on the Pi and you open the Toolbox from any browser on the same network. <strong>Nothing is installed on the machine you browse from</strong>, and nothing is baked into the image: every secret is generated on the device at first run.</p>
+</div>
+
+<h2>Why this edition exists at all</h2>
+
+<p>Every other edition of the Toolbox runs on a device that holds the operating system at arm's length. <strong>A phone will not decode a DHCP packet for you. A sandboxed Mac will not either.</strong> Those are platform limits, not gaps in the app, and no amount of engineering removes them.</p>
+
+<p><strong>The WLAN Pi is Linux, it is yours, and it says yes.</strong> So this is the edition with no wired ceiling:</p>
+
+<ul>
+<li><strong>It reads the full DHCP option list</strong>, not the handful of fields a phone will surrender. If your DHCP server is handing out an option nobody expected, this is where you see it.</li>
+<li><strong>It is the only place a real DORA exchange belongs.</strong> On a diagnostic tool the right primitive is usually DHCPINFORM, which asks for options and leaves the lease alone. A full DORA renegotiates an address on a machine that already has one, so it should be a deliberate act on a device you control. That device is this one.</li>
+<li><strong>It scans with the Pi's own radios</strong> rather than asking an operating system what it feels like sharing. On a multi-radio Pi you pick which radio does the scanning.</li>
+<li><strong>It measures from where the Pi sits</strong>, which is usually where the problem is, rather than from a laptop three rooms away.</li>
+</ul>
+
+<p><strong>That makes it the reference platform rather than the afterthought.</strong> When an edition on another platform cannot answer a question, this is the build that shows you what the honest answer would have been.</p>
+
+<h2>What you need</h2>
+
+<table>
+<thead><tr><th style="width:26%">Item</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td><strong>A WLAN Pi</strong></td><td><strong>Any of them.</strong> There are two shipping models, the R4 and the M4+, and <strong>the Toolbox has been run on both</strong> on WLAN Pi OS 3.4.4. The R4 with two Panda 6E adapters, the M4+ with a Panda plus an Intel BE200.</td></tr>
+<tr><td><strong>Internet on the Pi</strong></td><td>For the install only. Afterwards it runs happily on an isolated network.</td></tr>
+<tr><td><strong>Your sudo password</strong></td><td>The one you set on the Pi's first boot. WLAN Pi OS ships as <code>wlanpi/wlanpi</code> and forces a change, so there is no default left to guess.</td></tr>
+<tr><td><strong>A browser</strong></td><td>On any machine that can reach the Pi. Phone, tablet, laptop. Nothing to install there.</td></tr>
+<tr><td><strong>Optional: a USB Wi-Fi adapter</strong></td><td>A <strong>Panda PAU0F AXE3000</strong> is proven on our own hardware over a year of field use. It is MediaTek MT7921AU silicon, the same USB ID the WLAN Pi project marks recommended, and monitor mode and 6 GHz both work.</td></tr>
+</tbody>
+</table>
+
+<h2>Install</h2>
+
+<p class="step">Step 1. Install it</p>
+
+<p>One command, from a shell on the Pi:</p>
+
+<pre><code>curl -fsSL https://raw.githubusercontent.com/keithrparsons/wlan-pros-toolbox-pi/main/pi-install.sh | sudo bash</code></pre>
+
+<p>It checks it is actually on a WLAN Pi first and refuses loudly if it is not, because on a plain Debian box it would install a web server and a proxy that signs against a platform secret that is not there, and you would meet that later as a confusing error instead of now as a clear refusal.</p>
+
+<p>Then it fetches the current release, unpacks it, and installs. <strong>It ends by printing <code>INSTALL_OK</code> and a status block.</strong> If you do not see <code>INSTALL_OK</code>, it did not finish, whatever else scrolled past.</p>
+
+<p><strong>It is safe to re-run.</strong> The one thing to know: re-running restarts the Wi-Fi supplicant, so it briefly drops any Wi-Fi association the Pi itself is holding. If you are reaching the Pi over its own Wi-Fi rather than over Ethernet, you will bounce for a moment.</p>
+
+<p class="step">Step 2. Check it answers</p>
+
+<pre><code>curl http://&lt;pi-ip&gt;:8080/toolboxapi/health          # {"model":"R4"}
+curl http://&lt;pi-ip&gt;:8080/toolboxapi/wifi            # the Pi's OWN association</code></pre>
+
+<p class="step">Step 3. Open it</p>
+
+<p>From any browser on the same network: <code>http://&lt;pi-ip&gt;:8080/</code></p>
+
+<p><strong>Go straight to Wi-Fi Information.</strong> It should show the Pi's own association. If it instead tells you to download the native app, the web bundle deployed but the backend did not, and that is the one failure worth reporting rather than working around.</p>
+
+<h2>Read this before you put one on a network you do not own</h2>
+
+<div class="callout bad">
+<p><strong>A normal install serves plain HTTP with authentication off.</strong> That is the right default for a bench tool on your own bench, and the wrong one anywhere else. <strong>Anyone who can reach the Pi can reach everything it exposes</strong>, and that includes tools that send arbitrary packets and wake machines on the LAN.</p>
+<p><strong>There is a hardened build path for the other case.</strong> It turns on TLS and HTTP authentication, forces key-only SSH, strips passwordless sudo, and regenerates every secret on first boot. <strong>If the Pi is going anywhere near a client site, use that one.</strong> It is a golden-image build rather than something you run on a working card, and it is deliberately not what the normal install does.</p>
+<p>Do not expose port 8080 to the internet. There is no version of this where that is a good idea.</p>
+</div>
+
+<h2>What you get: 27 endpoints and the tools on top of them</h2>
+
+<p>The Pi answers <strong>27 endpoints</strong> behind the web app. That number is counted from the proxy's own routing table, not estimated.</p>
+
+<table>
+<thead><tr><th style="width:30%">Group</th><th>What it does from the Pi</th></tr></thead>
+<tbody>
+<tr><td><strong>Radio and association</strong></td><td>Scan with a chosen radio, list scan-capable interfaces, read the Pi's own association, connect and disconnect. On a multi-radio Pi the radio picker is the point: you scan with the adapter you chose, not the one the OS preferred.</td></tr>
+<tr><td><strong>Wired and addressing</strong></td><td>Interface and link tables, neighbor table (ARP and NDP), and the full DHCP option decode that no phone can give you.</td></tr>
+<tr><td><strong>Reachability</strong></td><td>Ping, a bounded ping series you can plot, traceroute, and a connection test. All measured from the Pi's position on the network rather than from your laptop.</td></tr>
+<tr><td><strong>Discovery</strong></td><td>Host and service discovery, ping sweep across a CIDR, and a TCP-connect port scan.</td></tr>
+<tr><td><strong>Names and ownership</strong></td><td>DNS, WHOIS, IP geolocation, and BGP/ASN lookup. Useful when the question is "whose network is this actually" rather than "is it up".</td></tr>
+<tr><td><strong>Web and transport</strong></td><td>TLS certificate inspection and HTTP header inspection, run from the Pi so you see what the Pi sees.</td></tr>
+<tr><td><strong>Throughput</strong></td><td>The Pi's own uplink throughput, plus a local sink so you can measure the browser-to-Pi hop separately. Two different questions, deliberately not merged.</td></tr>
+<tr><td><strong>Active tools</strong></td><td>Wake-on-LAN and a custom packet sender. These transmit. Treat them accordingly, and see the security note above.</td></tr>
+</tbody>
+</table>
+
+<h2>Keeping it working, and the one thing that quietly breaks it</h2>
+
+<div class="callout warn">
+<p><strong>An <code>apt upgrade</code> can silently undo part of this install, and nothing will tell you.</strong></p>
+<p>Three pieces of the build live inside files that Debian packages own. When those packages update, your copies are replaced with the stock versions. <strong>The install does not crash. Scanning simply stops working, and nothing announces why.</strong></p>
+</div>
+
+<p>That is what the update tool is for:</p>
+
+<pre><code>sudo toolbox-update status     # what is installed
+sudo toolbox-update check      # has anything drifted?
+sudo toolbox-update repair     # put it back</code></pre>
+
+<p><strong>This path is proven rather than assumed.</strong> We reverted the patches deliberately, watched <code>check</code> catch it and the scan die, then watched <code>repair</code> put it back. <strong>If you ever run a system update on that card, <code>check</code> is the fast way to find out what it cost you.</strong></p>
+
+<h3>Why the installer touches the supplicant at all</h3>
+
+<p>Worth knowing, because it explains a stock-image behaviour that looks like your fault:</p>
+
+<p><strong>The stock image ships no systemd unit for <code>wpa_supplicant</code>, and points its D-Bus activation at a path that does not exist.</strong> On top of that, the platform service asks for a dummy driver at two call sites. All three break scanning, on a completely fresh card, before you have done anything.</p>
+
+<p>The installer repairs the platform's own D-Bus supplicant path and lets the platform service drive it. <strong>An earlier version of this kit ran its own supplicant instead, which was a workaround that lost a race on every reboot.</strong> That hack is not installed here, and is removed if found. After a correct install, a scan returns real neighbors.</p>
+
+<h2>If it goes wrong</h2>
+
+<ul>
+<li><strong>No <code>INSTALL_OK</code>.</strong> The install did not complete. The last error before it stopped is the real one; earlier warnings are usually noise.</li>
+<li><strong>Wi-Fi Information tells you to download the app.</strong> The web bundle is there and the backend is not. Report this one.</li>
+<li><strong>Scanning returns nothing.</strong> Run <code>sudo toolbox-update check</code> first. If something drifted, <code>repair</code> is the answer. If nothing drifted, the radio may not be scan-capable.</li>
+<li><strong>You bricked the card.</strong> Recoverable. <strong>The M4+ boots from the SD card</strong> rather than from internal storage, so pull the card, reflash, and start again. You have not damaged the hardware.</li>
+</ul>
+
+<h2>What this is not</h2>
+
+<ul>
+<li><strong>Not an official WLAN Pi project.</strong> WLAN Pi is a separate, independent open-source project. This edition runs on it and is not affiliated with it.</li>
+<li><strong>Not model-fussy.</strong> Both shipping WLAN Pi models have been tested. There is no third one to worry about.</li>
+<li><strong>Not a replacement for the other editions.</strong> The Toolbox is free on iOS, Android, macOS, Windows and the web. This is the one that can answer the wired questions the others cannot.</li>
+<li><strong>Not a monitoring system.</strong> It answers questions while you are asking them. It does not sit and watch.</li>
+<li><strong>Not hardened by default.</strong> Read the security section. Twice, if the Pi is leaving your bench.</li>
+</ul>
+
+<footer>
+<p>Every command, path, port and behaviour on this page was read out of the installer and the proxy rather than recalled: the endpoint count from the proxy's own routing table, the <code>INSTALL_OK</code> sentinel and health-check URLs from the installer's own output, the supplicant explanation from the installer's architecture note, and the re-run caveat from the kit. Run on both shipping WLAN Pi models, the R4 and the M4+, on WLAN Pi OS 3.4.4.</p>
+</footer>
+
+</div>
+</body>
+</html>

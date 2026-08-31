@@ -43,6 +43,10 @@
   .size{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
   .printnote{border:1px solid var(--line);border-radius:8px;padding:16px 18px;background:var(--wash);
              margin:0 0 26px;font-size:15px;color:var(--ink-2);max-width:64ch}
+  pre{background:var(--wash);border:1px solid var(--line);border-radius:8px;
+      padding:14px 16px;overflow-x:auto;margin:12px 0;max-width:100%}
+  pre code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:var(--ink)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px}
   .printnote strong{color:var(--ink)}
   .printnote p{margin:8px 0} .printnote p:first-child{margin-top:0} .printnote p:last-child{margin-bottom:0}
 </style>
@@ -52,7 +56,7 @@
 
   <h1>Toolbox on WLAN Pi</h1>
   <p class="lede">The WLAN Pros Toolbox, served by your own WLAN Pi, reading your own radios.</p>
-  <p class="note"><strong>Not announced yet.</strong> This page is live so it can be checked, and is deliberately unlisted. The download is not here because the published installer is out of date and pointing you at it would hand you an old app.</p>
+  <p class="note"><strong>Beta.</strong> This edition is finished and installable, and it has not yet been through a round of outside testing. This page is unlisted while that happens. If you are reading it, you were sent it on purpose, and the thing we want back from you is what broke.</p>
 
   <h3>Why this edition exists</h3>
   <section class="why">
@@ -76,8 +80,8 @@
   <h3>What it runs on</h3>
   <section class="why">
     <p>
-      <strong>Verified on a WLAN Pi R4 running WLAN Pi OS 3.4.4.</strong> Other models and OS versions are likely fine
-      and are not yet confirmed, which is a different statement from "supported".
+      <strong>Tested on both shipping models, the WLAN Pi R4 and the M4+, on WLAN Pi OS 3.4.4.</strong>
+      The R4 with two Panda 6E adapters, the M4+ with a Panda plus an Intel BE200. There is no third current model.
     </p>
     <p>
       The Pi serves the Toolbox over HTTP on port 8080 and answers 27 endpoints behind it. You reach it from any
@@ -97,12 +101,27 @@
   <h3>Getting it</h3>
   <section class="why">
     <p>
-      <strong>Not yet. And the honest reason is worth having.</strong>
+      On the Pi itself, over SSH, one command:
+    </p>
+    <pre><code>curl -fsSL https://raw.githubusercontent.com/keithrparsons/wlan-pros-toolbox-pi/main/pi-install.sh | sudo bash</code></pre>
+    <p>
+      It checks it is really on a WLAN Pi and refuses loudly if it is not. It ends by printing <code>INSTALL_OK</code>.
+      <strong>If you do not see <code>INSTALL_OK</code>, it did not finish</strong>, whatever else scrolled past.
     </p>
     <p>
-      The current build and the currently published installer are not the same age. Rather than post instructions
-      that quietly hand you a build from July, the download appears here when there is one release that carries both.
-      <strong>A download link is a promise about what you will get, and right now we could not keep it.</strong>
+      Then open <code>http://&lt;pi-ip&gt;:8080/</code> from any browser on the same network.
+    </p>
+    <p>
+      <a href="/wlanpi/install.html">The full runbook</a> has the verification steps, the multi-radio notes,
+      and what to do when it does not come up.
+    </p>
+
+    <h3>What we need from a beta tester</h3>
+    <p>
+      Not a bug list in the abstract. Three things: <strong>whether the one command above finished on your hardware</strong>,
+      <strong>what the scan looked like against a network you already know well</strong>, and
+      <strong>anything the Pi edition claims that you can prove wrong.</strong>
+      The last one is the most valuable and the least fun to receive, so please send it anyway.
     </p>
   </section>
 
