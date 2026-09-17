@@ -723,6 +723,50 @@
       ],
       "source": "Standard link-budget arithmetic done on the values you enter, right on your device."
     },
+    "shannon-capacity": {
+      "name": "Shannon Capacity",
+      "category": "Calculators & Tools",
+      "purpose": "Works out the theoretical maximum data rate a channel can carry, from its bandwidth and signal-to-noise ratio, and in reverse the SNR a target rate would demand.",
+      "whyHere": "Every Wi-Fi generation pushes against this ceiling and none of them breaks it. Bandwidth and signal-to-noise decide the maximum, and everything a vendor sells you is an attempt to get closer to it. Put this next to Noise Floor and the Throughput Calculator and you can see how much of the theoretical maximum your link is actually using.",
+      "howToUse": [
+        "Choose whether to solve for capacity or for the required SNR.",
+        "Pick the channel bandwidth.",
+        "Enter the SNR in dB, or in reverse the capacity you are aiming for in Mbps.",
+        "Set the number of spatial streams, because the bound applies to each stream separately.",
+        "Read the capacity, the per-stream figure, and the spectral efficiency in bits per second per Hz."
+      ],
+      "inputs": [
+        {
+          "name": "Bandwidth",
+          "unit": "MHz",
+          "range": "Choose from 20, 40, 80, 160, or 320 MHz"
+        },
+        {
+          "name": "SNR",
+          "unit": "dB",
+          "range": "Any value, including negative. Wi-Fi really does operate near and below 0 dB at the lowest data rates"
+        },
+        {
+          "name": "Target capacity",
+          "unit": "Mbps",
+          "range": "Greater than zero (required SNR mode only)"
+        },
+        {
+          "name": "Spatial streams",
+          "unit": "NSS",
+          "range": "1 to 8"
+        }
+      ],
+      "algorithm": "Capacity equals the number of spatial streams times the bandwidth times the base-2 logarithm of one plus the signal-to-noise ratio, with that ratio as a linear power ratio rather than dB. Reversing it gives the spectral efficiency a target rate needs, and from that the SNR it demands.",
+      "example": "At 80 MHz and 25 dB SNR on one spatial stream the ceiling is about 664.8 Mbps, or 8.31 bits per second per Hz. Asked the other way, 1,000 Mbps on one 80 MHz stream needs 12.5 bits per second per Hz, which needs about 37.6 dB. That is why a gigabit demo only works standing under the access point.",
+      "fieldNotes": [
+        "This is a single-channel bound, and Wi-Fi is MIMO. A radio advertising 1,200 Mbps is not beating Shannon: that rate is the sum of parallel spatial streams, each sitting under its own bound. That is why spatial streams are an input here.",
+        "The ratio is linear, not dB. Feeding 25 straight into the formula instead of 316 is the most common mistake with this equation, so the screen shows the conversion.",
+        "An impossible target is not an error. Asking for 10 Gbps on one 20 MHz stream honestly needs about 1505 dB, and printing that number is the point.",
+        "The ceiling assumes perfect coding and no interference, so a real link always lands below it. The gap between the two is the useful part."
+      ],
+      "source": "Shannon-Hartley, published by Claude Shannon in 1948. Computed from the bandwidth, SNR, and stream count you enter, on your device."
+    },
     "noise-floor": {
       "name": "Noise Floor",
       "category": "Calculators & Tools",
@@ -2639,6 +2683,34 @@
       ],
       "source": "A built-in, offline list of filters you copy into Wireshark; the app runs nothing."
     },
+    "voip-wifi-filters": {
+      "name": "VoIP over Wi-Fi Filters",
+      "category": "Quick Reference",
+      "purpose": "Copy-ready Wireshark display filters for analyzing voice calls carried over Wi-Fi. It covers the SIP signaling and the RTP media, and then the three questions that are specifically about the air: did the QoS marking survive the trip onto the wireless side, did the call break at a roam, and is power save eating it.",
+      "whyHere": "Anyone can list sip and rtp. A WLAN pro opens a capture because a call sounded bad and the wired side looks perfect, and the answer is usually in the 802.11 header rather than the codec or the WAN. These are the filters that put the IP marking and the 802.11 User Priority on screen at the same time, and the ones that line an RTP gap up against a reassociation.",
+      "howToUse": [
+        "Filters are grouped by the question they answer; search the list by syntax or by task, and matching a group name brings up the whole group.",
+        "The filter text is selectable so you can copy it straight into Wireshark's filter bar.",
+        "Several groups carry a short note above their filters. That note is the method, not decoration: it says what the filter is for and how to read what comes back.",
+        "The last group is deliberately not display filters. Those are tshark statistics taps and Wireshark menu paths, and typing them into the filter bar will not work."
+      ],
+      "inputs": [],
+      "algorithm": null,
+      "example": "Filters as shipped. Find the call, signaling: sip, sip.Method == \"INVITE\", sip.Method == \"BYE\", sip.Status-Code >= 400, sip.Status-Code == 486 (Busy Here), sip.Call-ID, sip.resend == 1, sdp, sdp.media.format, udp.port == 5060, tcp.port == 5060. Find the media: rtp, rtcp, rtp.ssrc == 0x12345678, rtp.seq, rtp.timestamp, rtp.marker == 1, rtp.p_type, and the payload types rtp.p_type == 0 (G.711 PCMU), == 8 (G.711 PCMA), == 9 (G.722), == 18 (G.729), plus rtp.setup-frame. Did the QoS marking survive: ip.dsfield.dscp == 46 (EF on the wire), wlan.qos.priority == 6 (Voice on the air), ip.dsfield.dscp == 46 && wlan.qos.priority != 6 (the bug), ip.dsfield.dscp == 46 && wlan.qos.priority == 5 (the classic signature), rtp && wlan.qos.priority == 0, ip.dsfield.dscp == 0 && rtp, sip && ip.dsfield.dscp == 0, ip.dsfield.dscp == 40 (CS5), ip.dsfield.dscp == 34 (AF41), wlan.qos.priority. Did it break at a roam: wlan.fc.type_subtype == 0x02 (Reassociation request), == 0x03 (Reassociation response), == 0x0b (Authentication), == 0x0c (Deauthentication), wlan.tag.number == 55 (Mobility Domain element, 802.11r), rtp.ssrc == 0x12345678 && wlan.fc.retry == 1. Is power save eating it: wlan.fc.pwrmgt == 1, wlan.fc.pwrmgt == 1 && rtp, wlan.fc.type_subtype == 0x2c (QoS Null), == 0x1a (PS-Poll), wlan.qos.eosp == 1. What the endpoint says: rtcp.pt == 200 (Sender Report), rtcp.pt == 201 (Receiver Report), rtcp.ssrc.fraction, rtcp.ssrc.fraction > 0, rtcp.ssrc.cum_nr, rtcp.ssrc.high_seq, rtcp.ssrc.jitter, rtcp.ssrc.jitter > 30, rtcp.senderssrc. Loss and jitter, as statistics rather than filters: tshark -q -z rtp,streams -r capture.pcapng, tshark -q -z sip,stat -r capture.pcapng, tshark -q -z follow,sip -r capture.pcapng, and Telephony then RTP then RTP Streams in the Wireshark GUI.",
+      "fieldNotes": [
+        "Good to know: DSCP lives in the IP header and User Priority lives in the 802.11 header, so something has to map one to the other. When that mapping is missing, wrong, or stripped by a tunnel, the call competes with everything else on the channel and the wired capture still looks perfect.",
+        "A bit more detail: most equipment, with no explicit policy applied, derives User Priority from the top three bits of the DSCP value. EF is 46, which is 101110 in binary, and the top three bits are 101, which is 5. So EF lands in User Priority 5, the Video access category, rather than User Priority 6, which is Voice. That is why the ip.dsfield.dscp == 46 && wlan.qos.priority != 6 filter usually turns up UP 5 rather than nothing. The DSCP / QoS Markings tool has the full mapping table and the RFC 8325 fix for exactly this.",
+        "Caveat: the filters that combine an IP field with an 802.11 field need both headers visible in the same frame. That means a monitor-mode capture of an open or decrypted network, not a capture taken on the client's own interface, where the 802.11 header is not there to filter on.",
+        "Worth flagging (intentional, not a defect): Wireshark has no rtp.analysis display filter of any kind. Its per-stream loss and jitter is a statistic, not a filterable field, so there is no field name to type into the filter bar no matter how plausible one sounds. That is why the card ships a tshark statistics group instead. Four names that look right and do not exist are rtp.analysis.lost, rtp.analysis.jitter, rtp.analysis.delta, and rtp.analysis.out_of_seq.",
+        "The finding worth chasing: there are two sources for loss and jitter and they measure different things. The RTCP fields are what the far endpoint reported about what it received. The tshark rtp,streams tap is what this capture actually saw. When the two disagree, that is the result, not an error: the capture point and the endpoint did not experience the same stream, which on Wi-Fi usually means the loss happened between them.",
+        "Reading a roam: filter to one rtp.ssrc, note the sequence numbers either side of the gap, then look at what the client did in between. A roam that costs 300 ms is audible. A roam that costs 50 ms is not. An RTP gap that lines up with a reassociation is a roaming problem wearing a VoIP costume.",
+        "Reading power save: a voice client that sleeps between packets sounds exactly like a network with loss, and the far end's own report will call it loss. The Power Management bit rides in the frame control field of every frame, so watch for where it flips rather than looking for a single announcement.",
+        "Frame type and subtype values are shown in hexadecimal on this card (0x02 is Reassociation request, 0x0c is Deauthentication). The Wireshark 802.11 Filters tool shows the same values in decimal. Wireshark accepts either form.",
+        "The RTCP field names are Wireshark's own, with its own labels: rtcp.ssrc.fraction is \"Fraction lost\", rtcp.ssrc.cum_nr is \"Cumulative number of packets lost\", rtcp.ssrc.high_seq is \"Highest sequence number received\", and rtcp.ssrc.jitter is \"Interarrival jitter\". The jitter figure is in RTP timestamp units, not milliseconds: at an 8 kHz sampling clock, one unit is 125 microseconds.",
+        "Source: every filter on this card was compiled with dftest, the display-filter compiler Wireshark ships, against Wireshark 4.6.6 on 2026-09-15, before it shipped. RTP and RTCP per RFC 3550, payload type numbers per RFC 3551, DSCP to User Priority per RFC 8325."
+      ],
+      "source": "A built-in, offline list of filters you copy into Wireshark; the app runs nothing and reads no capture."
+    },
     "checklist-ap-install": {
       "name": "How to NOT Have a Wireless Problem",
       "category": "Quick Reference",
@@ -3854,7 +3926,7 @@
     "nearby-ap-scan": {
       "name": "Nearby AP Scan",
       "category": "Networking Tools",
-      "purpose": "Lists the Wi-Fi access points a scan can see around you (SSID, BSSID, channel, band, and signal) and draws a simple channel-occupancy bar per band so you can read how crowded each channel is at a glance. Runs on Android today.",
+      "purpose": "Lists the Wi-Fi access points a scan can see around you (SSID, BSSID, channel, band, and signal) and draws a simple channel-occupancy bar per band so you can read how crowded each channel is at a glance. Runs on Android, macOS, and Windows.",
       "whyHere": "A fast read of who else is on the air. When you are picking a channel or chasing co-channel interference, seeing the nearby BSSIDs and where they sit across 2.4, 5, and 6 GHz tells you which channels are busy and which are clear, without carrying a separate analyzer.",
       "howToUse": [
         "Tap Scan to run a Wi-Fi scan. Results list each visible access point with its SSID, BSSID, channel, band, and signal (RSSI).",
@@ -3865,7 +3937,7 @@
       "algorithm": null,
       "example": "On a busy 2.4 GHz band the occupancy bars cluster on channels 1, 6, and 11; an access point sitting on channel 3 overlaps both 1 and 6, which the bars make visible at a glance.",
       "fieldNotes": [
-        "Runs on Android today. iOS and macOS block nearby-AP scanning at the operating-system level, so the tool is left out of the catalog there. Windows is capable of it and can list every visible network, but that path is not wired into this tool yet; the copy says so honestly rather than implying only Apple restricts it.",
+        "RUNS ON ANDROID, macOS, AND WINDOWS. iOS is the one that blocks nearby-AP scanning at the operating-system level, so the tool is left out of the catalog there. This note said macOS blocked it too, and said Windows was capable but not wired; both were true when it was written and neither is true now.",
         "Clean fields only. The Android scan exposes SSID, BSSID, channel, band, and RSSI for a scanned (non-connected) network. It does not expose a per-network noise floor, SNR, or data rate, so those columns do not exist here and are never shown.",
         "Android throttles Wi-Fi scans. Foreground apps get a limited number of scans per window; when throttled, a re-scan returns the last cached results and the screen notes it rather than faking a fresh scan.",
         "Location permission and Wi-Fi must both be on for the scan to return results; the screen shows an honest Wi-Fi-off or Location-needed card when either is missing."
@@ -4372,6 +4444,98 @@
         "The card is a printed image, so a screen reader cannot read the values inside it. The card title and the pinch-to-zoom gesture are announced."
       ],
       "source": "The card ships inside the app as a PDF and displays fully offline."
+    },
+    "ssid-airtime": {
+      "name": "SSID Airtime",
+      "category": "Calculators & Tools",
+      "purpose": "Works out how much of a channel's time is spent on beacons and probe responses, and what one MORE SSID would cost, across 2.4, 5 and 6 GHz side by side.",
+      "whyHere": "Best-practice documents routinely ask for three or four SSIDs without ever costing them. This puts a number on the request, so the conversation stops being a matter of opinion. Airtime is a property of the CHANNEL, not of one access point, so every audible co-channel AP multiplies the figure.",
+      "howToUse": [
+        "Enter how many SSIDs one access point advertises, and how many co-channel APs you can hear (including that one).",
+        "Choose whether the APs beacon once per SSID, or use MBSSID to carry several BSSs in one beacon.",
+        "Set the management basic rate for each band. This is the single biggest lever: a beacon at 6 Mbps takes twice the airtime of the same beacon at 12.",
+        "Read the large number on each band card: that is what advertising ONE more SSID would add."
+      ],
+      "inputs": [
+        {
+          "name": "SSIDs advertised",
+          "unit": "count",
+          "range": "1 to 64, per access point"
+        },
+        {
+          "name": "Audible co-channel APs",
+          "unit": "count",
+          "range": "1 to 40, including this one"
+        },
+        {
+          "name": "Beaconing",
+          "unit": "toggle",
+          "range": "One beacon per SSID, or MBSSID"
+        },
+        {
+          "name": "Basic rate",
+          "unit": "Mbps",
+          "range": "1 to 54. CCK rates are hidden on 5 and 6 GHz, which have no CCK"
+        },
+        {
+          "name": "Beacon length",
+          "unit": "bytes",
+          "range": "60 to 2300, INCLUDING the 4-byte FCS"
+        },
+        {
+          "name": "Beacon interval",
+          "unit": "TU",
+          "range": "20 to 1000. One TU is 1024 microseconds, not 1000"
+        },
+        {
+          "name": "Amendment",
+          "unit": "select",
+          "range": "802.11ac, 802.11ax (default), or 802.11be. Sets the beacon size estimate"
+        },
+        {
+          "name": "Airtime counted",
+          "unit": "toggle",
+          "range": "Occupancy (default), or with contention added"
+        },
+        {
+          "name": "Probe exchanges",
+          "unit": "toggle",
+          "range": "Not counted (default), or counted"
+        }
+      ],
+      "algorithm": "Each beacon's time on air is the preamble plus the payload rounded UP to whole 4-microsecond OFDM symbols. Without MBSSID an AP sends one full beacon per SSID, so cost rises linearly with SSID count. With MBSSID it sends one beacon carrying a shared part plus a small profile per extra BSS, which is far cheaper and gets relatively cheaper as the count grows. That total is divided by the beacon interval and multiplied by the number of audible co-channel APs, because they all share the same channel time. Occupancy mode counts only the frames themselves; contention mode adds DIFS plus average backoff, which is the time an AP spends winning the medium.",
+      "example": "Four SSIDs, three audible co-channel APs, 331-byte beacons at a 12 Mbps basic rate, 100 TU interval, one beacon per SSID: the next SSID you add costs roughly another third of a percentage point of channel time on 5 GHz. Drop the basic rate to 6 Mbps and that cost doubles.",
+      "fieldNotes": [
+        "MANAGEMENT FRAMES ONLY. No data traffic, no RTS/CTS or ERP protection, no retries, no DTIM or buffered multicast. Real channel utilisation is always HIGHER than this figure, never lower.",
+        "Beacon length must INCLUDE the 4-byte FCS. Analysers commonly display the length without it; a 327-byte display means 331 here. Getting this wrong under-reports by about 2%.",
+        "Occupancy is the default on purpose. It makes no assumption about contention, so it is the figure that survives an argument.",
+        "The same SSID count lands far harder on 2.4 GHz, because there are only three non-overlapping channels to spread across. A ship network measured in August 2026 ran 2.4 GHz at 2.27 times the channel utilisation of its own 5 GHz, with identical SSIDs.",
+        "Beacon byte sizes per amendment are ESTIMATES. Replace them with a real length from a capture whenever you have one."
+      ],
+      "source": "Ported with permission from the SSID Airtime Calculator by Jonathan Finney (MIT licensed). Computed entirely on your device."
+    },
+    "join-network": {
+      "name": "Join a Network",
+      "category": "Networking Tools",
+      "purpose": "Picks a Wi-Fi network from a scan and associates to it, then reports what you actually landed on. On macOS and Windows the join runs on this device's own radio. With a WLAN Pi attached, the Pi joins instead and reports its full link record.",
+      "whyHere": "Associating is the test. A scan tells you a network is on the air; only a join tells you whether the credentials work, whether the AP will take you, and which BSSID you ended up on when several advertise the same SSID. Doing it from the tool means you see the outcome rather than reading it back out of the OS afterwards.",
+      "howToUse": [
+        "Pick a radio if more than one is offered, then run a scan. Networks are listed with their SSID, BSSID, channel, signal, and the security they advertise.",
+        "Tap a network. If it needs a passphrase you are asked for one; open and OWE (Enhanced Open) networks need nothing, because neither takes credentials.",
+        "Read the result. A native join reports that you are connected and to which SSID. A WLAN Pi join reports its full link record, including the BSSID it landed on.",
+        "Disconnect from the same screen when you are done."
+      ],
+      "inputs": [],
+      "algorithm": null,
+      "example": "Two APs advertise the same SSID in a corridor. You join, and the result names the BSSID you associated with, which tells you which of the two actually took you, rather than leaving you to infer it from signal strength.",
+      "fieldNotes": [
+        "WHICH RADIO JOINS DEPENDS ON THE PLATFORM, and the screen says so rather than making you guess. macOS and Windows join with their own radio. iOS and Android do not: neither lets a third-party app associate to a network it chooses, so there the tool needs a WLAN Pi and says so.",
+        "JOINING CHANGES THE NETWORK THIS DEVICE IS ON. That is the point of the tool, but it also means a join can move you to a different subnet, and anything depending on the old one is dropped. On a native join you are moving the machine you are standing at.",
+        "OPEN AND OWE NEED NO PASSWORD. OWE, which the Wi-Fi Alliance calls Enhanced Open, encrypts without authenticating, so there is nothing to type. A network advertising OWE transition mode is a marker that BOTH an open and an OWE BSS exist, not a security scheme of its own.",
+        "A FAILED JOIN USUALLY TELLS YOU WHICH KIND OF FAILURE IT WAS. A network that never appears is a different problem from one that appears and then refuses the passphrase, and the two are worth separating before you change anything.",
+        "802.1X IS NOT SUPPORTED YET. Enterprise networks need a credential exchange this tool does not carry; it handles open, OWE, WPA2 Personal, and WPA3 Personal."
+      ],
+      "source": "Associates using the operating system's own Wi-Fi interface on macOS and Windows, or the WLAN Pi's radio through the Pi's local API when one is attached."
     }
   }
 }
