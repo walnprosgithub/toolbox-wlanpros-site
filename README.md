@@ -15,14 +15,15 @@ Source of truth for the site at **toolbox.wlanpros.com**. Netlify is connected t
 ## Shipping a new web build (Keith / Larry / agents)
 
 1. Build with the base href flag, exactly: `flutter build web --release --base-href /app/`
-2. Replace the entire contents of `/app` with the build output (delete what was there first)
-3. Commit and push to `main`. Netlify republishes automatically.
+2. Replace the contents of `/app` with the build output. **Preserve `app/_redirects`.** It is the SPA fallback, hand-maintained, and `flutter build web` does not produce it — an unqualified "delete what was there first" removes it. This nearly happened on the 1.10.0 deploy.
+3. **Run `python3 scripts/check-version-text.py`.** It fails the push when `index.html` makes a claim the build contradicts. Do not push past a FAIL.
+4. Commit and push to `main`. Netlify republishes automatically.
 
 The base href flag is required: the app is served from `/app/`, not the domain root. A build made without it will load a blank page.
 
 ## Shipping a new macOS .dmg
 
-The dmg is NOT stored in this repo (since 7/7/26). It is served from **GitHub Releases**, because Netlify bandwidth is metered and one Mac download costs as much as ~500 page visits. The page links to `/WLAN-Pros-Toolbox.dmg`, which `_redirects` 301s to the latest release asset. Nothing in `index.html` changes between versions.
+The dmg is NOT stored in this repo (since 7/7/26). It is served from **GitHub Releases**, because Netlify bandwidth is metered and one Mac download costs as much as ~500 page visits. The page links to `/WLAN-Pros-Toolbox.dmg`, which `_redirects` 301s to the latest release asset. **`index.html` DOES change between versions, and assuming otherwise is how it goes stale.** The download link itself is version-free, which is what that sentence used to mean, but the page also carries claims about the build: the tool count, any "New in X" stamp, and the Apple Silicon warning with its pinned Intel fallback. Two of those were wrong in the wild — "173 tools" against a build shipping 185, and "New in 1.7" still sitting there at 1.10. `scripts/check-version-text.py` is the mechanical check; run it on every release push.
 
 To ship a new dmg:
 
